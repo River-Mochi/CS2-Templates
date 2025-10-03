@@ -146,6 +146,6 @@ Copyright (c) 2025 YourName (modifications)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy...
 ```
-- Adding your username or name is optional but you have to keep the rest of the License as is with each fork of this repo per MIT rules.
+- Adding your username (or name) is optional but you have to keep the rest of the License file as is with each fork of this repo per MIT.
 
 
