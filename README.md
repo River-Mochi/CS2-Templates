@@ -28,7 +28,7 @@ Starter template for a Cities: Skylines II mod using the built-in Modding Toolch
 YourMod/
 ├─ YourMod.csproj
 ├─ Mod.cs
-├─ GatedSystemBase.cs             # optional helper (gameplay gating + one-shot hook)
+├─ GatedSystem.cs             # optional helper (gameplay gating + one-shot hook)
 ├─ Systems/
 │  └─ ExampleSystem.cs            # sample system that inherits the helper
 ├─ Settings/
