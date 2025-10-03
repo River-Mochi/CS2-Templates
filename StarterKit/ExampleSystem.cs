@@ -1,4 +1,17 @@
 // ExampleSystem.cs
+
+/// <summary>
+/// ExampleSystem — starting point for CS2 DOTS systems.
+/// Responsibilities:
+/// 1) GameMode gating: enabled only for <c>GameMode.Game</c>.
+/// 2) One-shot apply: do setup in <see cref="ApplyOnceAfterLoad"/> after the map/city is ready.
+/// 3) Per-frame work: put your logic in <see cref="OnUpdate"/> (runs only while enabled).
+/// Notes:
+/// • Read user options via <c>Mod.Settings</c>.
+/// • Avoid heavy work in constructors; prefer ApplyOnceAfterLoad or the first OnUpdate.
+/// </summary>
+
+
 namespace YourModNamespace
 {
     using Colossal.Logging;                 // ILog
