@@ -3,7 +3,7 @@ CS2 templates: basic files to start a new mod
 
 Start template layout
 
-YourModTemplate/
+`YourModTemplate/
 ├─ .editorconfig
 ├─ .gitignore
 ├─ LICENSE
@@ -16,4 +16,4 @@ YourModTemplate/
    │  ├─ LocaleEN.cs
    │  └─ Systems/
    │     └─ ExampleSystem.cs
-   └─ YourMod.sln
+   └─ YourMod.sln`
