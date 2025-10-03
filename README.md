@@ -18,9 +18,9 @@ Starter template for a Cities: Skylines II mod using the built-in Modding Toolch
 - Cities: Skylines II installed
 - **Modding Toolchain** installed (Colossal)
 - Environment variable **`CSII_TOOLPATH`** pointing to the Toolchain folder  
-  (the `.csproj` imports `Mod.props` / `Mod.targets` from there).
+  (the `.csproj` file imports `Mod.props` / `Mod.targets` from there).
 
-> If you don’t have the toolchain, install it via the official CS2 modding docs.
+> If you don’t have the toolchain, install it via the in-game Options > Mods before doing anything else.
 
 ## Folder Layout
 
@@ -60,9 +60,9 @@ YourMod/
    - If `CSII_TOOLPATH` is set correctly, the toolchain will handle references & publishing.
 7. **Launch the game**, enable your mod in **Content Manager**, and open **Options** to see your UI.
 
-## Example: A System That Only Runs in Gameplay
+## Example: A System That only runs in active Gameplay
 
-The template includes `GatedSystemBase.cs`. Inherit from it to restrict a system to gameplay and (optionally) do something once after a city loads:
+The template includes `GatedSystemBase.cs` helper. Inherit from it to restrict a system to gameplay and (optionally) do something once after a city loads:
 
 ```csharp
 namespace YourMod.Systems
@@ -91,26 +91,26 @@ namespace YourMod.Systems
 ```
 
 Register it in `Mod.OnLoad`:
-updateSystem.UpdateAt<YourMod.Systems.ExampleSystem>(SystemUpdatePhase.MainLoop);
+`updateSystem.UpdateAt<YourMod.Systems.ExampleSystem>(SystemUpdatePhase.MainLoop);`
 
 Localization
 
-This template registers LocaleEN (English). Add more locales the same way:
-Mod.OnLoad
+This template registers LocaleEN.cs (English). Add more locales the same way:
+Example, in Mod.cs `OnLoad`
 `TryAddLocale("fr-FR", new LocaleFR(s_Settings));`
 
-Write locale strings using the Setting helper methods, e.g.:
+In LocaleEN.cs: write locale strings using the Setting helper methods, e.g.:
 ```csharp
 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableFeature)), "Enable Feature" },
 { m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableFeature)),  "Turns the feature on or off." },
 ```
 
 ### Style & Conventions
-- Private instance fields: m_FieldName
-- Private static fields: s_FieldName
-- Constants: kName
-- Put using directives inside the namespace block
-- .editorconfig enforces these rules
+- Private instance fields: `m_FieldName`
+- Private static fields: `s_FieldName`
+- Constants: `kName`
+- Put `using` directives inside the namespace block (optional, but many Colossal game files do this).
+- .editorconfig enforces these naming rules (remove or change it if you like different styles)
 
 ### Troubleshooting
 
