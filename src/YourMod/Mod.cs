@@ -6,7 +6,7 @@
 // - Registers locales (optional)
 // - Registers systems with UpdateSystem
 //
-// This template does not have “one-shot after load” logic which is in a helper if want to include it.
+// This template intentionally avoids any “one-shot after load” logic;
 // systems should handle that themselves (if needed) via GatedSystemBase.
 //
 namespace YourMod
@@ -42,7 +42,6 @@ namespace YourMod
             settings.RegisterInOptionsUI();
 
             // Locales (optional): add before Options UI if you localize labels/descriptions
-            // Make sure you have a LocaleEN that implements IDictionarySource.
             TryAddLocale("en-US", new LocaleEN(settings));
 
             // Register systems (choose a phase that fits your work)
@@ -59,8 +58,8 @@ namespace YourMod
         {
             s_Log.Info($"{Name} - OnDispose");
 
-            // If you subscribed to events (e.g., localizationManager.onActiveDictionaryChanged),
-            // unsubscribe here. Do not remove localization sources; CS2 manages them.
+            // If you subscribed to events, unsubscribe here.
+            // Do NOT remove localization sources; CS2 manages them.
 
             if (s_Settings != null)
             {
