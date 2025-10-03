@@ -133,8 +133,19 @@ Write locale strings using the Setting helper methods, e.g.:
 - Options not showing: Verify Setting.RegisterInOptionsUI() is called and the mod is enabled in-game.
 - Locales not applied: Make sure you called TryAddLocale(localeId, source) before RegisterInOptionsUI().
 
-### License
-MIT — see LICENSE. Add your name to the year you started contributing.
 
+### License
+MIT — see [LICENSE](https://github.com/River-Mochi/CS2-Templates/blob/main/LICENSE) file. Add your name to the year you started contributing. MIT License means this is free to use, just keep copy of the license file in every fork of this mod.
+Either keep the license file as it is written or add your name to it like below (in your own fork of this repo). 
+
+Example at the top of the License file:
+
+``` MIT License
+Copyright (c) 2025 RiverMochi
+Copyright (c) 2025 YourName (modifications)     
+
+Permission is hereby granted, free of charge, to any person obtaining a copy...
+```
+- Adding your username or name is optional but you have to keep the rest of the License as is with each fork of this repo per MIT rules.
 
 
