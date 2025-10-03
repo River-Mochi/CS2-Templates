@@ -2,18 +2,19 @@
 CS2 templates: basic files to start a new mod
 
 Start template layout
-
-`YourModTemplate/
+YourMod/                         ← project folder (rename for your mod)
+├─ YourMod.csproj
+├─ Mod.cs
+├─ GatedSystemBase.cs            ← optional helper (gating + one-shot hook)
+├─ Systems/
+│  └─ ExampleSystem.cs           ← sample system using the helper
+├─ Settings/
+│  └─ Setting.cs
+├─ Locale/
+│  └─ LocaleEN.cs
 ├─ .editorconfig
+├─ .gitattributes
 ├─ .gitignore
 ├─ LICENSE
-├─ README.md
-└─ src/
-   ├─ YourMod/                ← project folder (rename for your mod)
-   │  ├─ YourMod.csproj
-   │  ├─ Mod.cs
-   │  ├─ Setting.cs
-   │  ├─ LocaleEN.cs
-   │  └─ Systems/
-   │     └─ ExampleSystem.cs
-   └─ YourMod.sln`
+└─ README.md
+
