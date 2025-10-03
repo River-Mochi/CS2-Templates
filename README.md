@@ -60,6 +60,21 @@ YourMod/
    - If `CSII_TOOLPATH` is set correctly, the toolchain will handle references & publishing.
 7. **Launch the game**, enable your mod in **Content Manager**, and open **Options** to see your UI.
 
+Register it in `Mod.OnLoad`:
+`updateSystem.UpdateAt<YourMod.Systems.ExampleSystem>(SystemUpdatePhase.MainLoop);`
+
+Localization
+
+This template registers LocaleEN.cs (English). Add more locales the same way:
+Example, in Mod.cs `OnLoad`
+`TryAddLocale("fr-FR", new LocaleFR(s_Settings));`
+
+In LocaleEN.cs: write locale strings using the Setting helper methods, e.g.:
+```csharp
+{ m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableFeature)), "Enable Feature" },
+{ m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableFeature)),  "Turns the feature on or off." },
+```
+
 ## Example: A System That only runs in active Gameplay
 
 The template includes `GatedSystemBase.cs` helper. Inherit from it to restrict a system to gameplay and (optionally) do something once after a city loads:
@@ -90,20 +105,23 @@ namespace YourMod.Systems
 }
 ```
 
-Register it in `Mod.OnLoad`:
-`updateSystem.UpdateAt<YourMod.Systems.ExampleSystem>(SystemUpdatePhase.MainLoop);`
+## “One-shot after load” Helper
 
-Localization
+Think of two kinds of code:
+- Every-frame code: runs constantly while you’re in a city (like Unity’s Update()).
+- One-time code: runs once right after a city finishes loading, then stops.
+    - Get this by overriding OnGameLoadingComplete().
 
-This template registers LocaleEN.cs (English). Add more locales the same way:
-Example, in Mod.cs `OnLoad`
-`TryAddLocale("fr-FR", new LocaleFR(s_Settings));`
+Timeline (mental model)
+Mod that runs one-time after load.
 
-In LocaleEN.cs: write locale strings using the Setting helper methods, e.g.:
-```csharp
-{ m_Setting.GetOptionLabelLocaleID(nameof(Setting.EnableFeature)), "Enable Feature" },
-{ m_Setting.GetOptionDescLocaleID(nameof(Setting.EnableFeature)),  "Turns the feature on or off." },
-```
+1. **Mod.OnLoad** — your mod is loaded in the menu (no city yet).
+2. **OnGamePreload** — loading screen (stuff is still spawning).
+3. **OnGameLoadingComplete** — city ready → run your one-shot helper setup.
+4. **OnUpdate** — ticks every frame while playing.
+
+That’s all “one-shot after load” means: a safe place to run setup exactly once per city load, instead of doing it repeatedly in the per-frame loop.
+
 
 ### Style & Conventions
 - Private instance fields: `m_FieldName`

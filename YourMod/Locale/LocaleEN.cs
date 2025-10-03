@@ -40,11 +40,14 @@ namespace YourMod
                 // Buttons (labels only; buttons don’t show a description panel)
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenGitHub)),  "GitHub" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(Setting.OpenDiscord)), "Discord" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenDiscordButton)), "Come say hi. We don’t bite (usually)." },
+
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.OpenDocsButton)), "Docs! Because trial & error gets old fast." },
 
                 // Notes block text
-                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.MainNotes)),
-                  "• This is a starter template.\n• Add your own settings, systems, and localization." },
-                { m_Setting.GetOptionDescLocaleID(nameof(Setting.MainNotes)), "" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.MainNotes)), "You made it to the Options UI !!@@" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.MainNotes)), "This is where your settings live. Toggle things, click buttons, break nothing (hopefully)." },
+
             };
         }
 

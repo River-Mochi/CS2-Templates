@@ -25,6 +25,7 @@ namespace YourMod
         public const string VersionShort = "0.1.0";
 
         // --- Logging ---
+        // Log file: C:\Users\YourName\AppData\LocalLow\Colossal Order\Cities Skylines II\Logs\
         public static readonly ILog s_Log =
             LogManager.GetLogger(Name).SetShowsErrorsInUI(false);
 
@@ -33,7 +34,7 @@ namespace YourMod
 
         public void OnLoad(UpdateSystem updateSystem)
         {
-            s_Log.Info($"{Name} {VersionShort} - OnLoad");
+            s_Log.Info($"{Name} {VersionShort} - OnLoad. If you can read this, your log pipeline works.");
 
             // Settings: create + load saved values, then register in Options UI
             var settings = new Setting(this);
