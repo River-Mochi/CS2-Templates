@@ -1,24 +1,7 @@
 # CS2-Templates
 CS2 templates: basic files to start a new mod
 
-Start template layout
-YourMod/                         ← project folder (rename for your mod)
-├─ YourMod.csproj
-├─ Mod.cs
-├─ GatedSystemBase.cs            ← optional helper (gating + one-shot hook)
-├─ Systems/
-│  └─ ExampleSystem.cs           ← sample system using the helper
-├─ Settings/
-│  └─ Setting.cs
-├─ Locale/
-│  └─ LocaleEN.cs
-├─ .editorconfig
-├─ .gitattributes
-├─ .gitignore
-├─ LICENSE
-└─ README.md
-
-# Your Mod Name
+## Your Mod Name
 
 Starter template for a Cities: Skylines II mod using the built-in Modding Toolchain.
 
@@ -41,24 +24,26 @@ Starter template for a Cities: Skylines II mod using the built-in Modding Toolch
 
 ## Folder Layout
 
+```text
 YourMod/
 ├─ YourMod.csproj
 ├─ Mod.cs
-├─ GatedSystemBase.cs # optional helper (gameplay gating + one-shot hook)
+├─ GatedSystemBase.cs             # optional helper (gameplay gating + one-shot hook)
 ├─ Systems/
-│ └─ ExampleSystem.cs # sample system that inherits the helper
+│  └─ ExampleSystem.cs            # sample system that inherits the helper
 ├─ Settings/
-│ └─ Setting.cs
+│  └─ Setting.cs
 ├─ Locale/
-│ └─ LocaleEN.cs
+│  └─ LocaleEN.cs
 ├─ .editorconfig
 ├─ .gitattributes
 ├─ .gitignore
 ├─ LICENSE
 └─ README.md
-
+```
 
 > For small mods, keeping it flat like this is easiest. If your project grows, feel free to add `/docs`, `/tools`, etc.
+
 
 ## Getting Started
 
