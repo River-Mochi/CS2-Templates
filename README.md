@@ -114,9 +114,9 @@ Write locale strings using the Setting helper methods, e.g.:
 
 ### Troubleshooting
 
-- Toolchain not found: Ensure CSII_TOOLPATH points to the Modding Toolchain directory.
-- Options not showing: Verify Setting.RegisterInOptionsUI() is called and the mod is enabled in-game.
-- Locales not applied: Make sure you called TryAddLocale(localeId, source) before RegisterInOptionsUI().
+- Toolchain not found: Check csproj file, Ensure `CSII_TOOLPATH` points to the Modding Toolchain directory.
+- Options not showing: Verify Setting.cs `RegisterInOptionsUI()` is called and the mod is enabled in-game.
+- Locales not applied: in Mod.cs, make sure you called `TryAddLocale(localeId, source)` **before** `RegisterInOptionsUI()`.
 
 
 ### License
