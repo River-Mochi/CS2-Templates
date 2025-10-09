@@ -13,6 +13,9 @@
 // Notes:
 // * Keybinding *definitions* live in Setting.cs via [SettingsUI*Action]/[SettingsUI*Binding] attributes.
 // * This Mod.cs only retrieves ProxyAction instances by name and (optionally) logs interactions.
+// * ProxtAction is the runtime handle to a Colossal input action (button/axis/vector).
+//   * It lets code read the current value (e.g., ReadValue<float>() or ReadValue<Vector2>()) and subscribe to onInteraction events.
+//   * Contrast: ProxyBinding is the saved binding shown in Options UI; ProxyAction is the live action used at runtime.*
 // * Settings persistence key below uses nameof(Project2) to match [FileLocation(nameof(Project2))] in Setting.cs.
 
 namespace Project2
