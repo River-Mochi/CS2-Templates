@@ -7,9 +7,9 @@ using Game.Settings;
 using Game.UI;
 using Game.UI.Widgets;
 
-namespace Project2
+namespace MyModName
 {
-    [FileLocation(nameof(Project2))]
+    [FileLocation("ModsSettings/MyModName/MyModName")]
     [SettingsUIGroupOrder(kButtonGroup, kToggleGroup, kSliderGroup, kDropdownGroup, kKeybindingGroup)]
     [SettingsUIShowGroupName(kButtonGroup, kToggleGroup, kSliderGroup, kDropdownGroup, kKeybindingGroup)]
     [SettingsUIKeyboardAction(Mod.kVectorActionName, ActionType.Vector2, usages: new string[] { Usages.kMenuUsage, "TestUsage" }, interactions: new string[] { "UIButton" }, processors: new string[] { "ScaleVector2(x=100,y=100)" })]
@@ -142,7 +142,7 @@ namespace Project2
         {
             return new Dictionary<string, string>
             {
-                { m_Setting.GetSettingsLocaleID(), "Project2" },
+                { m_Setting.GetSettingsLocaleID(), "My Mod Name" },
                 { m_Setting.GetOptionTabLocaleID(Setting.kSection), "Main" },
 
                 { m_Setting.GetOptionGroupLocaleID(Setting.kButtonGroup), "Buttons" },
@@ -214,7 +214,7 @@ namespace Project2
                 { m_Setting.GetBindingKeyLocaleID(Mod.kVectorActionName, Vector2Component.Left), "Left key" },
                 { m_Setting.GetBindingKeyLocaleID(Mod.kVectorActionName, Vector2Component.Right), "Right key" },
 
-                { m_Setting.GetBindingMapLocaleID(), "Mod settings sample" },
+                { m_Setting.GetBindingMapLocaleID(), "My Mod Name — key bindings" },
             };
         }
 
