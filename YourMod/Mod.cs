@@ -18,7 +18,7 @@
 //     Contrast: ProxyBinding is the saved binding shown in Options UI; ProxyAction is the live action used at runtime.
 // * Settings persistence key below uses nameof(Project2) to match [FileLocation(nameof(Project2))] in Setting.cs.
 
-namespace Project2
+namespace MyModName
 {
     // Using directives inside the namespace (style).
     using Colossal;                        // IDictionarySource
@@ -33,7 +33,7 @@ namespace Project2
     public sealed class Mod : IMod
     {
         // --- Meta (adjust as desired) ---
-        public const string Name = "Your Mod Name";
+        public const string Name = "My Mod Name";
         public const string VersionShort = "0.1.0";
 
         // --- Action names (must match those referenced by attributes in Setting.cs) ---
@@ -44,7 +44,7 @@ namespace Project2
         // --- Logging ---
         // Log file: %LocalAppData%\..\LocalLow\Colossal Order\Cities Skylines II\Logs\
         public static readonly ILog s_Log =
-            LogManager.GetLogger(Name).SetShowsErrorsInUI(false);
+            LogManager.GetLogger("MyModName").SetShowsErrorsInUI(false);
 
         // --- Settings instance (created here; all option definitions stay in Setting.cs) ---
         public static Setting? s_Settings { get; private set; }
@@ -75,7 +75,7 @@ namespace Project2
             var settings = new Setting(this);
             s_Settings = settings;
 
-            AssetDatabase.global.LoadSettings(nameof(Project2), settings, new Setting(this));
+            AssetDatabase.global.LoadSettings("MyModName", settings, new Setting(this));
 
             // Locales (optional) — add before Options UI if localized labels/descriptions are used.
             TryAddLocale("en-US", new LocaleEN(settings));
