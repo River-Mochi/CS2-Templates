@@ -1,59 +1,57 @@
 // Mod.cs
 //
-// Minimal, reusable Mod entry point for CS2 mods — now merged with input/keybinding plumbing.
+// Minimal, reusable Mod entry point for CS2 mods — aligned with Colossal Setting.cs (with keybinding) template.
 // - Sets up logging (s_Log)
-// - Creates settings + loads saved values
+// - Creates settings + loads saved values + registers in Options UI
 // - Registers locales (optional)
-// - (NEW) Sets up example keybinding actions via Colossal's input system
+// - Reads input actions declared via attributes in Setting.cs (no keybind creation here)
 // - (optional) Registers systems with UpdateSystem
 //
 // This template intentionally avoids any “one-shot after load” logic;
 // systems should handle that themselves (if needed) via a gated approach.
-// Input handlers shown here are illustrative and lightweight.
 //
 // Notes:
-// * The settings persistence key uses `Name`, which controls the .coc filename.
-// * Locale sources are added safely; CS2 manages their lifecycle (no manual removal needed).
-// * Event handlers for input are subscribed on load and unsubscribed on dispose.
+// * Keybinding *definitions* live in Setting.cs via [SettingsUI*Action]/[SettingsUI*Binding] attributes.
+// * This Mod.cs only retrieves ProxyAction instances by name and (optionally) logs interactions.
+// * Settings persistence key below uses nameof(Project2) to match [FileLocation(nameof(Project2))] in Setting.cs.
 
 namespace Project2
 {
-    // Using directives inside the namespace (optional per style rules, could also place above namespace )
+    // Using directives inside the namespace (style).
     using Colossal;                        // IDictionarySource
     using Colossal.IO.AssetDatabase;       // AssetDatabase.global.LoadSettings
     using Colossal.Logging;                // ILog, LogManager
     using Game;                            // UpdateSystem, SystemUpdatePhase
-    using Game.Input;                      // ProxyAction, InputPhase, IInputAction
+    using Game.Input;                      // ProxyAction, IInputAction, InputPhase
     using Game.Modding;                    // IMod
     using Game.SceneFlow;                  // GameManager
     using UnityEngine;                     // Vector2
 
     public sealed class Mod : IMod
     {
-        // --- Meta (adjust these for the mod) ---
+        // --- Meta (adjust as desired) ---
         public const string Name = "Your Mod Name";
         public const string VersionShort = "0.1.0";
 
-        // --- Logging ---
-        // Log file: C:\Users\<User>\AppData\LocalLow\Colossal Order\Cities Skylines II\Logs\
-        public static readonly ILog s_Log =
-            LogManager.GetLogger(Name).SetShowsErrorsInUI(false);
-
-        // --- Settings instance (accessible to other classes if needed) ---
-        public static Setting? s_Settings { get; private set; }
-
-        // --- Input / keybinding (optional, uses Colossal standard pattern) ---
-        // Action names should match those declared in Setting.RegisterKeyBindings()
+        // --- Action names (must match those referenced by attributes in Setting.cs) ---
         public const string kButtonActionName = "ButtonBinding";
         public const string kAxisActionName   = "FloatBinding";
         public const string kVectorActionName = "Vector2Binding";
 
-        // Stored references to actions so other systems can inspect them if desired.
+        // --- Logging ---
+        // Log file: %LocalAppData%\..\LocalLow\Colossal Order\Cities Skylines II\Logs\
+        public static readonly ILog s_Log =
+            LogManager.GetLogger(Name).SetShowsErrorsInUI(false);
+
+        // --- Settings instance (created here; all option definitions stay in Setting.cs) ---
+        public static Setting? s_Settings { get; private set; }
+
+        // --- Optional: cached input actions (declared in Setting.cs via attributes) ---
         public static ProxyAction? s_ButtonAction;
         public static ProxyAction? s_AxisAction;
         public static ProxyAction? s_VectorAction;
 
-        // Stored delegates so they can be cleanly unsubscribed on dispose.
+        // Keep delegates so they can be unsubscribed cleanly on dispose.
         private static System.Action<IInputAction, InputPhase>? s_OnButtonInteraction;
         private static System.Action<IInputAction, InputPhase>? s_OnAxisInteraction;
         private static System.Action<IInputAction, InputPhase>? s_OnVectorInteraction;
@@ -62,31 +60,31 @@ namespace Project2
         {
             s_Log.Info($"{Name} {VersionShort} - OnLoad. If this appears, logging is configured.");
 
-            // Helpful: where this mod's package is located on disk (when available).
+            // Helpful: where this mod’s package is located (when available).
             if (GameManager.instance?.modManager != null &&
                 GameManager.instance.modManager.TryGetExecutableAsset(this, out var asset))
             {
-                s_Log.Info($"Current mod asset at {asset.path}");
+                s_Log.Info($"Mod asset path: {asset.path}");
             }
 
-            // Settings: create, load persisted values, then register in Options UI.
-            // Using `Name` as the settings key defines the .coc filename.
+            // Settings: create + load saved values, then register in Options UI.
+            // Use nameof(Project2) to match [FileLocation(nameof(Project2))] in Setting.cs.
             var settings = new Setting(this);
             s_Settings = settings;
 
-            AssetDatabase.global.LoadSettings(Name, settings, new Setting(this));
-            settings.RegisterInOptionsUI();
+            AssetDatabase.global.LoadSettings(nameof(Project2), settings, new Setting(this));
 
-            // Locales (optional): add before Options UI if localized labels/descriptions are used.
-            // Safe helper logs a warning if LocalizationManager is not available yet.
+            // Locales (optional) — add before Options UI if localized labels/descriptions are used.
             TryAddLocale("en-US", new LocaleEN(settings));
 
-            // --- Input setup (optional) ---
-            // Requires Setting.RegisterKeyBindings() to declare actions with the names above.
-            // If Setting does not implement keybinding, the try/catch cleanly skips this section.
+            settings.RegisterInOptionsUI();
+
+            // --- Input hookup (optional) ---
+            // Actions are declared by attributes in Setting.cs; call RegisterKeyBindings() to ensure
+            // the actions exist, then retrieve them by name and (optionally) log interactions.
             try
             {
-                settings.RegisterKeyBindings(); // Colossal standard method in Setting.cs
+                settings.RegisterKeyBindings(); // REQUIRED with the attribute-based template
 
                 s_ButtonAction = settings.GetAction(kButtonActionName);
                 s_AxisAction   = settings.GetAction(kAxisActionName);
@@ -98,14 +96,11 @@ namespace Project2
             }
             catch (System.Exception ex)
             {
-                s_Log.Warn($"Keybinding setup skipped: {ex.GetType().Name}: {ex.Message}");
+                s_Log.Warn($"Input action hookup skipped: {ex.GetType().Name}: {ex.Message}");
             }
 
-            // --- System registration examples (choose phases appropriate to the work) ---
-            // Example: a system that drives UI changes:
+            // --- Example system registrations (uncomment and replace with actual systems) ---
             // updateSystem.UpdateAt<ExampleUiSystem>(SystemUpdatePhase.UIUpdate);
-            //
-            // Example: a system that runs in the main simulation loop:
             // updateSystem.UpdateAt<ExampleSimSystem>(SystemUpdatePhase.MainLoop);
 
             s_Log.Info($"{Name} initialized.");
@@ -115,7 +110,7 @@ namespace Project2
         {
             s_Log.Info($"{Name} - OnDispose");
 
-            // Unsubscribe input handlers and disable actions to avoid residual callbacks on reload.
+            // Clean input subscriptions.
             SafeUnsubscribeAndDisable(ref s_ButtonAction, ref s_OnButtonInteraction);
             SafeUnsubscribeAndDisable(ref s_AxisAction,   ref s_OnAxisInteraction);
             SafeUnsubscribeAndDisable(ref s_VectorAction, ref s_OnVectorInteraction);
@@ -142,7 +137,8 @@ namespace Project2
             lm.AddSource(localeId, source);
         }
 
-        private static void EnableAndSubscribe(ProxyAction? action,
+        private static void EnableAndSubscribe(
+            ProxyAction? action,
             System.Action<IInputAction, InputPhase> handler)
         {
             if (action == null)
@@ -151,13 +147,12 @@ namespace Project2
             action.shouldBeEnabled = true;
             action.onInteraction += handler;
 
-            // Keep a reference so it can be unsubscribed later.
             if (ReferenceEquals(action, s_ButtonAction)) s_OnButtonInteraction = handler;
             else if (ReferenceEquals(action, s_AxisAction)) s_OnAxisInteraction = handler;
             else if (ReferenceEquals(action, s_VectorAction)) s_OnVectorInteraction = handler;
         }
 
-        // Logs float-like inputs (buttons/axes). Uses the provided accessor to read the correct action.
+        // Logs float-like inputs (button: 0/1; axis: continuous).
         private static System.Action<IInputAction, InputPhase> MakeFloatLogger(
             System.Func<ProxyAction?> getAction)
         {
@@ -166,13 +161,12 @@ namespace Project2
                 var a = getAction();
                 if (a != null)
                 {
-                    // ReadValue<float>() works for button (0/1) and axis actions.
                     s_Log.Info($"[{a.name}] On{phase} {a.ReadValue<float>()}");
                 }
             };
         }
 
-        // Logs Vector2 inputs. Uses the provided accessor to read the correct action.
+        // Logs Vector2 inputs.
         private static System.Action<IInputAction, InputPhase> MakeVector2Logger(
             System.Func<ProxyAction?> getAction)
         {
@@ -195,7 +189,6 @@ namespace Project2
             {
                 action.onInteraction -= handler;
             }
-
             if (action != null)
             {
                 action.shouldBeEnabled = false;
