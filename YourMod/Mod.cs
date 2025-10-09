@@ -1,6 +1,6 @@
 // Mod.cs
 //
-// Minimal, reusable Mod entry point for CS2 mods — aligned with Colossal keybinding template.
+// Minimal, reusable Mod entry point for CS2 mods — aligned with Colossal Setting.cs (with keybinding) template.
 // - Sets up logging (s_Log)
 // - Creates settings + loads saved values + registers in Options UI
 // - Registers locales (optional)
