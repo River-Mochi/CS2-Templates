@@ -1,4 +1,4 @@
-namespace YourMod.Systems
+namespace MyModName
 {
     using Colossal.Logging;                  // ILog
     using Colossal.Serialization.Entities;   // Purpose, GameMode
