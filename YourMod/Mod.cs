@@ -18,7 +18,7 @@
 
 namespace Project2
 {
-    // Using directives inside the namespace (per style rules)
+    // Using directives inside the namespace (optional per style rules, could also place above namespace )
     using Colossal;                        // IDictionarySource
     using Colossal.IO.AssetDatabase;       // AssetDatabase.global.LoadSettings
     using Colossal.Logging;                // ILog, LogManager
