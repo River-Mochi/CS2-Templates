@@ -8,7 +8,7 @@ namespace MyModName
     /// <summary>
     /// Example ECS system. Uses “gameplay-only” gating and an optional one-shot apply after load.
     /// </summary>
-    public sealed class ExampleSystem : GameSystemBase
+    public sealed class MyModNameSystem : GameSystemBase
     {
         private ILog m_Log;
         private const GameMode kAllowedModes = GameMode.Game; // gameplay only
