@@ -1,3 +1,6 @@
+// Seting.cs
+// this is a generic Settings file which has many of the standard methods a new mod might need.
+
 using System.Collections.Generic;
 using Colossal;
 using Colossal.IO.AssetDatabase;
