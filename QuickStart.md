@@ -42,7 +42,14 @@ That’s it. You now have a uniquely named mod.
 
 ---
 
-## 4) Build it
+## 4) Locale (languages)
+English is included in either the Setting.cs file for mods that don't need many user facing strings.
+
+- Option 1: for simple mods where you don't plan to add other language support, you can keep the English dictionary inside Settings.
+- Option 2: use LocaleEN.cs and delete all the Localization in Setting.cs at the bottom.
+
+
+## 5) Build it
 - Set build config to **Release**
 - Build the solution
 - Output is copied to:  
@@ -52,7 +59,7 @@ That’s it. You now have a uniquely named mod.
 
 ---
 
-## 5) Try it in-game
+## 6) Try it in-game
 - Launch CS2
 - Go to **Options → Mods → MyCoolMod**
 - You should see:
@@ -65,7 +72,7 @@ That’s it. You now have a uniquely named mod.
 
 ---
 
-## 6) Where to code things
+## 7) Where to code things
 - **Mod.cs** — entry point. Make settings, add locales, register your systems.
 - **Setting.cs** — the Options UI and persistent values.
 - **Locale/LocaleEN.cs** — strings for labels & tooltips.
@@ -75,11 +82,11 @@ That’s it. You now have a uniquely named mod.
 
 ---
 
-## 7) Shipping / Publishing
+## 8) Shipping / Publishing
 - Keep **LICENSE** (MIT is already set, update copyright year/name)
 - Write your own **README** if you like (see repo)
-- Publish to Paradox Mods using Visual Studio 2022, just right click on YourModName (csproj near the top right under Solution)
-  - don't publish this sample test mod :) - it will just bloat the PDX website with a do-nothing mod :)
+- Don't publish this sample test mod :) - it will just bloat the PDX website with a do-nothing mod :)
+- For real mod, Publish to Paradox Mods using Visual Studio 2022, just right click on YourModName (csproj near the top right under Solution)
 
 ---
 
