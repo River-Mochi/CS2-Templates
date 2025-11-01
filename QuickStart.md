@@ -1,4 +1,4 @@
-﻿# ⚡ Quick Start — CS2 Modding by RiverMochi
+﻿# ⚡ Quick Start — CS2 Modding by River-Mochi
 
 Welcome! This is a tiny starter template for Cities: Skylines II mods. It opens in **Visual Studio 2022**, builds a `.dll`, and shows a **sample Options UI** (checkbox, dropdown, buttons, friendly text).
 
