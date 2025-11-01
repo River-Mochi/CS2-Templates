@@ -3,11 +3,6 @@
     <Nullable>disable</Nullable>
     <Configurations>Debug;Release</Configurations>
 
-    <!-- Replace with your mod’s versioning -->
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
-    <Version>1.0.0</Version>
-
     <!-- Namespace root -->
     <RootNamespace>YourMod</RootNamespace>
   </PropertyGroup>
