@@ -1,6 +1,6 @@
 ﻿# CS2 Mod Template — Super Simple Starter
 
-This is a tiny, opinionated starter for **Cities: Skylines II** mods.
+This is a tiny, starter for **Cities: Skylines II** mods.
 It compiles cleanly, shows a **sample Options UI** (checkbox, dropdown, buttons, friendly text).
 And has an optional helper file that will wire in an **ECS DOTS system** with a gameplay gate and a one‑shot “after load” hook.
 
