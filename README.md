@@ -74,6 +74,7 @@ MIT — do what you want, just keep the copyright header in the LICENSE file wit
 Have fun & share cool stuff with the community! 🎈
 
 ---
-🧠 **Want more detail?**  
+## Want more detail?  
+
 See the [Full Modding Guide →](./docs/DETAILED_README.md)
 ---
