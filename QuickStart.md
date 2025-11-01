@@ -86,7 +86,9 @@ That’s it. You now have a uniquely named mod.
 - **No Options UI?** Build errors, missing toolchain, or namespace mismatches are the usual suspects.
 - **Log file:** `%LOCALAPPDATA%\Colossal Order\Cities Skylines II\Logs\MyCoolMod.log`
 - 
-- **Still stuck?** Discord: https://discord.gg/HTav7ARPs2
+- **Still stuck?**
+   - More Detailed [Readme](docs/DETAILED_README.md)
+   - Discord: https://discord.gg/HTav7ARPs2
    - Modding Wiki [here](https://cs2.paradoxwikis.com/Options_UI)
 
 Happy modding! 😊
