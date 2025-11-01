@@ -77,7 +77,7 @@ Have fun & share cool stuff with the community! 🎈
 
 ### 📘 More Resources
 
-- ⚡ [Quick Start Guide](./Quickstart.md) — Quick step-by-step setup & build for Sample working Mod in 15 minutes.
+- ⚡ [Quick Start Guide](./QuickStart.md) — Quick step-by-step setup & build for Sample working Mod in 15 minutes.
 - 🧠 [Detailed Modding Guide](./docs/DETAILED_README.md) — full breakdown of systems, settings, and localization in this repo.
 
 ---
