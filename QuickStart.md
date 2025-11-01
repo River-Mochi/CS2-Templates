@@ -75,8 +75,8 @@ That’s it. You now have a uniquely named mod.
 
 ## 7) Shipping / Publishing
 - Keep **LICENSE** (MIT is already set, update copyright year/name)
-- Write a chill **README** (see repo)
-- Publish to Paradox Mods using Visual Studio 2022, just right click on Publishconfiguration.xml
+- Write your own **README** if you like (see repo)
+- Publish to Paradox Mods using Visual Studio 2022, just right click on YourModName (csproj near the top right under Solution)
 
 ---
 
