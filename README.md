@@ -69,6 +69,6 @@ Build → copy happens via the CS2 toolchain (`CSII_TOOLPATH`).
 ---
 
 ## License
-MIT — do what you want, just keep the copyright header in the LICENSE file with the fork repo.
+MIT — do what you want, just keep the copyright header in the LICENSE file with the fork repo. Then your choice, add your username or real name to the top above River-Mochi.
 
 Have fun & share cool stuff with the community! 🎈
