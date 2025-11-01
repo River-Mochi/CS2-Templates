@@ -81,6 +81,7 @@ Have fun & share cool stuff with the community! 🎈
 
 - ⚡ [Quick Start Guide](./QuickStart.md) — Quick step-by-step setup & build for Sample working Mod in 15 minutes.
 - 🧠 [Detailed Modding Guide](./docs/DETAILED_README.md) — full breakdown of systems, settings, and localization in this repo.
+- [Modding Wiki here](https://cs2.paradoxwikis.com/Options_UI)
 - **Support / feedback:** https://discord.gg/HTav7ARPs2
   
 ---
