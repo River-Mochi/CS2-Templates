@@ -166,6 +166,8 @@ After setting the variable, **restart Visual Studio**.
    - do this until you are happy with the Mod
 6. Publish the Mod
    - Edit PublishConfirguration.xml
+   - Note - don't publish this exact sample test mod as it does nothing and will bloat the PDX website :)
+     - if you accidentally do that, I think you can delete it or put your real one over the old one but I've not tried.
    - Right click your *.csproj, select Publish
    - For new mods select PublishNew mod from the dropdown choices.
      - if you do not see dropdown choices, check that you have  `/Properties/PublishProfiles`
