@@ -138,14 +138,15 @@ That’s all “one-shot after load” means: a safe place to run setup exactly 
 
 
 ### License
-MIT — see [LICENSE](https://github.com/River-Mochi/CS2-Templates/blob/main/LICENSE) file. Add your name to the year you started contributing. MIT License means this is free to use, just keep copy of the license file in every fork of this mod.
-Either keep the license file as it is written or add your name to it like below (in your own fork of this repo). 
+MIT — see [LICENSE](https://github.com/River-Mochi/CS2-Templates/blob/main/LICENSE) file. Add your name to the year you started contributing. MIT License means this is free for anyone to use and modify in their own fork later, just keep copy of the license file in every fork of this mod.
+Either keep the license file as it is written or add your name or username to to the toplike below (in your own fork of this repo). 
+This is good to do for any Mod because if you stop playing, then other people can fork the mod, patch it in the future keep it working for all players in the future.
 
 Example at the top of the License file:
 
 ``` MIT License
-Copyright (c) 2025 RiverMochi
-Copyright (c) 2025 YourName (modifications)     
+Copyright (c) 2025 YourName (modifications)    
+Copyright (c) 2025 River-Mochi original repo   
 
 Permission is hereby granted, free of charge, to any person obtaining a copy...
 ```
