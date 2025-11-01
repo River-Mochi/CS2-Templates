@@ -138,21 +138,6 @@ Optional - Using Colossal styles
 - Options not showing: Verify Setting.cs `RegisterInOptionsUI()` is called and the mod is enabled in-game.
 - Locales not applied: in Mod.cs, make sure you called `TryAddLocale(localeId, source)` **before** `RegisterInOptionsUI()`.
 
-### License
-MIT — see [LICENSE](https://github.com/River-Mochi/CS2-Templates/blob/main/LICENSE) file. Add your name to the year you started contributing. MIT License means this is free for anyone to use and modify in their own fork later, just keep copy of the license file in every fork of this mod.
-Either keep the license file as it is written or add your name or username to to the toplike below (in your own fork of this repo). 
-This is good to do for any Mod because if you stop playing, then other people can fork the mod, patch it in the future keep it working for all players in the future.
-
-Example at the top of the License file:
-
-``` MIT License
-Copyright (c) 2025 YourName (modifications)    
-Copyright (c) 2025 River-Mochi original repo   
-
-Permission is hereby granted, free of charge, to any person obtaining a copy...
-```
-- Adding your username (or name) is optional but you have to keep the rest of the License file as is with each fork of this repo per MIT.
-
 
 ----
 ## One-time setup (toolchain)
@@ -163,7 +148,7 @@ The required user environment variable will be set during this process:
 
 After setting the variable, **restart Visual Studio**.
 
-## First Mod
+## First Mod - Make it Yours
 1. Clone & open in VS2022
    VS2022: **File → Clone Repository… → paste your repo URL → Clone**
 2. Open the project
@@ -187,7 +172,19 @@ After setting the variable, **restart Visual Studio**.
        - if you don't have them, just open VS2022 fresh, selecte Create new project, type "cities" into the search, select the Cities Skylines II template
        - you now get the PublishProfiles/  files. Copy them into your existing project.
       
-      
-        
+### License
+MIT — see [LICENSE](https://github.com/River-Mochi/CS2-Templates/blob/main/LICENSE) file. Add your name to the year you started contributing. MIT License means this is free for anyone to use and modify in their own fork later, just keep copy of the license file in every fork of this mod.
+Either keep the license file as it is written or add your name or username to to the toplike below (in your own fork of this repo). 
+This is good to do for any Mod because if you stop playing, then other people can fork the mod, patch it in the future keep it working for all players in the future.
+
+Example at the top of the License file:
+
+``` MIT License
+Copyright (c) 2025 YourName (modifications)    
+Copyright (c) 2025 River-Mochi original repo   
+
+Permission is hereby granted, free of charge, to any person obtaining a copy...
+```
+- Adding your username (or name) is optional but you have to keep the rest of the License file as is with each fork of this repo per MIT.
 
 
