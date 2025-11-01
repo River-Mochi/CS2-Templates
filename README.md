@@ -6,7 +6,7 @@
 - this is not meant to be a full guide as we already have Guides and Wiki for CS2 modding.
 
 ## :bulb: Want a working mod right now?
-- ⚡ [Quick Start Guide](./QuickStart.md) — Quick Start sample mod in 15 minutes.
+- ⚡ [Quick Start Guide](./QuickStart.md) — Quick Start mod in 15 minutes or keep reading below.
 
 ---
 
