@@ -1,5 +1,6 @@
 # CS2-Templates
 CS2 templates: basic files to start a new mod
+- Detailed guide below
 
 ## Your Mod Name
 
