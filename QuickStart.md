@@ -2,7 +2,8 @@
 
 Welcome! This is a tiny starter template for Cities: Skylines II mods. It opens in **Visual Studio 2022**, builds a `.dll`, and shows a **sample Options UI** (checkbox, dropdown, buttons, friendly text).
 
-Need help? **Discord:** https://discord.gg/HTav7ARPs2
+- Need help? Cities Skylines [Modding Discord](https://discord.gg/HTav7ARPs2)
+- Modding Wiki [here](https://cs2.paradoxwikis.com/Options_UI)
 
 ---
 
