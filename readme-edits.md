@@ -1,4 +1,4 @@
-﻿# CS2 Mod Template — Super Simple Starter
+﻿# Super Simple Starter
 
 This is a tiny, starter for **Cities: Skylines II** mods.
 It compiles cleanly, shows a **sample Options UI** (checkbox, dropdown, buttons, friendly text).
