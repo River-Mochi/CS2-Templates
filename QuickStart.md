@@ -43,10 +43,12 @@ That’s it. You now have a uniquely named mod.
 ---
 
 ## 4) Locale (languages)
-English is included in either the Setting.cs file for mods that don't need many user facing strings.
+English is included in either the Setting.cs file for mods that don't need many user-facing strings.
 
 - Option 1: for simple mods where you don't plan to add other language support, you can keep the English dictionary inside Settings.
+  - delete or disable the LocaleEN.cs file.
 - Option 2: use LocaleEN.cs and delete all the Localization in Setting.cs at the bottom.
+  - delete `public class LocaleEN : IDictionarySource` whole section from Setting.cs as it's all in Locale.EN for you
 
 
 ## 5) Build it
