@@ -1,18 +1,18 @@
 // Seting.cs
 // this is a generic Settings file which has many of the standard methods a new mod might need.
 
-using System.Collections.Generic;
-using Colossal;
-using Colossal.IO.AssetDatabase;
-using Game.Input;
-using Game.Modding;
-using Game.Settings;
-using Game.UI;
-using Game.UI.Widgets;
-
 namespace MyModName
 {
-    [FileLocation("ModsSettings/MyModName/MyModName")]
+    using System.Collections.Generic;
+    using Colossal;
+    using Colossal.IO.AssetDatabase;
+    using Game.Input;
+    using Game.Modding;
+    using Game.Settings;
+    using Game.UI;
+    using Game.UI.Widgets;
+    
+    [FileLocation("ModsSettings/MyModName/MyModName")]        // location of saved settings (if a checkbox is on/off, it's saved here)
     [SettingsUIGroupOrder(kButtonGroup, kToggleGroup, kSliderGroup, kDropdownGroup, kKeybindingGroup)]
     [SettingsUIShowGroupName(kButtonGroup, kToggleGroup, kSliderGroup, kDropdownGroup, kKeybindingGroup)]
     [SettingsUIKeyboardAction(Mod.kVectorActionName, ActionType.Vector2, usages: new string[] { Usages.kMenuUsage, "TestUsage" }, interactions: new string[] { "UIButton" }, processors: new string[] { "ScaleVector2(x=100,y=100)" })]
