@@ -4,7 +4,7 @@ This is a tiny starter for **Cities: Skylines II** mods.
 It compiles cleanly, shows a **sample Options UI** (checkbox, dropdown, buttons, friendly text).
 And has an optional helper file that will wire in an **ECS DOTS system** with a gameplay gate and a one‑shot “after load” hook.
 
-## Want a working mod right now?
+## :bulb: Want a working mod right now?
 - ⚡ [Quick Start Guide](./QuickStart.md) — Quick Start sample mod in 15 minutes.
 
 ---
