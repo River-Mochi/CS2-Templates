@@ -1,6 +1,6 @@
-﻿# Super Simple Starter
+﻿# Simple Starter
 
-This is a tiny, starter for **Cities: Skylines II** mods.
+This is a tiny starter for **Cities: Skylines II** mods.
 It compiles cleanly, shows a **sample Options UI** (checkbox, dropdown, buttons, friendly text).
 And has an optional helper file that will wire in an **ECS DOTS system** with a gameplay gate and a one‑shot “after load” hook.
 
@@ -9,7 +9,7 @@ And has an optional helper file that will wire in an **ECS DOTS system** with a 
 
 ---
 
-## What you get
+## :books: What you get
 - **Mod.cs** entry that sets up logging, settings, and a test system.
 - **Settings UI** with real Game.Settings attributes (checkbox, dropdown, buttons, multiline text).
 - **LocaleEN.cs** so you keep strings out of code.
