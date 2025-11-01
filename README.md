@@ -77,4 +77,5 @@ Have fun & share cool stuff with the community! 🎈
 ## Want more detail?  
 
 See the [Full Modding Guide →](./docs/DETAILED_README.md)
+
 ---
