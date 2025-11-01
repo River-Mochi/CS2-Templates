@@ -16,11 +16,13 @@ Starter template for a Cities: Skylines II mod using the built-in Modding Toolch
 
 - Visual Studio 2022 (or Rider)
 - Cities: Skylines II installed
-- **Modding Toolchain** installed (Colossal)
-- Environment variable **`CSII_TOOLPATH`** pointing to the Toolchain folder  
-  (the `.csproj` file imports `Mod.props` / `Mod.targets` from there).
+- **Modding Toolchain** installed from in-game (explained more later)
+  - Environment variable **`CSII_TOOLPATH`** pointing to the Toolchain folder  (default is usually correct nothing you need to do)
+  - the `.csproj` file imports `Mod.props` / `Mod.targets` from there.
+  - don't worry, it's given to you as part of the Colossal templates and works if you never changed default locations.
+  - do not alter these two files and for the most part your mod will compile.
 
-> If you don’t have the toolchain, install it via the in-game Options > Mods before doing anything else.
+> If you don’t have the toolchain, install it FIRST via the in-game Options > Mods before doing anything else.
 
 ## Folder Layout
 
@@ -30,7 +32,7 @@ YourMod/
 ├─ Mod.cs
 ├─ GatedSystem.cs             # optional helper (gameplay gating + one-shot hook)
 ├─ Systems/
-│  └─ ExampleSystem.cs            # sample system that inherits the helper
+│  └─ ExampleSystem.cs        # sample system that inherits the helper
 ├─ Settings/
 │  └─ Setting.cs
 ├─ Locale/
