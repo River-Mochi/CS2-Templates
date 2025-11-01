@@ -8,13 +8,14 @@ Welcome! This is a tiny starter template for Cities: Skylines II mods. It opens 
 ---
 
 ## 1) Prereqs (once)
-a. Windows + free Visual Studio 2022
-b. Assumes you downloaded all modding toolsets from in-game Options → Mods (this takes a bit time)
-c. CS2 Modding Toolchain gets installed as part of "b." (sets the `CSII_TOOLPATH` user env var).  
+
+- **a.** Windows + free Visual Studio 2022  
+- **b.** Assumes you downloaded all modding toolsets from **in-game** `Options → Mods` (this takes a bit)  
+- **c.** CS2 Modding Toolchain gets installed as part of **b.** (sets the `CSII_TOOLPATH` user env var).  
   If you’ve already built other CS2 mods, you’re probably set.
 
-> The template uses `Mod.props` / `Mod.targets` from the toolchain via `$(CSII_TOOLPATH)`.
-Critical that your *.csproj file points to them.
+> The template uses `Mod.props` / `Mod.targets` from the toolchain via `$(CSII_TOOLPATH)`.  
+> **Critical:** your `.csproj` file must point to them.
 
 ---
 
