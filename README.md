@@ -115,15 +115,14 @@ Think of two kinds of code:
     - Get this by overriding OnGameLoadingComplete().
 
 Timeline (mental model)
-Mod that runs one-time after load.
+Example Mod that runs one-time after load.
 
 1. **Mod.OnLoad** — your mod is loaded in the menu (no city yet).
 2. **OnGamePreload** — loading screen (stuff is still spawning).
 3. **OnGameLoadingComplete** — city ready → run your one-shot helper setup.
 4. **OnUpdate** — ticks every frame while playing.
 
-That’s all “one-shot after load” means: a safe place to run setup exactly once per city load, instead of doing it repeatedly in the per-frame loop.
-
+“One-shot after load” means: a safe place to run setup exactly once per city load, instead of doing it repeatedly in the per-frame loop.
 
 ### Style & Conventions
 
@@ -166,30 +165,29 @@ After setting the variable, **restart Visual Studio**.
 
 ## First Mod
 1. Clone & open in VS2022
-2.   VS2022: **File → Clone Repository… → paste your repo URL → Clone**
-3. Open the project
-
----
-
-
-
----
-
-
-## 3. Rename it to your mod
-
-### Project name & namespace
-
-In **Solution Explorer**, rename the folder `YourMod` to your real mod name (optional).  
-Right-click the project → **Edit Project File** → change anything needed in the  YourMod.csproj file.
-
----
-
-## 4. First Build
-
-**Restore & build**  
-VS2022 will auto-restore dependencies. Build > Clean > Rebuild Solution
-In Output, you  will  see the game/Unity references resolve via `Mod.props` and `Mod.targets`.
-
+   VS2022: **File → Clone Repository… → paste your repo URL → Clone**
+2. Open the project
+3. Rename it to your mod
+   - To change project name & namespace
+   - In **Solution Explorer**, rename the folder `YourMod` to your real mod name (optional).
+   - Right-click the project → **Edit Project File** → change anything needed in the  YourMod.csproj file.
+4. First Build
+   - **Restore & build**
+   - VS2022 will auto-restore dependencies. Build > Clean > Rebuild Solution
+   - In Output, you  will  see the game/Unity references resolve via `Mod.props` and `Mod.targets`.
+5. Mod will build and put copy at
+   - C:\Users\YourName\AppData\LocalLow\Colossal Order\Cities Skylines II\Mods\
+   - do this until you are happy with the Mod
+6. Publish the Mod
+   - Edit PublishConfirguration.xml
+   - Right click your *.csproj, select Publish
+   - For new mods select PublishNew mod from the dropdown choices.
+     - if you do not see dropdown choices, check that you have  `/Properties/PublishProfiles`
+       - there are 3 files in PublishProfiles/ that you receive from the Cities project template.
+       - if you don't have them, just open VS2022 fresh, selecte Create new project, type "cities" into the search, select the Cities Skylines II template
+       - you now get the PublishProfiles/  files. Copy them into your existing project.
+      
+      
+        
 
 
