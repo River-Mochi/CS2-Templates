@@ -10,7 +10,7 @@ Starter template for a Cities: Skylines II mod using the built-in Modding Toolch
 - `Settings/Setting.cs` wired for Options UI
 - `Locale/LocaleEN.cs` ready for localization
 - Example system under `Systems/ExampleSystem.cs`
-- Project style aligned with Colossal conventions (`.editorconfig`)
+- Optional: project style aligned with Colossal conventions (set up `.editorconfig` to alert you if you use non-colossal naming conventions)
 
 ## Requirements
 
@@ -32,11 +32,11 @@ YourMod/
 ├─ Mod.cs
 ├─ GatedSystem.cs             # optional helper (gameplay gating + one-shot hook)
 ├─ Systems/
-│  └─ ExampleSystem.cs        # sample system that inherits the helper
+│  └─ ExampleSystem.cs        # sample system that does the "main thing" you made this mod for
 ├─ Settings/
 │  └─ Setting.cs
 ├─ Locale/
-│  └─ LocaleEN.cs
+│  └─ LocaleEN.cs            # English strings to display in the Options menu
 ├─ .editorconfig
 ├─ .gitattributes
 ├─ .gitignore
@@ -59,7 +59,7 @@ YourMod/
 5. Update `Locale/LocaleEN.cs`:
    - Provide labels/descriptions for your options using the built-in localization keys.
 6. **Build** the solution:
-   - If `CSII_TOOLPATH` is set correctly, the toolchain will handle references & publishing.
+   - If `CSII_TOOLPATH` is set correctly, the toolchain will handle references & publishing. (nothing to worry about if you just take defaults)
 7. **Launch the game**, enable your mod in **Content Manager**, and open **Options** to see your UI.
 
 Register it in `Mod.OnLoad`:
@@ -126,10 +126,11 @@ That’s all “one-shot after load” means: a safe place to run setup exactly 
 
 
 ### Style & Conventions
+
+Optional - Using Colossal styles
 - Private instance fields: `m_FieldName`
 - Private static fields: `s_FieldName`
 - Constants: `kName`
-- Put `using` directives inside the namespace block (optional, but many Colossal game files do this).
 - .editorconfig enforces these naming rules (remove or change it if you like different styles)
 
 ### Troubleshooting
@@ -137,7 +138,6 @@ That’s all “one-shot after load” means: a safe place to run setup exactly 
 - Toolchain not found: Check csproj file, Ensure `CSII_TOOLPATH` points to the Modding Toolchain directory.
 - Options not showing: Verify Setting.cs `RegisterInOptionsUI()` is called and the mod is enabled in-game.
 - Locales not applied: in Mod.cs, make sure you called `TryAddLocale(localeId, source)` **before** `RegisterInOptionsUI()`.
-
 
 ### License
 MIT — see [LICENSE](https://github.com/River-Mochi/CS2-Templates/blob/main/LICENSE) file. Add your name to the year you started contributing. MIT License means this is free for anyone to use and modify in their own fork later, just keep copy of the license file in every fork of this mod.
@@ -156,44 +156,40 @@ Permission is hereby granted, free of charge, to any person obtaining a copy...
 
 
 ----
-## 1. Clone & open in VS2022
-
-VS2022: **File → Clone Repository… → paste your repo URL → Clone**
-
----
-
-## 2. Open the project
-
-In Visual Studio, open `YourMod/YourMod.csproj`  
-*(There’s no `.sln` on purpose; a single-project `.csproj` is fine.)*
-
----
-
 ## One-time setup (toolchain)
 
-Install the **CS2 Modding Toolchain** (if you haven’t yet) and set the user environment variable:
-
-| Variable name | Value |
-|----------------|--------|
-| `CSII_TOOLPATH` | Folder where the Toolchain put `Mod.props` and `Mod.targets` (e.g. `C:\Colossal\CS2\ModdingToolchain`) |
+Install the **CS2 Modding Toolchain** (if you haven’t yet)  from the In-game mod install.
+The required user environment variable will be set during this process:
+`CSII_TOOLPATH` - folder where the Toolchain put `Mod.props` and `Mod.targets` (e.g. `C:\Colossal\CS2\ModdingToolchain`) |
 
 After setting the variable, **restart Visual Studio**.
 
----
-
-## 3. First Build
-
-**Restore & build**  
-Visual Studio will auto-restore dependencies. Build with **Ctrl + Shift + B**.
-
-You should see the game/Unity references resolve via `Mod.props` and `Mod.targets`.
+## First Mod
+1. Clone & open in VS2022
+2.   VS2022: **File → Clone Repository… → paste your repo URL → Clone**
+3. Open the project
 
 ---
 
-## Rename it to your mod
+
+
+---
+
+
+## 3. Rename it to your mod
 
 ### Project name & namespace
 
 In **Solution Explorer**, rename the folder `YourMod` to your real mod name (optional).  
 Right-click the project → **Edit Project File** → change anything needed in the  YourMod.csproj file.
+
+---
+
+## 4. First Build
+
+**Restore & build**  
+VS2022 will auto-restore dependencies. Build > Clean > Rebuild Solution
+In Output, you  will  see the game/Unity references resolve via `Mod.props` and `Mod.targets`.
+
+
 
