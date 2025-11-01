@@ -154,68 +154,44 @@ Permission is hereby granted, free of charge, to any person obtaining a copy...
 
 
 ----
-1. Clone & open in VS2022
+## 1. Clone & open in VS2022
 
-  VS2022: File → Clone Repository… → paste your repo URL → Clone.
+VS2022: **File → Clone Repository… → paste your repo URL → Clone**
 
+---
 
-2. Open the project
-In VS: open YourMod/YourMod.csproj (there’s no .sln on purpose; a single-project csproj is fine).
+## 2. Open the project
 
-One-time setup (toolchain)
-Install the CS2 Modding Toolchain (if you haven’t yet) and set the user environment variable:
-Variable name: CSII_TOOLPATH
-Value: the folder where the Toolchain put Mod.props and Mod.targets (e.g. C:\Colossal\CS2\ModdingToolchain)
+In Visual Studio, open `YourMod/YourMod.csproj`  
+*(There’s no `.sln` on purpose; a single-project `.csproj` is fine.)*
 
-3. Restart VS after setting the variable.
+---
 
-    First Build
-    Restore & build
+## One-time setup (toolchain)
 
-    VS will auto-restore. Build with Ctrl+Shift+B.
+Install the **CS2 Modding Toolchain** (if you haven’t yet) and set the user environment variable:
 
-You should see the game/Unity references resolve via Mod.props/Mod.targets.
+| Variable name | Value |
+|----------------|--------|
+| `CSII_TOOLPATH` | Folder where the Toolchain put `Mod.props` and `Mod.targets` (e.g. `C:\Colossal\CS2\ModdingToolchain`) |
 
-Rename it to your mod
+After setting the variable, **restart Visual Studio**.
 
-Project name & namespace
+---
 
-In Solution Explorer, rename folder YourMod to your real mod name (optional).
+## 3. First Build
 
-Right-click the project → Edit Project File:
+**Restore & build**  
+Visual Studio will auto-restore dependencies. Build with **Ctrl + Shift + B**.
 
-Change <AssemblyName> and <RootNamespace> from YourMod to your namespace (if you want the defaults updated).
+You should see the game/Unity references resolve via `Mod.props` and `Mod.targets`.
 
-In any source file, place cursor on namespace YourMod → Ctrl+R, R (Rename) → enter your namespace → Apply to entire solution.
+---
 
-Update mod metadata
+## Rename it to your mod
 
-In Mod.cs: set Name, VersionShort, and your logger name string.
+### Project name & namespace
 
-In Setting.cs: keep or remove sample UI you don’t need.
+In **Solution Explorer**, rename the folder `YourMod` to your real mod name (optional).  
+Right-click the project → **Edit Project File** → change anything needed in the  YourMod.csproj file.
 
-In Locale/LocaleEN.cs: update strings (labels/descriptions); the attributes in Setting.cs refer to these.
-
-Enable your systems
-
-Wire systems into the update loop
-In Mod.cs → OnLoad, enable systems you want:
-
-updateSystem.UpdateAt<ExampleSystem>(SystemUpdatePhase.UIUpdate);
-
-
-(Keep using the gated system base so it only runs during gameplay.)
-
-Build artifacts
-
-Build / Publish
-
-A normal Build produces the DLL in bin\<Config>\.
-
-If you later add a Publish Profile (like in your other repo), you can publish a ready-to-drop package. The Modding toolchain also supports pack targets; you can add those later.
-
-if you hit anything odd after cloning (missing refs, build fails), the usual culprits are:
-
-CSII_TOOLPATH not set or pointing at the wrong folder.
-
-VS not restarted after adding the environment variable.
