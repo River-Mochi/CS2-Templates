@@ -22,24 +22,28 @@
 
 ## Why dropdowns get greyed out
 
-CS2 has **two** dropdown mechanisms:
+CS2 exposes two separate mechanisms:
 
-1) **Simple Enum Dropdown**  
-   If your property type is an `enum`, the options UI auto-generates a dropdown from the enum values. **You must not** add `[SettingsUIDropdown]` here.
+1. **Simple Enum Dropdown**  
+   - Property’s type is an `enum`.  
+   - UI builds the items automatically from the enum members.  
+   - **You must NOT add** `[SettingsUIDropdown]` to this property.
 
-2) **Custom Dropdown**  
-   If your property is **not** an enum (string/int/etc.), you add `[SettingsUIDropdown(typeof(Setting), nameof(GetItems))]` and implement a method returning `DropdownItem<T>[]`.
+2. **Custom Dropdown**  
+   - Property’s type is **not** an enum (commonly `string` or `int`).  
+   - You **do** add `[SettingsUIDropdown(typeof(Setting), nameof(GetItems))]`.  
+   - You implement `DropdownItem<T>[] GetItems()` to provide values and display text.
 
-**If you put `[SettingsUIDropdown]` on an enum property, the control appears but is disabled.** That’s the classic “greyed-out dropdown” bug.
+**Greyed-out control happens when you combine enum + `[SettingsUIDropdown]`.** Remove the attribute (Method A), or change the property to a non-enum and implement a provider (Method B).
 
 ---
 
 ## Method A — Simple Enum (no attribute)
 
 **Use when:** static options map 1:1 to an enum. No dynamic list needed.
-
 **Pros:** simplest wiring, less code.  
 **Cons:** items are fixed; item display is the enum member name (unless you localize the *option label/description*, not the individual enum members).
+ You don’t control per-item localized names (except by switching to Method B).
 
 ### Setting.cs (excerpt)
 
@@ -77,6 +81,37 @@ namespace YourModNS
     }
 }
 
+
+---
+namespace YourModNS
+{
+    using System.Collections.Generic;
+    using Colossal; // IDictionarySource
+
+    public sealed class LocaleEN : IDictionarySource
+    {
+        private readonly Setting m_Setting;
+        public LocaleEN(Setting setting) { m_Setting = setting; }
+
+        public IEnumerable<KeyValuePair<string, string>> ReadEntries(
+            IList<IDictionaryEntryError> errors, Dictionary<string, int> indexCounts)
+        {
+            return new Dictionary<string, string>
+            {
+                { m_Setting.GetSettingsLocaleID(), "Your Mod" },
+                { m_Setting.GetOptionTabLocaleID(Setting.kTabMain), "Main" },
+                { m_Setting.GetOptionGroupLocaleID(Setting.kGroupLook), "Look" },
+
+                { m_Setting.GetOptionLabelLocaleID(nameof(Setting.ColorPreset)), "Color preset" },
+                { m_Setting.GetOptionDescLocaleID(nameof(Setting.ColorPreset)),  "Pick a color preset." },
+            };
+        }
+
+        public void Unload() { }
+    }
+}
+
+---
 
 namespace YourModNS
 {
