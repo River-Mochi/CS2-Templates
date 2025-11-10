@@ -376,7 +376,26 @@ public DropdownItem<string>[] GetThemeItems() => new[]
 { "YourMod.Theme.Dark",  "Dark" },
 { "YourMod.Theme.Light", "Light" },
 
+---
 
+// Method A: simple enum
+public enum Difficulty { Easy, Normal, Hard }
+
+[SettingsUISection("Main", "Gameplay")]
+public Difficulty GameDifficulty { get; set; } = Difficulty.Normal;
+
+// Method B: custom dropdown (string)
+[SettingsUISection("Main", "Look")]
+[SettingsUIDropdown(typeof(Setting), nameof(GetThemeItems))]
+public string Theme { get; set; } = "YourMod.Theme.Dark";
+
+public DropdownItem<string>[] GetThemeItems() => new[]
+{
+    new DropdownItem<string> { value = "YourMod.Theme.Dark",  displayName = LocalizedString.Id("YourMod.Theme.Dark")  },
+    new DropdownItem<string> { value = "YourMod.Theme.Light", displayName = LocalizedString.Id("YourMod.Theme.Light") },
+};
+
+---
 
   Troubleshooting checklist
 
