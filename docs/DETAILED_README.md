@@ -174,6 +174,129 @@ After setting the variable, **restart Visual Studio**.
        - there are 3 files in PublishProfiles/ that you receive from the Cities project template.
        - if you don't have them, just open VS2022 fresh, selecte Create new project, type "cities" into the search, select the Cities Skylines II template
        - you now get the PublishProfiles/  files. Copy them into your existing project.
+
+
+to make Dropdown list
+Simple enum dropdown (no attribute):
+public SomeEnum EnumDropdown { get; set; } = SomeEnum.Value1;
+CS2 auto-builds the list from the enum. Works only for enums.
+
+Custom dropdown ([SettingsUIDropdown]):
+You can use any type T as long as you return DropdownItem<T>[] and the type is serializable by the options system (practically: primitives like int, float, string, and your own types that can be serialized). Example patterns that are valid:
+DropdownItem<string>[] with public string MyChoice { get; set; }
+DropdownItem<int>[] with public int MyChoice { get; set; }
+DropdownItem<MyStruct>[] with public MyStruct MyChoice { get; set; } (only if your struct is serializable and comparable)
+It doesn’t need to be a string—int, float, or another serializable type works fine. For your case, sticking with the simple enum dropdown (no attribute) is the cleanest and avoids the greying issue. If you ever need custom display names or dynamic lists, switch to [SettingsUIDropdown] and pick whatever T fits.
+
+simple example `public SomeEnum EnumDropdown { get; set; } = SomeEnum.Value1;`
+more complex example 
+[SettingsUIDropdown(typeof(MyModSetting), nameof(GetStringDropdownItems))]
+public string StringDropdown { get; set; } = "First";
+
+public DropdownItem<string>[] GetStringDropdownItems()
+{
+    var items = new DropdownItem<string>[]
+    {
+        new DropdownItem<string>
+        {
+            value = "First",
+            displayName = GetOptionLabelLocaleID("First"),
+        },
+        new DropdownItem<string>
+        {
+            value = "Second",
+            displayName = GetOptionLabelLocaleID("Second"),
+        },
+        new DropdownItem<string>
+        {
+            value = "Third",
+            displayName = GetOptionLabelLocaleID("Third"),
+        },
+    };
+
+    return items;
+}
+
+
+Example with plain strings
+// In Setting.cs
+namespace MyModNamespace
+{
+    using Game.Settings;            // SettingsUIDropdown
+    using Game.UI.Widgets;          // DropdownItem<T>
+
+    public sealed class MyModSetting : ModSetting
+    {
+        [SettingsUIDropdown(typeof(MyModSetting), nameof(GetStringDropdownItems))]
+        public string StringDropdown { get; set; } = "First";
+
+        public DropdownItem<string>[] GetStringDropdownItems()
+        {
+            return new[]
+            {
+                new DropdownItem<string> { value = "First",  displayName = "First"  },
+                new DropdownItem<string> { value = "Second", displayName = "Second" },
+                new DropdownItem<string> { value = "Third",  displayName = "Third"  },
+            };
+        }
+
+        // ... (rest of your setting class)
+    }
+}
+
+Same example but but using localization
+// In Setting.cs  localized version
+namespace MyModNamespace
+{
+    using Game.Settings;
+    using Game.UI.Localization;     // LocalizedString
+    using Game.UI.Widgets;
+
+    public sealed class MyModSetting : ModSetting
+    {
+        [SettingsUIDropdown(typeof(MyModSetting), nameof(GetStringDropdownItems))]
+        public string StringDropdown { get; set; } = "First";
+
+        public DropdownItem<string>[] GetStringDropdownItems()
+        {
+            return new[]
+            {
+                new DropdownItem<string> { value = "First",  displayName = LocalizedString.Id("MyMod.Dropdown.First")  },
+                new DropdownItem<string> { value = "Second", displayName = LocalizedString.Id("MyMod.Dropdown.Second") },
+                new DropdownItem<string> { value = "Third",  displayName = LocalizedString.Id("MyMod.Dropdown.Third")  },
+            };
+        }
+
+        // ... (rest of your setting class)
+    }
+}
+
+Sample LocaleEN.cs file for the Dropdown
+// LocaleEN.cs
+namespace MyModNamespace
+{
+    using System.Collections.Generic;
+    using Colossal; // IDictionarySource
+
+    public sealed class LocaleEN : IDictionarySource
+    {
+        public IEnumerable<KeyValuePair<string, string>> ReadEntries(
+            IList<IDictionaryEntryError> errors,
+            Dictionary<string, int> indexCounts)
+        {
+            return new Dictionary<string, string>
+            {
+                // Dropdown item texts
+                { "MyMod.Dropdown.First",  "First"  },
+                { "MyMod.Dropdown.Second", "Second" },
+                { "MyMod.Dropdown.Third",  "Third"  },
+            };
+        }
+
+        public void Unload() { }
+    }
+}
+
       
 ### License
 MIT — see [LICENSE](https://github.com/River-Mochi/CS2-Templates/blob/main/LICENSE) file. Add your name to the year you started contributing. MIT License means this is free for anyone to use and modify in their own fork later, just keep copy of the license file in every fork of this mod.
