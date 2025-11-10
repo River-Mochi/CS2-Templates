@@ -188,8 +188,8 @@ DropdownItem<int>[] with public int MyChoice { get; set; }
 DropdownItem<MyStruct>[] with public MyStruct MyChoice { get; set; } (only if your struct is serializable and comparable)
 It doesn’t need to be a string—int, float, or another serializable type works fine. For your case, sticking with the simple enum dropdown (no attribute) is the cleanest and avoids the greying issue. If you ever need custom display names or dynamic lists, switch to [SettingsUIDropdown] and pick whatever T fits.
 
-simple example `public SomeEnum EnumDropdown { get; set; } = SomeEnum.Value1;`
-more complex example 
+Simple example `public SomeEnum EnumDropdown { get; set; } = SomeEnum.Value1;`
+More complex example 
 [SettingsUIDropdown(typeof(MyModSetting), nameof(GetStringDropdownItems))]
 public string StringDropdown { get; set; } = "First";
 
@@ -249,7 +249,7 @@ Same example but but using localization
 namespace MyModNamespace
 {
     using Game.Settings;
-    using Game.UI.Localization;     // LocalizedString
+    using Colossal.Localization;     // LocalizedString
     using Game.UI.Widgets;
 
     public sealed class MyModSetting : ModSetting
