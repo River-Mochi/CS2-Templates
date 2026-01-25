@@ -1,7 +1,6 @@
 # PrefabSystem Source of Truth (Cities: Skylines II Modding)
 
 This document explains **what “source of truth” means for prefab values** in Cities: Skylines II (CS2), and how to avoid the most common baseline mistakes when changing capacities, workers, rates, fleets, storage, etc.
-
 It’s written for C# / ECS modders using the **Colossal Order (CO) API**.
 
 ---
