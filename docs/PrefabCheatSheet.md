@@ -40,7 +40,7 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 
 | ECS component | Key fields (scaled values you write) |
 |---|---|
-| `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_HearseCapacity`, `m_StorageCapacity`, `m_LongTermStorage` |
+| `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_HearseCapacity`, `m_StorageCapacity` |
 | `Game.Prefabs.WorkplaceData` | `m_MaxWorkers`, `m_MinimumWorkersLimit` |
 
 ---
