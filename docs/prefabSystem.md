@@ -205,7 +205,7 @@ So scaling workers on the prefab may require a refresh trigger (rebuild / upgrad
 |---|---|---|
 | processing/storage/fleet | `DeathcareFacilityData` on prefab | often yes / quickly visible |
 | workers max/min | `WorkplaceData` on prefab | **often needs refresh** (rebuild/upgrade/extension) |
-| runtime worker provider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
+| runtime worker provider | `WorkProvider` on instances | yes, risky (compatibility + invariants) |
 
 ---
 
