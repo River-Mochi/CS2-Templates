@@ -46,7 +46,7 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 ---
 
 ## Why workers are “special”
-Worker limits often end up in **runtime instance components** (example: `Game.Companies.WorkProvider.m_MaxWorkers`) that don’t always hot-update when you edit the prefab.
+Worker limits are **runtime instance components** (example: `Game.Companies.WorkProvider.m_MaxWorkers`) that don’t always hot-update when you edit the prefab.
 
 **So:**
 - editing `WorkplaceData` is correct and safe
