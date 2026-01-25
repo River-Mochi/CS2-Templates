@@ -31,7 +31,7 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 
 | Authoring component (PrefabBase) | Key fields (vanilla baseline) |
 |---|---|
-| `Game.Prefabs.DeathcareFacility` | `m_ProcessingRate`, `m_HearseCapacity`, `m_StorageCapacity`, `m_LongTermStorage` |
+| `Game.Prefabs.DeathcareFacility` | `m_ProcessingRate`, `m_HearseCapacity`, `m_StorageCapacity` |
 | `Game.Prefabs.Workplace` | `m_Workplaces`, `m_MinimumWorkersLimit` |
 
 ---
