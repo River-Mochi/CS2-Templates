@@ -179,6 +179,17 @@ float scaled = baseRate * scalar;
 ```
 
 ---
+### Derived runtime state (instance-side, cached)
+Some simulation values are stored on *instance entities* as runtime components.  
+These values may be **computed/cached** from prefab data and saved into the savegame, so they might **not update immediately** when you change prefab values.
+
+**Example: Workers**
+- Prefab authoring (baseline): `Game.Prefabs.Workplace` (`m_Workplaces`, `m_MinimumWorkersLimit`)
+- Prefab ECS data (what mods often write): `Game.Prefabs.WorkplaceData` (`m_MaxWorkers`, `m_MinimumWorkersLimit`)
+- Instance runtime state (what simulation may use): `Game.Companies.WorkProvider` (`m_MaxWorkers`) — **serializable per instance**
+
+`WorkProvider` implements `ISerializable` and writes/reads `m_MaxWorkers`, meaning existing buildings can carry worker limits as persisted runtime state.  
+So scaling workers on the prefab may require a refresh trigger (rebuild / upgrade / extension change) to recompute instance-side values.
 
 ## Quick reference tables
 
