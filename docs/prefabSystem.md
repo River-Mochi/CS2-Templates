@@ -198,5 +198,5 @@ float scaled = baseRate * scalar;
 
 ---
 
-## Tiny wording you can reuse in your mod UI
-> Worker limits are partially cached on existing buildings. After changing worker scaling, rebuild the building or toggle an upgrade/extension to refresh. Restarting the game usually won’t refresh worker limits.
+## Warnings to tell players for runtime components
+> Worker limits are partially cached on existing buildings. After changing worker scaling, rebuild the building or add/remove an upgrade/extension to refresh. Restarting the game usually won’t refresh runtime component limits.
