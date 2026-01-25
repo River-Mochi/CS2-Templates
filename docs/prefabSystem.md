@@ -1,6 +1,6 @@
 # PrefabSystem Source of Truth (Cities: Skylines II Modding)
 
-This document explains **what “source of truth” means for prefab values** in Cities: Skylines II (CS2), and how to avoid the most common baseline mistakes when changing capacities, workers, rates, fleets, storage, etc.
+This document explains **what “source of truth” means for prefab values** in Cities: Skylines II (CS2), and how to avoid common baseline mistakes when changing capacities, workers, rates, fleets, storage, etc.
 It’s written for C# / ECS modders using the **Colossal Order (CO) API**.
 
 ---
@@ -24,9 +24,7 @@ CS2 has multiple layers of data that look similar but mean different things:
 
 A lot of mod bugs come from accidentally using the wrong layer as “baseline”, causing:
 - compounding scaling (`scaled = scaled * scalar` repeatedly),
-- incorrect restores,
-- incompatibilities with other mods,
-- “vanilla baseline” drifting over time.
+- incorrect restores, incompatibilities with other mods, “vanilla baseline” drifting over time.
 
 ---
 
@@ -39,7 +37,7 @@ A lot of mod bugs come from accidentally using the wrong layer as “baseline”
 
 ---
 
-## The 3 layers (the mental model)
+## The 3 layers (mental model)
 
 ### 1) Authoring prefab asset (true baseline)
 **Source-of-truth for “vanilla defaults”.**
