@@ -198,5 +198,5 @@ float scaled = baseRate * scalar;
 
 ---
 
-## Warnings to tell players for runtime components
+## Warnings for runtime components
 > Worker limits are partially cached on existing buildings. After changing worker scaling, rebuild the building or add/remove an upgrade/extension to refresh. Restarting the game usually won’t refresh runtime component limits.
