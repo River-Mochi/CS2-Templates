@@ -94,7 +94,7 @@ Important:
 - Changing **workers** often needs a “refresh” (rebuild, upgrade, add/remove extension) before the building behaves like it updated.
 - Restarting the game usually does **not** force that refresh.
 
-### What’s happening conceptually
+### What’s happening
 
 Some values are read from **prefab data** by simulation systems frequently (or affect newly spawned behavior quickly).
 Examples: processing rate, storage capacity, hearse capacity.
@@ -104,8 +104,8 @@ Workers are often represented by instance-side systems that compute or cache a r
 Existing buildings may not re-run the “recompute my workforce limit” path just because you edited the prefab.
 
 ### Practical takeaway
-If your mod scales worker counts:
-- **Best practice:** write scaled worker values onto the prefab (`WorkplaceData`), but tell players:
+Example, if the mod scales worker counts:
+- **Best practice:** write scaled worker values onto the prefab (`WorkplaceData`), but:
   - Existing buildings might not fully update until a refresh event:
     - rebuild the building, or
     - add/remove an extension, or
@@ -141,12 +141,12 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
 }
 ```
 
-### Step 3 — If touching workers, include a refresh note or a controlled restore strategy
+### Step 3 — If altering workers, include a refresh note or a controlled restore strategy
 If you scale workers, it’s good to:
 - store what you applied (marker component), and
 - only restore if the current values still match your marker (prevents stomping another mod’s changes).
 
-This is exactly why marker components (like your `MHWorkplaceMarker`) exist.
+This is exactly why marker components exist.
 
 ---
 
