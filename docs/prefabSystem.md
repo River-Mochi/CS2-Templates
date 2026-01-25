@@ -23,7 +23,7 @@ In CS2 you will run into **three** layers that *sound* similar but behave differ
   PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
   if (prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase)) { ... }
   ```
-- **This is what you should treat as “true vanilla baseline.”**
+- **What to treat as “true vanilla baseline.”**
 
 3) **Instance Entity** (the placed building / vehicle / citizen in the world)
 - Has `PrefabRef` pointing at the prefab entity.
@@ -57,7 +57,6 @@ Examples:
 
 **`Game.Prefabs.DeathcareFacility` (authoring)**
 - `m_ProcessingRate`
-- `m_HearseCapacity`
 - `m_StorageCapacity`
 - `m_LongTermStorage`
 
@@ -70,7 +69,6 @@ These are the ECS components you typically write to when scaling:
 
 **`Game.Prefabs.DeathcareFacilityData`**
 - `m_ProcessingRate`
-- `m_HearseCapacity`
 - `m_StorageCapacity`
 - `m_LongTermStorage`
 
@@ -160,10 +158,7 @@ var baseData = dcLookup[prefab]; // might already be modified!
 var scaled = baseData.m_ProcessingRate * scalar;
 ```
 
-Why it fails:
-- If another mod already changed `DeathcareFacilityData`, you double-scale.
-- “Restore defaults” restores to an already-modified value.
-
+Wh
 ### RIGHT baseline
 ```csharp
 // RIGHT: baseline from PrefabBase authoring
@@ -201,7 +196,7 @@ So scaling workers on the prefab may require a refresh trigger (rebuild / upgrad
 | Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
 
 ### “Applies immediately?” rule of thumb
-| What you change | Where you usually write | Applies to existing buildings instantly? |
+| What to change | Where to usually write | Applies to existing buildings instantly? |
 |---|---|---|
 | processing/storage/fleet | `DeathcareFacilityData` on prefab | often yes / quickly visible |
 | workers max/min | `WorkplaceData` on prefab | **often needs refresh** (rebuild/upgrade/extension) |
