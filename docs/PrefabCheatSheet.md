@@ -72,6 +72,6 @@ var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 Only if you fully understand:
 - which systems read them, what caches exist, what invariant you might violate
 - Consider: mutating runtime components that are calculated by the game is riskier with side effects.
-- In the example of max workers, asking the player to rebuild the building to refresh it maybe be easier and much safer.
+  - In the example of max workers, asking the player to rebuild the building to refresh it maybe be easier and much safer.
 
 If you don’t, stick to prefab `*Data` + give players refresh instructions.
