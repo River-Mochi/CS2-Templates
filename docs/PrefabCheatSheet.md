@@ -74,4 +74,4 @@ Only if you fully understand:
 - what caches exist
 - what invariant you might violate
 
-If you don’t, stick to prefab `*Data` + player refresh guidance.
+If you don’t, stick to prefab `*Data` + give players refresh instructions.
