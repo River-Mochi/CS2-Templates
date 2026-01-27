@@ -1,6 +1,6 @@
 # PrefabSystem “Source of Truth” in Cities: Skylines II (CO API)
 
-This note is for CS2 modders who change **capacities / rates / worker counts** and want the results to be:
+This note is for CS2 modders who change things like **capacities / rates / worker counts** and want the results to be:
 - **Correct** (true vanilla baselines)
 - **Compatible** (other mods can coexist)
 - **Predictable** (players know when changes apply immediately vs needing a refresh)
@@ -58,7 +58,6 @@ Examples:
 **`Game.Prefabs.DeathcareFacility` (authoring)**
 - `m_ProcessingRate`
 - `m_StorageCapacity`
-- `m_LongTermStorage`
 
 **`Game.Prefabs.Workplace` (authoring)**
 - `m_Workplaces` (baseline max workers)
@@ -70,7 +69,6 @@ These are the ECS components you typically write to when scaling:
 **`Game.Prefabs.DeathcareFacilityData`**
 - `m_ProcessingRate`
 - `m_StorageCapacity`
-- `m_LongTermStorage`
 
 **`Game.Prefabs.WorkplaceData`**
 - `m_MaxWorkers`
@@ -84,18 +82,18 @@ These are often what the simulation actually uses for *current behavior*:
 
 ---
 
-## The “why does X apply immediately but workers don’t?” thing
+## Why does X prefab change apply immediately but workers don’t?
 
 Important:
 
-- Changing **processing rate / storage / hearse capacity** can appear to take effect immediately.
-- Changing **workers** often needs a “refresh” (rebuild, upgrade, add/remove extension) before the building behaves like it updated.
+- Changing **processing rate / storage / some capacity** slider can appear to take effect immediately.
+- Changing **workers** needs a “refresh” (rebuild the building, upgrade, add/remove extension) before the building shows true change in worker numbers.
 - Restarting the game usually does **not** force that refresh.
 
 ### What’s happening
 
 Some values are read from **prefab data** by simulation systems frequently (or affect newly spawned behavior quickly).
-Examples: processing rate, storage capacity, hearse capacity.
+Examples: processing rate, storage capacity, vehicle capacity.
 
 Other values are used to produce or update **instance runtime components** that are not fully “hot-reloaded.”
 Workers are often represented by instance-side systems that compute or cache a runtime worker limit (ex: `WorkProvider.m_MaxWorkers`).
@@ -122,7 +120,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 if (!prefabBase.TryGet(out DeathcareFacility authoring))
     return;
 
-// true baseline
+// true baseline examples
 float baseRate = authoring.m_ProcessingRate;
 int baseHearses = authoring.m_HearseCapacity;
 ```
@@ -158,7 +156,6 @@ var baseData = dcLookup[prefab]; // might already be modified!
 var scaled = baseData.m_ProcessingRate * scalar;
 ```
 
-Wh
 ### RIGHT baseline
 ```csharp
 // RIGHT: baseline from PrefabBase authoring
