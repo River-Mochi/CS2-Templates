@@ -12,7 +12,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 
 ## 3 different “things” that often get mixed up
 
-In CS2 you will run into **three** layers that *sound* similar but behave differently:
+In CS2 you run into **three** layers that *sound* similar but behave differently:
 
 1) **Prefab Entity** (ECS entity with `PrefabData`)
 - This is the ECS representation of a prefab.
