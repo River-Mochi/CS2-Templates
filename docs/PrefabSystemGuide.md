@@ -22,7 +22,8 @@ In CS2 you run into **three** layers that *sound* similar but behave differently
 1) **Prefab Entity** (ECS entity with `PrefabData`)
 - This is the ECS representation of a prefab.
 - Often referenced by `PrefabRef.m_Prefab` from an instance.
-- Frequently stores runtime data like `*Data` components (ex: `DeathcareFacilityData`, `WorkplaceData`).
+- Frequently stores runtime-ish data like `*Data` components (ex: `DeathcareFacilityData`, `WorkplaceData`).
+- **Important:** prefab entities are **mutable**. The game and mods can change them during a session.
 
 2) **PrefabBase (Authoring object)** — the real baseline
 - The game’s authoring object that represents what the prefab “is” in vanilla.
