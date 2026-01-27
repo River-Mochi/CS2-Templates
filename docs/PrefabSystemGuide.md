@@ -5,6 +5,11 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 - **Compatible** (other mods can coexist)
 - **Predictable** (players know when changes apply immediately vs needing a new building)
 
+**TL;DR metal model**
+- **Baseline** = `PrefabBase` authoring (via `PrefabSystem.TryGetPrefab(...)`)
+- **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
+- **What gameplay uses right now** = instance-side runtime components (often cached / serialized)
+
 > [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to see these values more clearly in-game. <br>
 > Examples below are mainly from the Magic Hearse mod.
 
