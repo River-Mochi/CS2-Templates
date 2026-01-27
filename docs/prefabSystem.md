@@ -5,7 +5,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 - **Compatible** (other mods can coexist)
 - **Predictable** (players know when changes apply immediately vs needing a new building)
 
-> [**Scene Explorer mod**](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to see these values more clearly in-game.
+> [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to see these values more clearly in-game.
 
 ---
 
