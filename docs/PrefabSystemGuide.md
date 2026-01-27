@@ -185,7 +185,7 @@ These values may be **computed/cached** from prefab data and saved into the save
 `WorkProvider` implements `ISerializable` and writes/reads `m_MaxWorkers`, meaning existing buildings can carry worker limits as persisted runtime state.  
 So scaling workers on the prefab may require a refresh trigger (rebuild / upgrade / extension change) to recompute instance-side values.
 
-## Quick reference tables
+## Quick reference
 
 ### Baseline vs data vs runtime
 | Layer | What it is | Good for | Not good for |
