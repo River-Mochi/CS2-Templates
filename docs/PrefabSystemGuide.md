@@ -89,8 +89,8 @@ These are often what the simulation actually uses for *current behavior*:
 
 Important:
 
-- Changing **processing rate / storage / some capacity** slider can appear to take effect immediately.
-- Changing **workers** needs a “refresh” (rebuild the building, upgrade, add/remove extension) before the building shows true change in worker numbers.
+- Changing **processing rate / storage / some capacity** slider in Options UI can take effect immediately.
+- Changing **workers** needs a “rebuid” (rebuild the building, upgrade, add/remove extension) before the building shows true change in worker numbers.
 - Restarting the game usually does **not** force that refresh.
 
 ### What’s happening
