@@ -13,7 +13,7 @@ Do **not** treat prefab-entity `*Data` components reached via `PrefabRef` as bas
 ```csharp
 PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
 
-// prefabEntity is the ECS prefab entity (often from PrefabRef.m_Prefab)
+// Example: prefabEntity is the ECS prefab entity (from PrefabRef.m_Prefab)
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
@@ -27,25 +27,25 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 
 ---
 
-## Common authoring components & fields (examples)
+## Example authoring components & fields
 
 | Authoring component (PrefabBase) | Key fields (vanilla baseline) |
 |---|---|
-| `Game.Prefabs.DeathcareFacility` | `m_ProcessingRate`, `m_HearseCapacity`, `m_StorageCapacity` |
+| `Game.Prefabs.DeathcareFacility` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.Workplace` | `m_Workplaces`, `m_MinimumWorkersLimit` |
 
 ---
 
-## Common ECS `*Data` components you write on prefab entities (examples)
+## Example ECS `*Data` components you write on prefab entities
 
 | ECS component | Key fields (scaled values you write) |
 |---|---|
-| `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_HearseCapacity`, `m_StorageCapacity` |
+| `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.WorkplaceData` | `m_MaxWorkers`, `m_MinimumWorkersLimit` |
 
 ---
 
-## Why workers are “special”
+## Why workers example is “special”
 Worker limits are **runtime instance components** (example: `Game.Companies.WorkProvider.m_MaxWorkers`) that don’t always hot-update when you edit the prefab.
 
 **So:**
@@ -71,5 +71,6 @@ var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 ## “When do I mutate runtime instance components?”
 Only if you fully understand:
 - which systems read them, what caches exist, what invariant you might violate
+- Do you want to add a Harmony patch layer?
 - Consider: mutating runtime components that are calculated by the game is riskier with side effects.
-  - In the example of max workers, asking the player to rebuild the building to refresh it maybe be easier and much safer.
+  - In the example of max workers, asking the player to rebuild the building to refresh values is easy and much safer.
