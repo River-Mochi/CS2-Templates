@@ -192,7 +192,7 @@ So scaling workers on the prefab may require a refresh trigger (rebuild / upgrad
 |---|---|---|---|
 | `PrefabBase` authoring | “Real prefab definition” | true vanilla baseline | writing runtime effects |
 | Prefab entity (`PrefabData`) | ECS representation | writing scaled `*Data` | using as baseline |
-| Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
+| Instance entity | initialized when placed building/vehicle | inspecting current behavior | reading vanilla defaults |
 
 ### “Applies immediately?” rule of thumb
 | What to change | Where to usually write | Applies to existing buildings instantly? |
