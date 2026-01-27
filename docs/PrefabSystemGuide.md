@@ -139,7 +139,7 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
 }
 ```
 
-### Step 3 — If altering workers, include a refresh note or a controlled restore strategy
+### Step 3 — If altering special items like MaxWorkers, include a refresh note or a controlled restore strategy
 If you scale workers, it’s possible to:
 - store what you applied (create a marker component), and
 - only restore if the current values still match your marker (prevents stomping another mod’s changes).
