@@ -197,7 +197,7 @@ So scaling workers on the prefab may require a refresh trigger (rebuild / upgrad
 ### “Applies immediately?” rule of thumb
 | What to change | Where to usually write | Applies to existing buildings instantly? |
 |---|---|---|
-| processing/storage/fleet | `SomeNameFacilityData` on prefab | often yes / quickly visible |
+| processing/storage/fleet | `SomeNameFacilityData` or other prefab *Data name | often yes / quickly visible |
 | workers max/min | `WorkplaceData` on prefab | **often needs refresh** (rebuild/upgrade/extension) |
 | runtime worker provider | `WorkProvider` on instances | yes, risky (compatibility + invariants) |
 
