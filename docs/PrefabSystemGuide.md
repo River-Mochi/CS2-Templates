@@ -32,11 +32,12 @@ In CS2 you run into **three** layers that *sound* similar but behave differently
   PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
   if (prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase)) { ... }
   ```
-- **What to treat as “true vanilla baseline.”**
+- **Treat as “true vanilla baseline.”**
 
 3) **Instance Entity** (the placed building / vehicle / citizen in the world)
 - Has `PrefabRef` pointing at the prefab entity.
 - Has runtime components that may or may not update when the prefab changes.
+- Often carries **cached / computed / serialized** values used by simulation right now.
 
 ---
 
@@ -45,7 +46,7 @@ In CS2 you run into **three** layers that *sound* similar but behave differently
 `PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
 
 The prefab entity can already be modified by:
-- the game itself (upgrades combining stats, simulation adjustments)
+- the game itself (ex: upgrades/extensions combinging stats)
 - other mods
 - your own mod on earlier runs
 
@@ -60,7 +61,7 @@ So using prefab-entity components as “baseline” tends to produce **double-sc
 ## Concrete: real components & fields you can cite
 
 ### Authoring components (PrefabBase) — true vanilla values
-These live on `PrefabBase` and contain the “what the prefab was authored as” values.
+These live on `PrefabBase` and contain the “authored” values.
 
 Examples:
 
@@ -91,22 +92,22 @@ These are often what the simulation actually uses for *current behavior*:
 
 ---
 
-## Why does X prefab change apply immediately but things like m_MaxWorkers don’t?
+## Why does a prefab change apply instantly for some sliders, but the same method can not be used for workers?
 
 Important:
 
 - Changing **processing rate / storage / some capacity** slider in Options UI can take effect immediately.
-- Changing **workers** needs a “rebuid” (rebuild the building, upgrade, add/remove extension) before the building shows true change in worker numbers.
-- Restarting the game usually does **not** force that refresh.
+- Changing items like **workers** often needs a “rebuid” (rebuild the building, add/remove extension/upgrade) before the building shows true new worker limit.
+- Restarting the game usually does **not** force that update.
 
-### What’s happening
+### What’s happening (simple)
 
-Some values are read from **prefab data** by simulation systems frequently (or affect newly spawned behavior quickly).
+Some values are read from **prefab** `*Data` by frequently (or affect newly spawned behavior quickly).
 Examples: processing rate, storage capacity, vehicle capacity.
 
-Other values are used to produce or update **instance runtime components** that are not fully “hot-reloaded.”
-Workers are represented by instance-side systems that compute or cache a runtime worker limit (ex: `WorkProvider.m_MaxWorkers`).
-Existing buildings may not re-run the “recompute my workforce limit” path just because you edited the prefab.
+Other values feed into **instance runtime components** that are computed/cached and not automatically invalidated when you edit prefab data.
+Workers are an example: the sim may use a cached per-building value (ex: WorkProvider.m_MaxWorkers) that isn’t recomputed just because WorkplaceData changed.
+Upgrades/extensions also complicate this: the game may combine multiple sources into a final runtime worker limit.
 
 ### Practical takeaway
 Example, if the mod scales something like worker counts:
@@ -114,7 +115,7 @@ Example, if the mod scales something like worker counts:
   - Existing buildings might not fully update until a refresh event:
     - rebuild the building, or
     - add/remove an extension, or add/remove a building upgrade (when available)
-- Avoid “mutate everything at runtime” unless you really know the full dependency chain (easy to break simulation invariants).
+- Avoid “mutate everything at runtime” unless the full dependency chain is understood (it’s easy to break invariants or stomp other mods).
 
 ---
 
@@ -145,12 +146,19 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
 }
 ```
 
-### Step 3 — If altering special items like MaxWorkers, include a refresh note or a controlled restore strategy
+### Step 3 — For special items like workers, add a controlled restore strategy (marker)
 If you scale workers, it’s possible to:
-- store what you applied (create a marker component), and
-- only restore if the current values still match your marker (prevents stomping another mod’s changes).
+- store what you applied (marker component), and
+- only restore if the current values still match the marker (prevents stomping another mod’s changes).
+- consider one-shot apply (ex: setting change) and not per-frame (bad for performance)
 
-This is exactly why marker components exist.
+---
+
+### How to verify in-game (quick)
+Use Scene Explorer mod (entity inspector) and typically CTRL+E and click on any building:
+- PrefabBase authoring (source-of-truth baseline)
+- Prefab entity (`PrefabData` entity on any crematorium: `WorkplaceData`, `DeathcareFacilityData`, etc.)
+- Placed building instance (`WorkProvider`, plus anything else)
 
 ---
 
@@ -186,10 +194,10 @@ These values may be **computed/cached** from prefab data and saved into the save
 **Example: Workers**
 - Prefab authoring (baseline): `Game.Prefabs.Workplace` (`m_Workplaces`, `m_MinimumWorkersLimit`)
 - Prefab ECS data (what mods often write): `Game.Prefabs.WorkplaceData` (`m_MaxWorkers`, `m_MinimumWorkersLimit`)
-- Instance runtime state (what simulation may use): `Game.Companies.WorkProvider` (`m_MaxWorkers`) — **serializable per instance**
-
-`WorkProvider` implements `ISerializable` and writes/reads `m_MaxWorkers`, meaning existing buildings can carry worker limits as persisted runtime state.  
-So scaling workers on the prefab may require a refresh trigger (rebuild / upgrade / extension change) to recompute instance-side values.
+- Instance runtime state (what simulation may use): `Game.Companies.WorkProvider` (`m_MaxWorkers`) — commonly persists on reboot
+  
+If a runtime worker limit is serialized per building instance, scaling workers on the prefab often requires 
+a refresh trigger (rebuild / extension change) to recompute instance-side values.
 
 ## Quick reference
 
@@ -198,16 +206,17 @@ So scaling workers on the prefab may require a refresh trigger (rebuild / upgrad
 |---|---|---|---|
 | `PrefabBase` authoring | “Real prefab definition” | true vanilla baseline | writing runtime effects |
 | Prefab entity (`PrefabData`) | ECS representation | writing scaled `*Data` | using as baseline |
-| Instance entity | initialized when placed building/vehicle | inspecting current behavior | reading vanilla defaults |
+| Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
 
 ### “Applies immediately?” rule of thumb
 | What to change | Where to usually write | Applies to existing buildings instantly? |
 |---|---|---|
-| processing/storage/fleet | `SomeNameFacilityData` or other prefab *Data name | often yes / quickly visible |
-| workers max/min | `WorkplaceData` on prefab | **often needs refresh** (rebuild/upgrade/extension) |
-| runtime worker provider | `WorkProvider` on instances | possible, risky (compatibility + invariants) |
+| processing/storage/fleet | prefab *Data components (ex: DeathcareFacilityData) | often yes / instant |
+| workers max/min | ex: `WorkplaceData` on prefab | **often needs** (rebuild/extension) |
+| runtime worker provider | `WorkProvider` on instances | possible but risky (compatibility + invariants) |
 
 ---
 
 ## Example Warnings for runtime components
-> Worker limits are partially cached on existing buildings. After changing worker scaling, rebuild the building or add/remove an upgrade/extension to refresh. Restarting the game usually won’t refresh runtime component limits.
+> Worker limits are partially cached on existing buildings. After changing worker scaling, rebuild the building or add/remove an upgrade/extension to refresh.
+> Restarting the game usually won’t refresh runtime component limits.
