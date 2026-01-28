@@ -203,7 +203,7 @@ a refresh trigger (rebuild / extension change) to recompute instance-side values
 - This means a slider to adjust workers will not instant update on the building
 - we can't update `Companies.WorkProvider` directly because it's calculated in a **burst job**.
 
-**3 Methods to get buildings to update**
+#### 3 Methods to get buildings to update**
 1. Harmony patch: makes the mod more brittle on game patch days.
 2. Rigurous research of the decompiled code to find an exact method used and copy it into the mod so the burst job for Companies.WorkProvider will read your new value.
     - one-shot method on slider movement helps avoid fighting the burst job and will update **existing** buildings.
