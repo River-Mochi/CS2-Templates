@@ -196,7 +196,7 @@ These values may be **computed/cached** from prefab data and saved into the save
 **Example: Workers**
 - Prefab authoring (baseline): `Game.Prefabs.Workplace` (`m_Workplaces`, `m_MinimumWorkersLimit`)
 - Prefab ECS data (what mods often write): `Game.Prefabs.WorkplaceData` (`m_MaxWorkers`, `m_MinimumWorkersLimit`)
-- Instance runtime state (what simulation may use): `Game.Companies.WorkProvider` (`m_MaxWorkers`) — commonly persists on reboot
+- Instance runtime state (what simulation may use): `Game.Companies.WorkProvider` (`m_MaxWorkers`)
   
 **Why do new buildings get the update but not the existing ones?**
 If a runtime worker limit is serialized per building, scaling workers on the prefab often requires 
