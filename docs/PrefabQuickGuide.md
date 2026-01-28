@@ -70,7 +70,7 @@ var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 
 ## “When do I mutate runtime instance components?”
 Only if you fully understand:
-- which systems read them, what caches exist, what invariant you might violate (rigorous research using iLSpy or DnSpyEX decompilers and Scene Explorer mod).
+- which systems read them, what caches exist, what invariant you might violate (rigorous research using iLSpy or DnSpyEX and Scene Explorer mod).
 - Do you really want to add a Harmony patch layer?
 - Consider: mutating runtime components that are calculated by the game is riskier with side effects.
   - In the example of max workers, asking the player to rebuild the building to refresh values is easy and much safer.
