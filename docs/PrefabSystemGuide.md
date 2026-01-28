@@ -209,7 +209,7 @@ a refresh trigger (new building change) to recompute instance-side values.
 2. Rigorous research of the decompiled code to find the exact method used and copy it. Then the burst job for Companies.WorkProvider will read your new value.
     - one-shot method on slider movement helps avoid fighting the burst job and will update **existing** buildings.
     - also still need `WorkplaceData` change to take care of all **new** buildings.
-    - risks doing this, carefully check the logic.
+    - iLSpy or DnSpyEx are apps to decompile and study code.
 3. Ask the player to do it: avoid all effort of 1 or 2 by asking the player to simply make new buildings to see the slider changes for "special" values.
 
 >Changes persist on saves when the mod is removed but is harmless, player can delete old buildings and all new buildings will be vanilla values.
