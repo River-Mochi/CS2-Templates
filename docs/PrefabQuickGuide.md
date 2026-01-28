@@ -49,11 +49,11 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 Worker limits are **runtime instance components** (ex: `Game.Companies.WorkProvider.m_MaxWorkers`) that don’t always hot-update when you edit the prefab.
 
 **So:**
-- editing `WorkplaceData` is correct and safe
+- editing `WorkplaceData` is correct and safe for all new buildings
 - but players may need a **refresh event** for existing buildings:
   - rebuild building
   - add/remove extension
-  - add/remove upgrade
+  - add/remove upgrade (ex: cold storage)
 - restarting the game usually doesn’t force that refresh
 
 ---
