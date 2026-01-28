@@ -215,7 +215,7 @@ a refresh trigger (rebuild / extension change) to recompute instance-side values
 |---|---|---|
 | processing/storage/fleet | prefab *Data components (ex: DeathcareFacilityData) | often yes / instant |
 | workers max/min | ex: `WorkplaceData` on prefab | **often needs** (rebuild/add extension) |
-| runtime worker provider | `WorkProvider` on instances | possible but risky (compatibility + invariants) |
+| runtime worker provider | `WorkProvider` on instances | possible, but risky (compatibility + invariants) |
 
 ---
 
