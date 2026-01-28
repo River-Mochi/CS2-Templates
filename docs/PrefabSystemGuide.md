@@ -114,7 +114,7 @@ Example, if the mod scales something like worker counts:
 - Write scaled worker values onto the prefab (`WorkplaceData`), but:
   - Existing buildings might not fully update until a refresh event:
     - rebuild the building, or
-    - add/remove an extension, or add/remove a building upgrade (when available)
+    - add/remove an extension, or a building upgrade (when available)
 - Avoid “mutate everything at runtime” unless the full dependency chain is understood (it’s easy to break invariants or stomp other mods).
 
 ---
