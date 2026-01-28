@@ -46,7 +46,7 @@ In CS2 you run into **three** layers that *sound* similar but behave differently
 `PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
 
 The prefab entity can already be modified by:
-- the game itself (ex: upgrades/extensions combinging stats)
+- the game itself (ex: upgrades/extensions combining stats)
 - other mods
 - your own mod on earlier runs
 
