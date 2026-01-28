@@ -230,8 +230,3 @@ a refresh trigger (new building change) to recompute instance-side values.
 | workers max/min | ex: `WorkplaceData` on prefab | **often needs** (rebuild/add extension) |
 | runtime worker provider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
 
----
-
-## Example Warnings for runtime components
-> Worker limits are partially cached on existing buildings. After changing worker scaling, rebuild the building or add/remove an upgrade/extension to refresh.
-> Restarting the game usually won’t refresh runtime component limits.
