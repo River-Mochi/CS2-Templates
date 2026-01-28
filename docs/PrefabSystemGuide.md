@@ -102,7 +102,7 @@ Important:
 
 ### What’s happening (simple)
 
-Some values are read from **prefab** `*Data` by frequently (or affect newly spawned behavior quickly).
+Some values are read from **prefab** `*Data` frequently (or affect newly spawned behavior quickly).
 Examples: processing rate, storage capacity, vehicle capacity.
 
 Other values feed into **instance runtime components** that are computed/cached and not automatically invalidated when you edit prefab data.
