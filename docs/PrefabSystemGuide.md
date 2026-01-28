@@ -198,20 +198,21 @@ These values may be **computed/cached** from prefab data and saved into the save
 - Prefab ECS data (what mods often write): `Game.Prefabs.WorkplaceData` (`m_MaxWorkers`, `m_MinimumWorkersLimit`)
 - Instance runtime state (what simulation may use): `Game.Companies.WorkProvider` (`m_MaxWorkers`) — commonly persists on reboot
   
-If a runtime worker limit is serialized per building instance, scaling workers on the prefab often requires 
+**Why do new buildings get the update but not the existing ones?**
+If a runtime worker limit is serialized per building, scaling workers on the prefab often requires 
 a refresh trigger (new building change) to recompute instance-side values.
-- This means a slider to adjust workers will not instant update on the building
-- we can't update `Companies.WorkProvider` directly because it's calculated in a **burst job**.
+- This means a slider to adjust workers with `WorkplaceData` will change new buildings but not existing ones.
+- Can't update `Companies.WorkProvider` directly because it's calculated in a **burst job**.
 
-#### 3 Methods to get buildings to update
+#### 3 Methods to get buildings to update instantly for special values
 1. Harmony patch: makes the mod more brittle on game patch days, but may be the only way.
 2. Rigurous research of the decompiled code to find the exact method used and copy it. Then the burst job for Companies.WorkProvider will read your new value.
     - one-shot method on slider movement helps avoid fighting the burst job and will update **existing** buildings.
     - also still need `WorkplaceData` change to take care of all **new** buildings.
     - risks doing this, carefully check the logic.
-3. Avoid all this by asking the player to simply update to new buildings to get the changes for this one slider.
-  
-nota bene: changes persist on saves when the mod is removed but is harmless, player can delete old buildings and all new buildings will be vanilla values.
+3. Above are a lot of effort: avoid all this by asking the player to simply make new buildings to see the slider changes for "special" values.
+
+>Changes persist on saves when the mod is removed but is harmless, player can delete old buildings and all new buildings will be vanilla values.
 
 ## Quick reference
 
