@@ -200,6 +200,13 @@ These values may be **computed/cached** from prefab data and saved into the save
   
 If a runtime worker limit is serialized per building instance, scaling workers on the prefab often requires 
 a refresh trigger (rebuild / extension change) to recompute instance-side values.
+This means a slider to adjust workers will not instant update on the building and we can't update Companies.WorkProvider directly because it's calculated in a burst job.
+
+**Two work-arounds**
+- Harmony patch: makes the mod more brittle on game patch days but sometimes is the only way.
+- Research the decompiled code to find the exact method used and copy it to change Companies.WorkProvider.
+    - one-shot method on slider move helps avoid fighting burst job will instant update existing buildings
+    - still need WorkplaceData change to take care of all new buildings.
 
 ## Quick reference
 
@@ -215,7 +222,7 @@ a refresh trigger (rebuild / extension change) to recompute instance-side values
 |---|---|---|
 | processing/storage/fleet | prefab *Data components (ex: DeathcareFacilityData) | often yes / instant |
 | workers max/min | ex: `WorkplaceData` on prefab | **often needs** (rebuild/add extension) |
-| runtime worker provider | `WorkProvider` on instances | possible, but risky (compatibility + invariants) |
+| runtime worker provider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
 
 ---
 
