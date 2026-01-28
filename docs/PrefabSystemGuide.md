@@ -106,7 +106,7 @@ Some values are read from **prefab** `*Data` frequently (or affect newly spawned
 Examples: processing rate, storage capacity, vehicle capacity.
 
 Other values feed into **instance runtime components** that are computed/cached and not automatically invalidated when you edit prefab data.
-Workers are an example: the sim may use a cached per-building value (ex: WorkProvider.m_MaxWorkers) that isn’t recomputed just because WorkplaceData changed.
+Workers are an example: the sim may use a cached per-building value (ex: `WorkProvider.m_MaxWorkers`) that isn’t recomputed just because `WorkplaceData` changed.
 Upgrades/extensions also complicate this: the game may combine multiple sources into a final runtime worker limit.
 
 ### Practical takeaway
