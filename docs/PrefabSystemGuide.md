@@ -200,7 +200,8 @@ These values may be **computed/cached** from prefab data and saved into the save
   
 If a runtime worker limit is serialized per building instance, scaling workers on the prefab often requires 
 a refresh trigger (rebuild / extension change) to recompute instance-side values.
-This means a slider to adjust workers will not instant update on the building and we can't update Companies.WorkProvider directly because it's calculated in a burst job.
+- This means a slider to adjust workers will not instant update on the building
+- and we can't update `Companies.WorkProvider` directly because it's calculated in a **burst job**.
 
 **Two work-arounds**
 - Harmony patch: makes the mod more brittle on game patch days but sometimes is the only way.
