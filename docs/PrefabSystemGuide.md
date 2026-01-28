@@ -159,7 +159,7 @@ If you scale workers, it’s possible to:
 ### How to verify in-game (quick)
 Use Scene Explorer mod (entity inspector) and typically CTRL+E and click on any building:
 - PrefabBase authoring (source-of-truth baseline)
-- Prefab entity (`PrefabData` entity on any crematorium: `WorkplaceData`, `DeathcareFacilityData`, etc.)
+- Prefab entity (`PrefabData` entity, click on any crematorium: `WorkplaceData`, `DeathcareFacilityData`, etc.)
 - Placed building instance (`WorkProvider`, plus anything else)
 
 ---
