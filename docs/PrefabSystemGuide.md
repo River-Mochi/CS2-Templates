@@ -206,7 +206,7 @@ a refresh trigger (new building change) to recompute instance-side values.
 
 #### 3 ways to get buildings to update instantly for special values
 1. Harmony patch: makes the mod more brittle on game patch days, but may be the only way.
-2. Rigorous research of the decompiled code to find the exact method used and copy it. Then the burst job for Companies.WorkProvider will read your new value.
+2. Rigorous research of the decompiled code to find the exact method used and copy it. Then the burst job for `Companies.WorkProvider` will read your new value.
     - one-shot method on slider movement helps avoid fighting the burst job and will update **existing** buildings.
     - also still need `WorkplaceData` change to take care of all **new** buildings.
     - iLSpy or DnSpyEx are apps to decompile and study code.
