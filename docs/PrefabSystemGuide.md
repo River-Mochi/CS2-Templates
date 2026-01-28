@@ -1,14 +1,14 @@
 # PrefabSystem “Source of Truth” in Cities: Skylines II (CO API)
 
 This note is for CS2 modders who change things like **capacities / rates and special values like worker counts** and want the results to be:
-- **Correct** (true vanilla baselines)
-- **Compatible** (other mods can coexist)
-- **Predictable** (players know when changes apply immediately vs needing a new building)
+  - **Correct** (true vanilla baselines)
+  - **Compatible** (other mods can coexist)
+  - **Predictable** (players know when changes apply immediately vs needing a new building)
 
 **TL;DR mental model**
-- **Baseline** = `PrefabBase` authoring (via `PrefabSystem.TryGetPrefab(...)`)
-- **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
-- **What gameplay uses right now** = instance-side runtime components (often cached / serialized)
+  - **Baseline** = `PrefabBase` authoring (via `PrefabSystem.TryGetPrefab(...)`)
+  - **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
+  - **What gameplay uses right now** = instance-side runtime components (often cached / serialized)
 
 > [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to see these values more clearly in-game. <br>
 > Examples below are mainly from the [Magic Hearse](https://mods.paradoxplaza.com/mods/123497/Windows) mod.
@@ -21,23 +21,23 @@ In CS2 you run into **three** layers that *sound* similar but behave differently
 
 1) **Prefab Entity** (ECS entity with `PrefabData`)
 - This is the ECS representation of a prefab.
-- Often referenced by `PrefabRef.m_Prefab` from an instance.
-- Frequently stores runtime-ish data like `*Data` components (ex: `DeathcareFacilityData`, `WorkplaceData`).
+  - Often referenced by `PrefabRef.m_Prefab` from an instance.
+  - Frequently stores runtime-ish data like `*Data` components (ex: `DeathcareFacilityData`, `WorkplaceData`).
 - **Important:** prefab entities are **mutable**. The game and mods can change them during a session.
 
 2) **PrefabBase (Authoring object)** — the real baseline
-- The game’s authoring object that represents what the prefab “is” in vanilla.
-- Accessed via:
+  - The game’s authoring object that represents what the prefab “is” in vanilla.
+  - Accessed via:
   ```csharp
   PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
   if (prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase)) { ... }
   ```
-- **Treat as “true vanilla baseline.”**
+  - **Treat as “true vanilla baseline.”**
 
 3) **Instance Entity** (the placed building / vehicle / citizen in the world)
-- Has `PrefabRef` pointing at the prefab entity.
-- Has runtime components that may or may not update when the prefab changes.
-- Often carries **cached / computed / serialized** values used by simulation right now.
+  - Has `PrefabRef` pointing at the prefab entity.
+  - Has runtime components that may or may not update when the prefab changes.
+  - Often carries **cached / computed / serialized** values used by simulation right now.
 
 ---
 
