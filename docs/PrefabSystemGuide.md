@@ -146,7 +146,7 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
 }
 ```
 
-- **Alternate method** from [Tree mod](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L35)
+- **Alternate step 2 method** from [Tree mod](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L35)
 
 ### Step 3 — For special items like workers, add a controlled restore strategy (marker)
 If you scale workers, it’s possible to:
