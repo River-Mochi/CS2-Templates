@@ -36,7 +36,7 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 
 ---
 
-## Example ECS `*Data` components you write on prefab entities
+## Example ECS `*Data` components (changeable) you write on prefab entities
 
 | ECS component | Key fields (scaled values you write) |
 |---|---|
