@@ -144,7 +144,7 @@ int baseHearses = authoring.m_HearseCapacity;
 
 This is where the mod actually **changes the prefab entity** (entities with `PrefabData`) by writing to `*Data` components.
 
-#### Option 1: `EntityQuery` + `NativeArray<Entity>` loop (classic style)
+#### Option 1: Classic style (`EntityQuery` + `NativeArray<Entity>` loop)
 
 ```csharp
 // Build query → get entities → foreach loop.
@@ -182,7 +182,7 @@ foreach (Entity prefabEntity in entities)
 
 **Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
 
-#### Option 2: `SystemAPI.Query<RefRW<T>>()` (compact ECS style)
+#### Option 2: Compact ECS style (`SystemAPI.Query<RefRW<T>>()`)
 
 ```csharp
 // Same logic as above, just using Unity RefRW<T> query style, foreach is denser.
