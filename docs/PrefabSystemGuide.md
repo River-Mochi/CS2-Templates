@@ -177,14 +177,12 @@ foreach (Entity prefabEntity in entities)
     dc.m_StorageCapacity = scaledStorage;
     EntityManager.SetComponentData(prefabEntity, dc);
 }
-entities.Dispose();
 ```
 
 #### Option 2: `SystemAPI.Query<RefRW<T>>()` (compact ECS style)
 
 ```csharp
-// Same logic as above, just using RefRW<T> query style.
-// foreach is denser, no dispose needed.
+// Same logic as above, just using RefRW<T> query style, foreach is denser.
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
