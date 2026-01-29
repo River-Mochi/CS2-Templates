@@ -175,17 +175,17 @@ float scaled = baseData.m_ProcessingRate * scalar;
 
 ### RIGHT baseline
 ```csharp
-// RIGHT: baseline from PrefabBase authoring
-Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+// RIGHT: baseline from PrefabBase authoring (vanilla)
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // PrefabRef points to the *prefab entity* (ECS)
 
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
 if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
     return;
-
-float baseRate = authoring.m_ProcessingRate;
-float scaled = baseRate * scalar;
+// baseRate = vanilla truth, scaled = computed result
+float baseRate = authoring.m_ProcessingRate;  // Read vanilla baseline from authoring fields
+float scaled = baseRate * scalar;  // Apply scalar from settings.
 ```
 
 ---
