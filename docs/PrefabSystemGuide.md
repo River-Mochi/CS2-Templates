@@ -253,4 +253,4 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 |---|---|---|
 | processing/storage | prefab `*Data` components (ex: `DeathcareFacilityData`) | yes / easiest |
 | workers max/min | `WorkplaceData` on prefab | Often needs a trigger: new building/extension/upgrade |
-| runtime worker provider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
+| runtime WorkProvider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
