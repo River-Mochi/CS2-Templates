@@ -203,7 +203,7 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
 }
 ```
 
-**Option 3 (EntityManager loop style):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L33)
+**Option 3 (EntityManager loop style):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
 
 ---
 ## Baseline examples
