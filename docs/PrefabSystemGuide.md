@@ -122,7 +122,7 @@ Often what simulation uses *right now*:
 - runtime value; normally not hot-updated from prefab edits in Options UI
 - Means that updating `WokplaceData` above only applies to new buildings but not existing ones.
 - `Workprovider` is game computed and needs extra code to make "instant" changes on a building
-- or a player action to naturally trigger the game job (build new building or add an extension).
+- or a player action to naturally trigger the game job (build new building or add an extension triggers game to run job and read `*Data` again).
 
 ---
 
