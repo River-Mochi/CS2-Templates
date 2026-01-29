@@ -159,17 +159,17 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
 **Alternate Step 2 method (EntityManager loop style):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L33) 
 
 ---
-## WRONG vs RIGHT examples
+## Baseline examples
 
-### WRONG baseline (double-scaling risk)
+### DON'T do this (double-scale trap)
 ```csharp
-// WRONG: uses prefab-entity data as vanilla baseline
+// Danger: uses prefab-entity data as vanilla baseline
 Entity prefab = prefabRefLookup[instance].m_Prefab;
 var baseData = dcLookup[prefab]; // might already be modified!
-float scaled = baseData.m_ProcessingRate * scalar;
+float scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 ```
 
-### RIGHT baseline
+### DO this (true vanilla baseline)
 ```csharp
 // RIGHT: baseline from PrefabBase authoring (vanilla)
 Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // PrefabRef points to the *prefab entity* (ECS)
