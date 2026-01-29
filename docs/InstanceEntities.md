@@ -80,7 +80,7 @@ If prefab value changes but instance stays the same, the value is very likely **
 
 ### dnSpy tips
 If a struct/component implements `ISerializable`, it’s a strong clue it can be stored in saves.  
-This does not prove “cached”, but it raises the probability it may persist in saves.
+This does not prove “cached”, but it raises the probability the value can persist across loads.
 
 ---
 
