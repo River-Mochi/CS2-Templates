@@ -201,6 +201,6 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 ### “Applies immediately?” rule of thumb
 | What to change | Where to usually write | Applies to existing buildings instantly? |
 |---|---|---|
-| processing/storage | prefab `*Data` components (ex: `DeathcareFacilityData`) | yes / quick |
-| workers max/min | `WorkplaceData` on prefab | often needs rebuild/extension/upgrade |
+| processing/storage | prefab `*Data` components (ex: `DeathcareFacilityData`) | yes / easiest |
+| workers max/min | `WorkplaceData` on prefab | Often needs a trigger: new building/extension/upgrade |
 | runtime worker provider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
