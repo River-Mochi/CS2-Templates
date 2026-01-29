@@ -180,6 +180,8 @@ foreach (Entity prefabEntity in entities)
 }
 ```
 
+**Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
+
 #### Option 2: `SystemAPI.Query<RefRW<T>>()` (compact ECS style)
 
 ```csharp
@@ -201,8 +203,6 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
 }
 ```
-
-**Example mod (EntityManager loop style):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
 
 ### Step 3 — Restore Strategy / Marker component
 Special case: if scaling something like Workers, consider:
