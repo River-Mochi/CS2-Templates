@@ -185,8 +185,8 @@ foreach (Entity prefabEntity in entities)
 #### Option 2: compact ECS style (`SystemAPI.Query<RefRW<T>>()`)
 
 ```csharp
-// Same logic as Option1, just using Unity ECS RefRW<T> query style.
-// Tradeoff: denser, harder to debug when learning (where is real error?)
+// Same logic as Option 1, just using Unity ECS RefRW<T> query style.
+// Tradeoff: denser, compile errors turn into "okay, which piece is mad?"
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
