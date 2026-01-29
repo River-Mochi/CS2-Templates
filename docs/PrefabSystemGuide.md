@@ -8,7 +8,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 **TL;DR mental model**
   - **Baseline** = `PrefabBase` authoring (via `PrefabSystem.TryGetPrefab(...)`)
   - **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
-  - **What gameplay uses right now** = instance-side runtime components (often cached / serialized)
+  - **What gameplay uses right now** = instance-side runtime components (often) cached / serialized)
 
 > [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to see these values more clearly in-game. <br>
 > Examples below are mainly from the [Magic Hearse](https://mods.paradoxplaza.com/mods/123497/Windows) mod but apply to general prefabs.
@@ -22,7 +22,7 @@ In CS2 you run into **three** layers that *sound* similar but behave differently
 1) **Prefab Entity** (ECS entity with `PrefabData`)
 - This is the ECS representation of a prefab.
   - Often referenced by `PrefabRef.m_Prefab` from an instance.
-  - Frequently stores runtime-ish data like `*Data` components (ex: `DeathcareFacilityData`, `WorkplaceData`).
+  - Frequently stores ECS prefab-side `*Data` components that mods commonly edit (ex: `DeathcareFacilityData`, `WorkplaceData`).
 - **Important:** prefab entities are **mutable**. The game and mods can change them during a session.
 
 2) **PrefabBase (Authoring object)** — the real baseline
@@ -130,7 +130,7 @@ If you scale workers, it’s possible to:
 ---
 
 ### How to verify in-game (quick)
-Use Scene Explorer mod (entity inspector) and typically CTRL+E and click on any building:
+Use Scene Explorer mod an entity inspector (often CTRL+E and click on any building):
 - PrefabBase authoring (source-of-truth baseline)
 - Prefab entity (`PrefabData` entity, click on any crematorium: `WorkplaceData`, `DeathcareFacilityData`, etc.)
 - Placed building instance (`WorkProvider`, plus anything else)
