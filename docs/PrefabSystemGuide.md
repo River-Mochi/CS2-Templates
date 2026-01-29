@@ -164,7 +164,8 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
     dc.ValueRW.m_HearseCapacity = Math.Max(1, (int)Math.Round(authoring.m_HearseCapacity * scalar));
 }
 ```
-**Alternate method from [Tree mod](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L33)**
+**Alternate Step 2 method (EntityManager loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L33) 
+uses a direct “loop prefab entities → TryGetComponent → SetComponentData” style. Same idea as Step 2, just a different style.
 
 ---
 ## WRONG vs RIGHT examples
