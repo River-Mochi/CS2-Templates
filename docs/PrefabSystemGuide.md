@@ -59,11 +59,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 ## Why `PrefabRef` is NOT the “true vanilla baseline”
 
 `PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
-
-That prefab entity can already be modified by:
-- the game itself (per upgrades/extensions and combining stats)
-- other mods
-- your own mod on earlier runs
+That prefab entity can and is commonly modified by mods.
 
 So using prefab-entity `*Data` as “baseline” could produce **double-scaling** or **wrong restore values**.
 
