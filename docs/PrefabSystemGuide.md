@@ -90,7 +90,7 @@ That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vani
 
 ## Concrete: real components & fields (examples)
 
-### A. Authoring components (PrefabBase) — true vanilla values
+### 1) Authoring components (PrefabBase) — true vanilla values
 These live on `PrefabBase` and contain the authored defaults.
 
 **`Game.Prefabs.DeathcareFacility` (authoring)**
@@ -100,7 +100,7 @@ These live on `PrefabBase` and contain the authored defaults.
 - `m_Workplaces` (baseline max workers)
 - `m_MinimumWorkersLimit`
 
-### B. ECS `*Data` components (on prefab entities)
+### 2) ECS `*Data` components (on prefab entities)
 These are what mods usually write to when scaling for example:
 
 **`Game.Prefabs.DeathcareFacilityData`**
@@ -109,7 +109,7 @@ These are what mods usually write to when scaling for example:
 **`Game.Prefabs.WorkplaceData`**
 - `m_MaxWorkers`, `m_MinimumWorkersLimit`
 
-### C. Runtime / instance-side components (placed entities)
+### 3) Runtime / instance-side components (placed entities)
 Often what simulation uses *right now*:
 
 **`Game.Companies.WorkProvider` (instance-side example)**
