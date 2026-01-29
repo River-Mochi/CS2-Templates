@@ -5,9 +5,10 @@ This note is for CS2 modders who change things like **capacities / rates and spe
   - **Compatible** (other mods can coexist)
   - **Predictable** (players know when changes apply immediately vs needing a new building)
 
-No time to read? See [Quick Guide](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabQuickGuide.md#prefabsystem-source-of-truth--quick-guide-cs2-modding)
+**No time to read? See:** [Quick Guide](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabQuickGuide.md#prefabsystem-source-of-truth--quick-guide-cs2-modding)
 
 ---
+
 **TL;DR mental model**
   - **Baseline** = `PrefabBase` authoring (via `PrefabSystem.TryGetPrefab(...)`)
   - **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
