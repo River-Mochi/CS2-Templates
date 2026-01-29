@@ -124,7 +124,7 @@ These are what mods usually write to when scaling for example:
 Often what simulation uses *right now*:
 
 **`Game.Companies.WorkProvider` (instance-side example)**
-- `m_MaxWorkers` (runtime value; not always hot-updated from prefab edits)
+- `m_MaxWorkers` (runtime value; not always hot-updated from prefab edits in Options UI)
 
 ---
 
