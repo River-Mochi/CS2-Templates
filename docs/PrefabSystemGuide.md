@@ -43,7 +43,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 - Often referenced by `PrefabRef.m_Prefab` from an instance.
 - Stores ECS prefab-side `*Data` components that **mods commonly edit** (ex: `DeathcareFacilityData`, `WorkplaceData`).
 - **Important:** prefab entities are **mutable**. Game + mods can change them during a session.
-- Not everything from PrefabBase to PrefabData is one-to-one (not all provide easy tuning knobs)
+- Not everything from PrefabBase to PrefabData is one-to-one (not all provide easy tuning knobs).
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
@@ -60,7 +60,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 ## Why `PrefabRef` is NOT the “true vanilla baseline”
 
 `PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
-That prefab entity can and is commonly modified by mods.
+That prefab entity is commonly modified by mods.
 
 So using prefab-entity `*Data` as “baseline” could produce **double-scaling** or **wrong restore values**.
 
@@ -87,7 +87,6 @@ is basically:
 That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vanilla values.
 
 ---
-
 
 ## Concrete: real components & fields (examples)
 
@@ -118,7 +117,7 @@ Often what simulation uses *right now*:
 
 - runtime value; normally not hot-updated from prefab edits in Options UI
 - Means that updating `WokplaceData` above only applies to new buildings but not existing ones.
-- `Workprovider` is game computed and needs extra code to make "instant" changes on a building
+- `WorkProvider` is game computed and needs extra code to make "instant" changes on a building
 - or a player action to naturally trigger the game job (build new building or add an extension triggers game to run job and read `WorkplaceData` again).
 
 ---
@@ -145,11 +144,11 @@ int baseHearses = authoring.m_HearseCapacity;
 
 This is where the mod actually **changes the prefab entity** (entities with `PrefabData`) by writing to `*Data` components.
 
-#### Option 1: explicit `EntityQuery` + `NativeArray<Entity>` loop
+#### Option 1: `EntityQuery` + `NativeArray<Entity>` loop
 
 ```csharp
-// Step 2: iterate prefab entities that have DeathcareFacilityData.
 // Build query → get entities → foreach loop.
+// Example: iterate prefab entities that have DeathcareFacilityData.
 
 EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>() // prefab entities only + the data component to edit
