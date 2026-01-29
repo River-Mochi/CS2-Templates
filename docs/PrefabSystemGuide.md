@@ -58,7 +58,7 @@ float baseRate = authoring.m_ProcessingRate;
 - Details in InstanceEntities.md
 ---
 
-## What `PrefabRef` really is (and what it is not)
+## What `PrefabRef` really is
 
 `PrefabRef` is just:
 
@@ -79,7 +79,7 @@ So:
 
 ---
 
-## Why `PrefabRef.m_Prefab` is NOT a safe vanilla baseline
+## Why `PrefabRef.m_Prefab` is NOT vanilla baseline
 
 If code does this:
 
