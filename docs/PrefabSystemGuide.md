@@ -12,7 +12,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 
 ---
 
-## TL;DR mental model
+### TL;DR mental model
 - **Baseline (true vanilla)** = `PrefabBase` authoring fields (via `PrefabSystem.TryGetPrefab(...)`)
 - **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
 - **What gameplay uses right now** = instance-side runtime components (often cached / computed / serialized)
