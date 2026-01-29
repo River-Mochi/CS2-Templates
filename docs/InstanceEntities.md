@@ -186,14 +186,6 @@ foreach (var (prefabRef, workProvider, entity) in SystemAPI
 
 ---
 
-## Practical player-facing wording (short)
-
-When a value is instance-cached (workers are common):
-
-> “This setting affects new buildings immediately. Existing buildings update after a refresh (rebuild the building, or add/remove an upgrade/extension). Restarting the game usually won’t refresh existing buildings.”
-
----
-
 ## Summary table
 
 | Goal | Typical approach | Risk |
