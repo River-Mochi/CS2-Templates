@@ -47,7 +47,8 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
 - Has `PrefabRef` pointing at the prefab entity.
-- Has runtime components used by simulation right now (often cached/computed/serialized).
+- Has runtime components used by simulation right now (often cached/computed/serialized)
+- See InstanceEntities for detailed example.
 
 ---
 
