@@ -103,7 +103,7 @@ So using prefab-entity `*Data` as baseline risks **double scaling** and **wrong 
 
 ---
 
-## Concrete: Deathcare + Hearse fields (common confusion)
+## Concrete examples
 
 ### Authoring (PrefabBase) — vanilla baseline
 
