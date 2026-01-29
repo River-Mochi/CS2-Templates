@@ -45,6 +45,15 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 
 ---
 
+## WRONG snippet (don’t do this)
+
+```csharp
+Entity prefab = prefabRefLookup[instance].m_Prefab;
+var baseData = dcLookup[prefab]; // already modified by game/mods
+var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
+```
+
+---
 ## Why workers example is “special”
 Worker limits are **runtime instance components** (ex: `Game.Companies.WorkProvider.m_MaxWorkers`) that don’t always hot-update when you edit the prefab.
 
@@ -55,17 +64,6 @@ Worker limits are **runtime instance components** (ex: `Game.Companies.WorkProvi
   - add/remove extension
   - add/remove upgrade (ex: cold storage)
 - restarting the game usually doesn’t force that refresh
-
----
-
-## WRONG snippet (don’t do this)
-
-```csharp
-Entity prefab = prefabRefLookup[instance].m_Prefab;
-var baseData = dcLookup[prefab]; // already modified by game/mods
-var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
-```
-
 ---
 
 ## “When do I mutate runtime instance components?”
