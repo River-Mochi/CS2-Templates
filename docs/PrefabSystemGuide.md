@@ -173,8 +173,6 @@ Some values used by simulation are **instance-side runtime components** and may 
 
 ---
 
-## WRONG vs RIGHT baseline examples
-
 ### WRONG (double-scaling risk)
 
 ```csharp
