@@ -145,34 +145,79 @@ int baseHearses = authoring.m_HearseCapacity;
 ```
 
 ### Step 2 — Write scaled values onto ECS `*Data` on prefab entities
+
+This is where the mod actually **changes the prefab entity** (entities with `PrefabData`) by writing to `*Data` components.
+
+#### Option 1: explicit `EntityQuery` + `NativeArray<Entity>` loop
+
 ```csharp
-foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
-    .Query<RefRW<DeathcareFacilityData>>()
-    .WithAll<PrefabData>()
-    .WithEntityAccess())
+// Step 2: iterate prefab entities that have DeathcareFacilityData.
+// Build query → get entities → foreach loop.
+
+EntityQuery query = SystemAPI.QueryBuilder()
+    .WithAll<PrefabData, DeathcareFacilityData>() // prefab entities only + the data component to edit
+    .Build();
+
+NativeArray<Entity> entities = query.ToEntityArray(Allocator.Temp);
+
+foreach (Entity prefabEntity in entities)
 {
-    // Always baseline from PrefabBase authoring (not from dc.ValueRO)
-    if (!prefabSystem.TryGetPrefab(e, out PrefabBase prefabBase))
+    // 1) Read vanilla baseline from PrefabBase authoring (NOT from prefab-entity *Data)
+    if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
         continue;
 
     if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
         continue;
 
+    float baseRate = authoring.m_ProcessingRate;     // vanilla authored baseline
+    float scaledRate = baseRate * scalar;            // apply settings scalar
+
+    int baseStorage = authoring.m_StorageCapacity;   // vanilla authored baseline
+    int scaledStorage = Math.Max(1, (int)Math.Round(baseStorage * scalar));
+
+    // 2) Write scaled values onto the prefab entity's *Data component
+    DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
+    dc.m_ProcessingRate = scaledRate;
+    dc.m_StorageCapacity = scaledStorage;
+    EntityManager.SetComponentData(prefabEntity, dc);
+}
+entities.Dispose();
+```
+
+#### Option 2: `SystemAPI.Query<RefRW<T>>()` style (more compact ECS)
+
+```csharp
+// Same logic as above, just using RefRW<T> query style.
+// This is common in ECS-heavy mods, but the foreach header is denser.
+
+foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
+    .Query<RefRW<DeathcareFacilityData>>()
+    .WithAll<PrefabData>()          // prefab entities only
+    .WithEntityAccess())            // exposes prefabEntity in the loop
+{
+    // Vanilla baseline from PrefabBase authoring
+    if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
+        continue;
+
+    if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
+        continue;
+
+    // Scale 1–2 fields (keep examples small and clear)
     dc.ValueRW.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
-    dc.ValueRW.m_HearseCapacity = Math.Max(1, (int)Math.Round(authoring.m_HearseCapacity * scalar));
+    dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
 }
 ```
-**Alternate Step 2 method (EntityManager loop style):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L33) 
+
+**Option 3 (EntityManager loop style):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L33)
 
 ---
 ## Baseline examples
 
 ### DON'T do this for baseline (double-scale trap)
 ```csharp
-// Danger: uses prefab-entity data as vanilla baseline
-// This common method is for assigning values, but bad if intent is correct scaled baseline.
+// Common method for assigning values; bad if intent is correct scaled baseline.
 Entity prefab = prefabRefLookup[instance].m_Prefab;
-var baseData = dcLookup[prefab]; // might already be modified!
+var baseData = dcLookup[prefab]; // danger, might already be modified!
 float scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 ```
 
