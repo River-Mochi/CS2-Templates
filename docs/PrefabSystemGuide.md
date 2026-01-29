@@ -48,7 +48,7 @@ if (prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 - A placed thing in the simulation.
 - Has a `PrefabRef` component.
   - `PrefabRef` points to a **prefab entity** (`PrefabRef.m_Prefab`).
-  - `PrefabRef` is **not** “the instance entity”. It’s just a component on the instance.
+  - `PrefabRef` is just a component on the instance entity.
 - Has runtime components that may or may not update when the prefab changes.
 - Often carries **cached / computed / serialized** values used by simulation right now.
 - Detailed example in InstanceEntity.md
@@ -59,12 +59,12 @@ if (prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 
 `PrefabRef.m_Prefab` only tells you *which prefab entity* the instance currently references.
 
-The prefab entity can already be modified by:
+The prefab entity can be modified by:
 - the game itself (example: upgrades/extensions combining stats)
 - other mods
 - the same mod on earlier runs
 
-So using prefab-entity components as “baseline” tends to cause **double-scaling** or **wrong restore values**.
+So using prefab-entity components as “baseline” could cause **double-scaling** or **wrong restore values**.
 
 **Rule of thumb**
 - ✅ Baseline = `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` → authoring component fields  
