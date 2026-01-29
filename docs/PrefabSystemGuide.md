@@ -117,7 +117,12 @@ These are what mods usually write to when scaling for example:
 Often what simulation uses *right now*:
 
 **`Game.Companies.WorkProvider` (instance-side example)**
-- `m_MaxWorkers` (runtime value; not always hot-updated from prefab edits in Options UI)
+- `m_MaxWorkers`
+
+- runtime value; normally not hot-updated from prefab edits in Options UI
+- Means that updating `WokplaceData` above only applies to new buildings but not existing ones.
+- `Workprovider` is game computed and needs extra code to make "instant" changes on a building
+- or a player action to naturally trigger the game job (build new building or add an extension).
 
 ---
 
@@ -162,9 +167,10 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
 ---
 ## Baseline examples
 
-### DON'T do this (double-scale trap)
+### DON'T do this for baseline (double-scale trap)
 ```csharp
 // Danger: uses prefab-entity data as vanilla baseline
+// This common method is for assigning values, but bad if intent is correct scaled baseline.
 Entity prefab = prefabRefLookup[instance].m_Prefab;
 var baseData = dcLookup[prefab]; // might already be modified!
 float scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
