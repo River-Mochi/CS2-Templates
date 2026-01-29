@@ -182,7 +182,7 @@ foreach (Entity prefabEntity in entities)
 #### Option 2: `SystemAPI.Query<RefRW<T>>()` (compact ECS style)
 
 ```csharp
-// Same logic as above, just using RefRW<T> query style, foreach is denser.
+// Same logic as above, just using Unity RefRW<T> query style, foreach is denser.
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
