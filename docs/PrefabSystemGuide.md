@@ -144,7 +144,7 @@ int baseHearses = authoring.m_HearseCapacity;
 
 This is where the mod actually **changes the prefab entity** (entities with `PrefabData`) by writing to `*Data` components.
 
-#### Option 1: `EntityQuery` + `NativeArray<Entity>` loop
+#### Option 1: `EntityQuery` + `NativeArray<Entity>` loop (classic style)
 
 ```csharp
 // Build query → get entities → foreach loop.
