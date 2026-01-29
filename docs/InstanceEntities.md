@@ -33,7 +33,7 @@ Some systems read prefab `*Data` frequently, or the effect is naturally visible 
 Other systems compute a per-instance value and store it on the instance entity (and sometimes serialize it into the save).  
 Prefab edits then affect **new instances**, but **existing** ones can remain unchanged until a refresh trigger happens.
 
-- Typical examples: worker limits (common), upgrade/extension combined stats, derived runtime limits
+- Typical examples: worker limits (example), upgrade/extension combined stats, derived runtime limits
 - Result: prefab edits do **not reliably** update existing instances without a refresh
 
 ---
@@ -50,7 +50,7 @@ None of those are “bad”; they’re normal sim engineering tradeoffs. They *d
 
 ---
 
-## Worker limits case study (common pain point)
+## Worker limits case study (example)
 
 ### Typical layers
 
@@ -95,7 +95,7 @@ Exact triggers vary by system, but these commonly cause rebuild/reinit paths:
 | Building rebuild (delete + place again) | Forces a clean init using current prefab state |
 | Some service/system-specific “refresh” method | Recomputes runtime data (best-case, but must be located per system) |
 
-This is why “rebuild / change extension / toggle upgrade” is often the most reliable player-facing instruction.
+This is why “rebuild / change extension / toggle upgrade” is often the most reliable player method.
 
 ---
 
