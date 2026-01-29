@@ -184,7 +184,7 @@ foreach (Entity prefabEntity in entities)
 entities.Dispose();
 ```
 
-#### Option 2: `SystemAPI.Query<RefRW<T>>()` style (more compact ECS)
+#### Option 2: `SystemAPI.Query<RefRW<T>>()` (compact ECS style)
 
 ```csharp
 // Same logic as above, just using RefRW<T> query style.
