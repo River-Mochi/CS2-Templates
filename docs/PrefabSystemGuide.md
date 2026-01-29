@@ -95,8 +95,7 @@ That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vani
 These live on `PrefabBase` and contain the authored defaults.
 
 **`Game.Prefabs.DeathcareFacility` (authoring)**
-- `m_ProcessingRate`
-- `m_StorageCapacity`
+- `m_ProcessingRate`, `m_StorageCapacity`
 
 **`Game.Prefabs.Workplace` (authoring)**
 - `m_Workplaces` (baseline max workers)
@@ -106,12 +105,10 @@ These live on `PrefabBase` and contain the authored defaults.
 These are what mods usually write to when scaling for example:
 
 **`Game.Prefabs.DeathcareFacilityData`**
-- `m_ProcessingRate`
-- `m_StorageCapacity`
+- `m_ProcessingRate`, `m_StorageCapacity`
 
 **`Game.Prefabs.WorkplaceData`**
-- `m_MaxWorkers`
-- `m_MinimumWorkersLimit`
+- `m_MaxWorkers`, `m_MinimumWorkersLimit`
 
 ### Runtime / instance-side components (placed entities)
 Often what simulation uses *right now*:
@@ -122,7 +119,7 @@ Often what simulation uses *right now*:
 - runtime value; normally not hot-updated from prefab edits in Options UI
 - Means that updating `WokplaceData` above only applies to new buildings but not existing ones.
 - `Workprovider` is game computed and needs extra code to make "instant" changes on a building
-- or a player action to naturally trigger the game job (build new building or add an extension triggers game to run job and read `*Data` again).
+- or a player action to naturally trigger the game job (build new building or add an extension triggers game to run job and read `WorkplaceData` again).
 
 ---
 
