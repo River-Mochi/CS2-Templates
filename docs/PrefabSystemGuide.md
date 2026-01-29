@@ -1,186 +1,224 @@
 # PrefabSystem “Source of Truth” in Cities: Skylines II (CO API)
 
-This note is for CS2 modders who change things like **capacities / rates and special values like worker counts** and want the results to be:
-  - **Correct** (true vanilla baselines / game defaults)
-  - **Compatible** (other mods can coexist)
-  - **Predictable** (players know when changes apply immediately vs needing a new building)
+This note is for CS2 modders who change things like **capacities / rates / counts** and want results to be:
 
-**No time to read?** [Quick Guide](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabQuickGuide.md#prefabsystem-source-of-truth--quick-guide-cs2-modding)
+- **Correct** (true vanilla baselines / game defaults)
+- **Compatible** (other mods can coexist)
+- **Predictable** (players know when changes apply immediately vs needing a refresh)
 
----
-
-**TL;DR mental model**
-  - **Baseline** = `PrefabBase` authoring (via `PrefabSystem.TryGetPrefab(...)`)
-  - **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
-  - **What gameplay uses right now** = instance-side runtime components (often) cached / serialized)
-
-> [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to see these values more clearly in-game. <br>
-> Examples below are mainly from the [Magic Hearse](https://mods.paradoxplaza.com/mods/123497/Windows) mod but apply to general prefabs.<br>
-> See **InstanceEntities.md**: for more detail on instance runtime examples (i.e. special cases like workers):
+**No time to read?** See: `PrefabQuickGuide.md`
 
 ---
 
-## 3 different “things” that often get mixed up
+## TL;DR mental model
 
-In CS2 you run into **three** layers that *sound* similar but behave differently:
-
-1) **Prefab Entity** (ECS entity with `PrefabData`)
-- This is the ECS representation of a prefab.
-  - Often referenced by `PrefabRef.m_Prefab` from an instance.
-  - Frequently stores ECS prefab-side `*Data` components that mods commonly edit (ex: `DeathcareFacilityData`, `WorkplaceData`).
-- **Important:** prefab entities are **mutable**. The game and mods can change them during a session.
-
-2) **PrefabBase (Authoring object)** — the real baseline
-  - The game’s authoring object that represents what the prefab “is” in vanilla.
-  - Accessed via:
-  ```csharp
-  PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
-  if (prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase)) { ... }
-  ```
-  - **Treat as “true vanilla baseline.”**
-
-3) **Instance Entity** (the placed building / vehicle / citizen in the world)
-  - Has `PrefabRef` pointing at the prefab entity.
-  - Has runtime components that may or may not update when the prefab changes.
-  - Often carries **cached / computed / serialized** values used by simulation right now.
+- **True vanilla baseline = `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` → authoring component fields**
+- **What mods usually edit** = prefab-entity ECS `*Data` components (`WithAll<PrefabData>()`)
+- **What simulation uses right now** = instance/runtime components (often cached/serialized; not always hot-updated)
 
 ---
 
-## Why `PrefabRef` is NOT the “true vanilla baseline”
+## The 3 layers people mix up (and why it matters)
 
-`PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
+### 1) Prefab entity (ECS entity with `PrefabData`)
 
-The prefab entity can already be modified by:
-- the game itself (ex: upgrades/extensions combining stats)
-- other mods
-- your own mod on earlier runs
+The ECS representation of a prefab.
 
-So using prefab-entity components as “baseline” tends to produce **double-scaling** or **wrong restore values**.
+- Often referenced by `PrefabRef.m_Prefab` from instances.
+- Holds prefab-side ECS `*Data` components mods commonly edit (e.g., `DeathcareFacilityData`, `WorkplaceData`).
+- **Mutable** during a session.
+- Can be **replaced** by the game when prefab definitions update.
 
-**Rule of thumb**
-- ✅ Baseline = `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` → authoring component fields  
-- ❌ Baseline = reading `*Data` from the prefab entity referenced by `PrefabRef`
+### 2) PrefabBase (authoring object) — the baseline source of truth
 
----
+The authoring “truth” for vanilla values.
 
-## Concrete: real components & fields you can cite
-
-### Authoring components (PrefabBase) — true vanilla values
-These live on `PrefabBase` and contain the “authored” values.
-
-Examples:
-
-**`Game.Prefabs.DeathcareFacility` (authoring)**
-- `m_ProcessingRate`
-- `m_StorageCapacity`
-
-**`Game.Prefabs.Workplace` (authoring)**
-- `m_Workplaces` (baseline max workers)
-- `m_MinimumWorkersLimit`
-
-### ECS `*Data` components (often on prefab entities)
-These are the ECS components you typically write to when scaling:
-
-**`Game.Prefabs.DeathcareFacilityData`**
-- `m_ProcessingRate`
-- `m_StorageCapacity`
-
-**`Game.Prefabs.WorkplaceData`**
-- `m_MaxWorkers`
-- `m_MinimumWorkersLimit`
-
-### Runtime / instance-side components (placed entities)
-These are often what the simulation actually uses for *current behavior*:
-
-**`Game.Companies.WorkProvider` (instance-side)**
-- `m_MaxWorkers` (game-maintained runtime value; not always “copied live” from prefab changes)
-
----
-
-## Recommended pattern (safe & compatible)
-
-### Step 1 — Read vanilla from PrefabBase
 ```csharp
+PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
+
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
-if (!prefabBase.TryGet(out DeathcareFacility authoring))
+if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
     return;
 
-// true baseline examples
-float baseRate = authoring.m_ProcessingRate;
+// true vanilla baseline (authoring)
 int baseHearses = authoring.m_HearseCapacity;
+float baseRate = authoring.m_ProcessingRate;
 ```
 
-### Step 2 — Write scaled values onto ECS `*Data` on prefab entities
+- **Treat PrefabBase authoring fields as “true vanilla baseline.”**
+- This is the safest baseline for scaling/restoring without double-scaling.
+
+### 3) Instance entity (placed building / vehicle / citizen)
+
+What exists in the city.
+
+- Has `PrefabRef` pointing at the prefab entity.
+- Has runtime components used by simulation now.
+- Often carries **cached / computed / serialized** values.
+
+---
+
+## What `PrefabRef` really is (and what it is not)
+
+`PrefabRef` is just:
+
 ```csharp
-foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
-    .Query<RefRW<DeathcareFacilityData>>()
-    .WithAll<PrefabData>()
-    .WithEntityAccess())
+public struct PrefabRef : IComponentData
 {
-    // authoring baseline via PrefabBase here...
-    dc.ValueRW.m_ProcessingRate = scaled;
+    public Entity m_Prefab; // prefab entity
 }
 ```
 
-- **Alternate step 2 method** from [Tree mod](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L35)
+So:
 
-### Step 3 — For special items like workers, add a controlled restore strategy (marker)
-If you scale workers, it’s possible to:
-- store what you applied (marker component), and
-- only restore if the current values still match the marker (prevents stomping another mod’s changes).
-- consider one-shot apply (ex: setting change) and not per-frame (bad for performance)
+- ✅ tells which **prefab entity** an instance currently references
+- ❌ does **not** mean “vanilla baseline”
+- ❌ does **not** guarantee stability: prefab entities can be **replaced** and references can be repointed
 
----
-
-### How to verify in-game (quick)
-Use Scene Explorer mod an entity inspector (often CTRL+E and click on any building):
-- PrefabBase authoring (source-of-truth baseline)
-- Prefab entity (`PrefabData` entity, click on any crematorium: `WorkplaceData`, `DeathcareFacilityData`, etc.)
-- Placed building instance (`WorkProvider`, plus anything else)
+**Compatibility rule:** avoid treating `PrefabRef.m_Prefab` as “permanent identity” across time.
 
 ---
 
-## WRONG vs RIGHT examples
+## Why `PrefabRef.m_Prefab` is NOT a safe vanilla baseline
 
-### WRONG baseline (potential bug)
+If code does this:
+
 ```csharp
-// WRONG: uses prefab-entity data as vanilla baseline
-Entity prefab = prefabRefLookup[instance].m_Prefab;
-var baseData = dcLookup[prefab]; // might already be modified!
-var scaled = baseData.m_ProcessingRate * scalar;
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+var data = dcLookup[prefabEntity]; // DeathcareFacilityData on prefab entity
 ```
 
-### RIGHT baseline
+That `data` can already be modified by:
+
+- upgrades/extensions combining stats
+- other mods
+- earlier runs of the same mod
+
+So using prefab-entity `*Data` as baseline risks **double scaling** and **wrong restores**.
+
+### Rule of thumb
+
+- ✅ Baseline = `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` → authoring fields
+- ❌ Baseline = reading prefab-entity `*Data` through `PrefabRef`
+
+---
+
+## Concrete: Deathcare + Hearse fields (common confusion)
+
+### Authoring (PrefabBase) — vanilla baseline
+
+| Authoring component | Baseline fields |
+|---|---|
+| `Game.Prefabs.DeathcareFacility` | `m_HearseCapacity`, `m_StorageCapacity`, `m_ProcessingRate`, `m_LongTermStorage` |
+| `Game.Prefabs.Hearse` | `m_CorpseCapacity` |
+
+**Do not mix these:**
+- Facility fleet slots: `DeathcareFacility.m_HearseCapacity`
+- Vehicle payload: `Hearse.m_CorpseCapacity`
+
+### Prefab entity ECS `*Data` (commonly edited)
+
+| ECS component | Fields typically edited |
+|---|---|
+| `Game.Prefabs.DeathcareFacilityData` | `m_HearseCapacity`, `m_StorageCapacity`, `m_ProcessingRate`, `m_LongTermStorage` |
+| `Game.Prefabs.HearseData` | `m_CorpseCapacity` |
+
+---
+
+## Recommended pattern (safe + compatible)
+
+### Step 1 — read vanilla from PrefabBase authoring
+
 ```csharp
-// RIGHT: baseline from PrefabBase authoring
-Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
+
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
-if (!prefabBase.TryGet(out DeathcareFacility authoring))
+if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
     return;
 
+int baseHearses = authoring.m_HearseCapacity;
 float baseRate = authoring.m_ProcessingRate;
-float scaled = baseRate * scalar;
+```
+
+### Step 2 — write scaled values onto prefab entity `*Data` (PrefabData entities)
+
+```csharp
+PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
+
+foreach ((RefRW<Game.Prefabs.DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
+    .Query<RefRW<Game.Prefabs.DeathcareFacilityData>>()
+    .WithAll<PrefabData>()
+    .WithEntityAccess())
+{
+    if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
+        continue;
+
+    if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
+        continue;
+
+    dc.ValueRW.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
+    dc.ValueRW.m_HearseCapacity = (int)math.round(authoring.m_HearseCapacity * scalar);
+}
+```
+
+### Step 3 — runtime-cached values need a deliberate strategy
+
+Some values used by simulation are **instance-side runtime components** and may not hot-update from prefab edits.
+
+- Prefab edits remain correct and safe for **new** instances.
+- Existing instances may require a **refresh event** (rebuild, add/remove upgrade/extension).
+- Avoid per-frame instance mutation for performance and compatibility.
+
+---
+
+## WRONG vs RIGHT baseline examples
+
+### WRONG (double-scaling risk)
+
+```csharp
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+var baseData = dcLookup[prefabEntity];           // may already be modified
+dcLookup[prefabEntity] = new DeathcareFacilityData
+{
+    m_ProcessingRate = baseData.m_ProcessingRate * scalar
+};
+```
+
+### RIGHT (authoring truth)
+
+```csharp
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+
+PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
+if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
+    return;
+
+if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
+    return;
+
+float scaled = authoring.m_ProcessingRate * scalar;
 ```
 
 ---
 
-## Quick reference
+## Quick reference tables
 
 ### Baseline vs data vs runtime
+
 | Layer | What it is | Good for | Not good for |
 |---|---|---|---|
-| `PrefabBase` authoring | “Real prefab definition” | true vanilla baseline | writing runtime effects |
-| Prefab entity (`PrefabData`) | ECS representation | writing scaled `*Data` | using as baseline |
+| `PrefabBase` authoring | real prefab definition | true vanilla baseline | direct runtime mutation |
+| Prefab entity (`PrefabData`) | ECS prefab representation | writing scaled `*Data` | baseline (unless intentionally “scale effective”) |
 | Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
 
 ### “Applies immediately?” rule of thumb
-| What to change | Where to usually write | Applies to existing buildings instantly? |
-|---|---|---|
-| processing/storage/fleet | prefab *Data components (ex: DeathcareFacilityData) | often yes / instant |
-| workers max/min | ex: `WorkplaceData` on prefab | **often needs** (rebuild/add extension) |
-| runtime worker provider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
 
+| Change type | Usually written where | Existing instances update instantly? |
+|---|---|---|
+| processing/storage/fleet | prefab `*Data` (e.g., `DeathcareFacilityData`) | often yes |
+| workers max/min | prefab `WorkplaceData` | often needs refresh event |
+| instance runtime components | instance components | yes, but riskier |
