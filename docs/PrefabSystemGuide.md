@@ -52,8 +52,6 @@ float baseRate = authoring.m_ProcessingRate;
 
 ### 3) Instance entity (placed building / vehicle / citizen) 
 
-What exists in the city.
-
 - Has `PrefabRef` pointing at the prefab entity.
 - Has runtime components used by simulation now.
 - Often carries **cached / computed / serialized** values.
