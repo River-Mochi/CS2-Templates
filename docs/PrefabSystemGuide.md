@@ -14,7 +14,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 - **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
 - **What gameplay uses right now** = instance-side runtime components (often cached / serialized)
 
-> [**Scene Explorer**](https://mods.paradoxplaza.com/mods/74285/Windows) mod is recommended to see live detailed entity values in-game.<br>
+> [**Scene Explorer**](https://mods.paradoxplaza.com/mods/74285/Windows) mod is recommended to see detailed entity values in-game.<br>
 > Examples below uses [**Magic Hearse**](https://mods.paradoxplaza.com/mods/123497/Windows) mod.
 
 ---
@@ -26,7 +26,7 @@ In CS2 you run into **three** layers that *sound* similar but behave differently
 ### 1) Prefab entity (ECS entity with `PrefabData`)
 - ECS representation of a prefab.
 - Many instances store a `PrefabRef` component that points to this prefab entity.
-- This entity often holds prefab-side `*Data` components mods edit (example: `DeathcareFacilityData`, `WorkplaceData`).
+- This entity often holds prefab-side `*Data` components mods edit (ex: `DeathcareFacilityData`, `WorkplaceData`).
 - **Important:** prefab entities are **mutable**. The game and mods can change them during a session.
 
 ### 2) `PrefabBase` (authoring object) — the real baseline
@@ -51,6 +51,7 @@ if (prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
   - `PrefabRef` is **not** “the instance entity”. It’s just a component on the instance.
 - Has runtime components that may or may not update when the prefab changes.
 - Often carries **cached / computed / serialized** values used by simulation right now.
+- Detailed example in InstanceEntity.md
 
 ---
 
