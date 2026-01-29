@@ -22,14 +22,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 ## 3 different “things” that often get mixed up
 
 In CS2 you run into **three layers** that *sound* similar but behave differently:
-
-### 1) Prefab Entity (ECS entity with `PrefabData`)
-- ECS representation of a prefab.
-- Often referenced by `PrefabRef.m_Prefab` from an instance.
-- Stores ECS prefab-side `*Data` components that mods commonly edit (ex: `DeathcareFacilityData`, `WorkplaceData`).
-- **Important:** prefab entities are **mutable**. Game + mods can change them during a session.
-
-### 2) PrefabBase (authoring) — the real baseline
+### 1) PrefabBase (authoring) — the real baseline
 - Authoring object that represents what the prefab “is” in vanilla.
 - Accessed via `PrefabSystem.TryGetPrefab(...)`:
 
@@ -43,6 +36,12 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 
 - **Treat PrefabBase authoring fields as the “true vanilla baseline.”**
 - This prevents double-scaling and makes restore logic sane.
+  
+### 2) Prefab Entity (ECS entity with `PrefabData`)
+- ECS representation of a prefab.
+- Often referenced by `PrefabRef.m_Prefab` from an instance.
+- Stores ECS prefab-side `*Data` components that mods commonly edit (ex: `DeathcareFacilityData`, `WorkplaceData`).
+- **Important:** prefab entities are **mutable**. Game + mods can change them during a session.
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
