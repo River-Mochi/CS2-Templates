@@ -202,7 +202,6 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
         continue;
 
-    // Scale 1–2 fields (keep examples small and clear)
     dc.ValueRW.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
     dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
 }
