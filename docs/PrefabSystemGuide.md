@@ -243,14 +243,14 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 
 ### Baseline vs data vs runtime
 | Layer | What it is | Good for | Not good for |
-|---|---|---|---|
+|:---|:---|:---|:---|
 | `PrefabBase` authoring | Real prefab definition | true vanilla baseline | writing runtime effects |
 | Prefab entity (`PrefabData`) | ECS representation | writing scaled `*Data` | using as baseline |
 | Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
 
 ### “Applies immediately?” (real examples)
 | What to change | Where to usually write | Existing buildings instant update? |
-|---|---|---|
+|:---|:---|:---|
 | processing/storage | prefab `*Data` components (ex: `DeathcareFacilityData`) | yes / easiest |
 | workers max/min | `WorkplaceData` on prefab | Often needs a trigger: new building/extension/upgrade |
 | runtime WorkProvider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
