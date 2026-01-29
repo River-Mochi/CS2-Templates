@@ -5,7 +5,7 @@ This is a companion to [**PrefabSystemGuide.md**](https://github.com/River-Mochi
 Prefab edits are usually done on **prefab entities** (`WithAll<PrefabData>()`).  
 Gameplay, however, often reads **instance entities** (the placed building/vehicle/citizen/etc.) that may hold **cached / computed / serialized** runtime state.
 
-The result: some sliders feel “instant”, while other values only change for **newly created** instances or after a **refresh event**.
+Result: some Options UI menu sliders changing building/vehicle (prefab) details show instant changes on existing prefabs, while other values only update on **newly created** buildings or after a trigger (adding/removing a building extension or upgrade item). 
 
 ---
 
