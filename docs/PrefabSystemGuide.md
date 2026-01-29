@@ -50,14 +50,14 @@ float baseRate = authoring.m_ProcessingRate;
 - **Treat PrefabBase authoring fields as “true vanilla baseline.”**
 - This is the safest baseline for scaling/restoring without double-scaling.
 
-### 3) Instance entity (placed building / vehicle / citizen)
+### 3) Instance entity (placed building / vehicle / citizen) 
 
 What exists in the city.
 
 - Has `PrefabRef` pointing at the prefab entity.
 - Has runtime components used by simulation now.
 - Often carries **cached / computed / serialized** values.
-
+- Details in InstanceEntities.md
 ---
 
 ## What `PrefabRef` really is (and what it is not)
