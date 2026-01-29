@@ -60,7 +60,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 `PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
 
 That prefab entity can already be modified by:
-- the game itself (upgrades/extensions combining stats)
+- the game itself (per upgrades/extensions and combining stats)
 - other mods
 - your own mod on earlier runs
 
@@ -201,6 +201,6 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 ### “Applies immediately?” rule of thumb
 | What to change | Where to usually write | Applies to existing buildings instantly? |
 |---|---|---|
-| processing/storage/fleet | prefab `*Data` components (ex: `DeathcareFacilityData`) | often yes / quick |
+| processing/storage | prefab `*Data` components (ex: `DeathcareFacilityData`) | often yes / quick |
 | workers max/min | `WorkplaceData` on prefab | often needs rebuild/extension/upgrade |
 | runtime worker provider | `WorkProvider` on instances | yes, but risky (compatibility + invariants) |
