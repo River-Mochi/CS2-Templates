@@ -207,7 +207,7 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
 Special case: if scaling workers, consider:
 - store what was applied (add a marker component)
 - restore only if current values still match the marker (prevents stomping another mod)
-- apply on change events (i.e., setting slider change), not per-frame
+- apply on change events (i.e., options menu slider change), not per-frame
 
 ---
 ## Baseline examples
