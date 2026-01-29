@@ -186,7 +186,7 @@ foreach (Entity prefabEntity in entities)
 
 ```csharp
 // Same logic as Option 1, just using Unity ECS RefRW<T> query style.
-// Tradeoff: denser, compile errors turn into "okay, which piece is mad?"
+// Tradeoff: denser, compile errors turn into "where is the real bug?"
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
