@@ -188,7 +188,7 @@ entities.Dispose();
 
 ```csharp
 // Same logic as above, just using RefRW<T> query style.
-// This is common in ECS-heavy mods, but the foreach header is denser.
+// foreach header is denser, no dispose needed.
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
