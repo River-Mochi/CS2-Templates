@@ -36,7 +36,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 
 - **Treat PrefabBase authoring fields as the “true vanilla baseline.”**
 - PrefabBase includes the raw field value that asset creator used on that prefab.
-- This makes restore logic correct (prevents double multiplier scaling).
+- This makes restore logic correct and prevents double multiplier scaling.
   
 ### 2) Prefab Entity (ECS entity with `PrefabData`)
 - ECS representation of a prefab.
