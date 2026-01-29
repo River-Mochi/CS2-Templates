@@ -50,5 +50,7 @@ a refresh trigger (new building change) to recompute instance-side values.
     - iLSpy or DnSpyEx are apps to decompile and study code.
 3. Ask the player to do it: avoid all effort of 1 or 2 by asking the player to simply make new buildings to see the slider changes for "special" values.
 
->Changes persist on saves when the mod is removed but is harmless if steps are done correctly. Player can delete old buildings and all new buildings will be vanilla values.
+> Some instance-side changes may be serialized into the save and remain after removing the mod.
+> Prefab-side edits are not guaranteed to persist.
+> Recommended: avoid permanent-looking instance edits unless that outcome is intentional and clearly documented for players.
 
