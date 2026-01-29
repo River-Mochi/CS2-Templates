@@ -92,9 +92,6 @@ These are often what the simulation actually uses for *current behavior*:
 
 ---
 
-
----
-
 ## Recommended pattern (safe & compatible)
 
 ### Step 1 — Read vanilla from PrefabBase
@@ -165,8 +162,6 @@ float scaled = baseRate * scalar;
 ```
 
 ---
-
-
 
 ## Quick reference
 
