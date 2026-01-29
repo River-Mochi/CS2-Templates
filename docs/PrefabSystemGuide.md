@@ -29,7 +29,7 @@ In CS2 you run into **three layers** that *sound* similar but behave differently
 - Stores ECS prefab-side `*Data` components mods commonly edit (ex: `DeathcareFacilityData`, `WorkplaceData`).
 - **Important:** prefab entities are **mutable**. Game + mods can change them during a session.
 
-### 2) PrefabBase (Authoring object) — the real baseline
+### 2) PrefabBase (authoring) — the real baseline
 - Authoring object that represents what the prefab “is” in vanilla.
 - Accessed via `PrefabSystem.TryGetPrefab(...)`:
 
