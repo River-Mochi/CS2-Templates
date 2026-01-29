@@ -35,7 +35,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 ```
 
 - **Treat PrefabBase authoring fields as the “true vanilla baseline.”**
-- Prevents double-scaling and makes restore logic correct.
+- This prevents double-scaling and makes restore logic correct.
   
 ### 2) Prefab Entity (ECS entity with `PrefabData`)
 - ECS representation of a prefab.
