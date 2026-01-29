@@ -35,7 +35,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 ```
 
 - **Treat PrefabBase authoring fields as the “true vanilla baseline.”**
-- This prevents double-scaling and makes restore logic correct.
+- Prevents double-scaling and makes restore logic correct.
   
 ### 2) Prefab Entity (ECS entity with `PrefabData`)
 - ECS representation of a prefab.
@@ -47,8 +47,9 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 - The thing that exists in the city right now.
 - `PrefabRef` points to a **prefab entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
 - Has runtime components used by simulation right now (often cached/computed/serialized).
-- Some of those runtime values do **not** hot-update just because the prefab entity changed.
+- Most all known of these runtime values do **not** hot-update just because the prefab entity changed.
   - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
+  - needs extra code to trigger an instant update or a player action (ex: place a new building).
 
 > See **InstanceEntities.md** for detailed instance-side / runtime examples.
 
