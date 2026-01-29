@@ -11,7 +11,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
   - **What gameplay uses right now** = instance-side runtime components (often cached / serialized)
 
 > [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to see these values more clearly in-game. <br>
-> Examples below are mainly from the [Magic Hearse](https://mods.paradoxplaza.com/mods/123497/Windows) mod.
+> Examples below are mainly from the [Magic Hearse](https://mods.paradoxplaza.com/mods/123497/Windows) mod but apply to general prefabs.
 
 ---
 
