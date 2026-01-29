@@ -18,7 +18,7 @@ This note is for CS2 modders who change things like **capacities / rates / count
 
 ---
 
-## The 3 layers that get mix up (and why it matters)
+## The 3 layers that get mix up
 
 ### 1) Prefab entity (ECS entity with `PrefabData`)
 
