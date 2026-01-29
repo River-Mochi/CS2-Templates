@@ -68,10 +68,8 @@ So using prefab-entity `*Data` as “baseline” tends to produce **double-scali
 
 ---
 
-## DNSpy facts that matter (short + practical)
-
 ### `PrefabData.m_Index` maps a prefab entity → `PrefabBase`
-In game code, `PrefabSystem` keeps a list of authoring prefabs (`m_Prefabs`).
+In the game, `PrefabSystem` keeps a list of authoring prefabs (`m_Prefabs`).
 `PrefabData` stores the **index** into that list.
 
 So this call:
@@ -97,31 +95,25 @@ This matters because not every “prefab edit” causes every instance cache to 
 
 ---
 
-## Concrete: real components & fields (Deathcare is just an example)
+## Concrete: real components & fields (examples)
 
 ### Authoring components (PrefabBase) — true vanilla values
 These live on `PrefabBase` and contain the authored defaults.
 
-Example authoring components:
-
 **`Game.Prefabs.DeathcareFacility` (authoring)**
 - `m_ProcessingRate`
 - `m_StorageCapacity`
-- `m_HearseCapacity`
 
 **`Game.Prefabs.Workplace` (authoring)**
 - `m_Workplaces` (baseline max workers)
 - `m_MinimumWorkersLimit`
 
-(There are many more prefab types; Deathcare is just an easy example to see in-game.)
-
 ### ECS `*Data` components (on prefab entities)
-These are what mods usually write to when scaling:
+These are what mods usually write to when scaling for example:
 
 **`Game.Prefabs.DeathcareFacilityData`**
 - `m_ProcessingRate`
 - `m_StorageCapacity`
-- `m_HearseCapacity`
 
 **`Game.Prefabs.WorkplaceData`**
 - `m_MaxWorkers`
@@ -130,7 +122,7 @@ These are what mods usually write to when scaling:
 ### Runtime / instance-side components (placed entities)
 Often what simulation uses *right now*:
 
-**`Game.Companies.WorkProvider` (instance-side)**
+**`Game.Companies.WorkProvider` (instance-side example)**
 - `m_MaxWorkers` (runtime value; not always hot-updated from prefab edits)
 
 ---
@@ -171,12 +163,6 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity e) in SystemAPI
     dc.ValueRW.m_HearseCapacity = Math.Max(1, (int)Math.Round(authoring.m_HearseCapacity * scalar));
 }
 ```
-
-### Step 3 — Special case: workers (restore strategy / marker)
-If scaling workers, consider:
-- store what was applied (marker component)
-- restore only if current values still match the marker (prevents stomping another mod)
-- apply on change events (setting change), not per-frame
 
 ---
 
