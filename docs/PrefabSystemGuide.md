@@ -41,14 +41,14 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 ### 2) Prefab Entity (ECS entity with `PrefabData`)
 - ECS representation of a prefab.
 - Often referenced by `PrefabRef.m_Prefab` from an instance.
-- Stores ECS prefab-side `*Data` components that mods commonly edit (ex: `DeathcareFacilityData`, `WorkplaceData`).
+- Stores ECS prefab-side `*Data` components that **mods commonly edit** (ex: `DeathcareFacilityData`, `WorkplaceData`).
 - **Important:** prefab entities are **mutable**. Game + mods can change them during a session.
 - Not everything from PrefabBase to PrefabData is one-to-one (not all provide easy tuning knobs)
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
 - `PrefabRef` points to a **prefab entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
-- Has runtime components used by simulation right now (often cached/computed/serialized).
+- Has runtime components used by simulation right now (often game computed/ cached / serialized).
 - Most all known of these runtime values do **not** hot-update just because the prefab entity changed.
   - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
   - needs extra code to trigger an instant update or a player action (ex: place a new building).
@@ -84,7 +84,7 @@ is basically:
 - read `PrefabData.m_Index` from `prefabEntity`
 - return `m_Prefabs[m_Index]`
 
-That “index bridge” is why `TryGetPrefab(...)` is the right baseline hook for vanilla values.
+That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vanilla values.
 
 ---
 
