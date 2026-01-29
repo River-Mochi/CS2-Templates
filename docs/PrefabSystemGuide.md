@@ -8,7 +8,7 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 **No time to read?** [Quick Guide](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabQuickGuide.md#prefabsystem-source-of-truth--quick-guide-cs2-modding)
 
 > [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to inspect entities in-game.  
-> Examples use [Magic Hearse](https://mods.paradoxplaza.com/mods/123497/Windows) but the pattern applies to *any* prefab type.
+> Examples use Magic Hearse but the pattern applies to *any* prefab type.
 
 ---
 
