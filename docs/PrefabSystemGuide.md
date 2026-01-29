@@ -46,9 +46,12 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
-- Has `PrefabRef` pointing at the prefab entity.
-- Has runtime components used by simulation right now (often cached/computed/serialized)
-- See InstanceEntities for detailed example.
+- `PrefabRef` points to a **prefab entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
+- Has runtime components used by simulation right now (often cached/computed/serialized).
+- Some of those runtime values do **not** hot-update just because the prefab entity changed.
+  - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
+
+> See **InstanceEntities.md** for detailed instance-side / runtime examples.
 
 ---
 
@@ -61,17 +64,17 @@ That prefab entity can already be modified by:
 - other mods
 - your own mod on earlier runs
 
-So using prefab-entity `*Data` as “baseline” tends to produce **double-scaling** or **wrong restore values**.
+So using prefab-entity `*Data` as “baseline” could produce **double-scaling** or **wrong restore values**.
 
 **Rule of thumb**
 - ✅ Baseline = `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` → authoring component fields
 - ❌ Baseline = reading `*Data` from the prefab entity referenced by `PrefabRef`
 
 ---
+## Tiny but important: how `TryGetPrefab(...)` works
 
-### `PrefabData.m_Index` maps a prefab entity → `PrefabBase`
-In the game, `PrefabSystem` keeps a list of authoring prefabs (`m_Prefabs`).
-`PrefabData` stores the **index** into that list.
+The engine keeps an internal list of authoring prefabs (`PrefabSystem` has a list like `m_Prefabs`).
+Each prefab entity has `PrefabData`, which stores **an index into that list**.
 
 So this call:
 
@@ -83,18 +86,10 @@ is basically:
 - read `PrefabData.m_Index` from `prefabEntity`
 - return `m_Prefabs[m_Index]`
 
-That’s why it’s the right “vanilla baseline” hook.
-
-### The engine sometimes REPLACES prefab entities
-`PrefabSystem.UpdatePrefab(...)` can trigger a replace flow (via `ReplacePrefabSystem`):
-- old prefab entity gets marked `Deleted`
-- a new prefab entity is created
-- instances are patched / marked `Updated`
-- areas/nets/lanes/meshes may be rebuilt where relevant
-
-This matters because not every “prefab edit” causes every instance cache to rebuild.
+That “index bridge” is why `TryGetPrefab(...)` is the right baseline hook for vanilla values.
 
 ---
+
 
 ## Concrete: real components & fields (examples)
 
