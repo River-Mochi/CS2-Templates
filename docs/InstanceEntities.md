@@ -2,7 +2,7 @@
 
 This is a companion to [**PrefabSystemGuide.md**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabSystemGuide.md)
 
-Prefab edits are usually done on **prefab entities** (`WithAll<PrefabData>()`).  
+Most mods edit **prefab entities** (entities with PrefabData) by writing to components with *Data at end of the name.  
 Gameplay, however, often reads **instance entities** (the placed building/vehicle/citizen/etc.) that may hold **cached / computed / serialized** runtime state.
 
 Result: some Options UI menu sliders changing building/vehicle (prefab) details show instant changes on existing prefabs, while other values only update on **newly created** buildings or after a trigger (adding/removing a building extension or upgrade item). 
@@ -78,9 +78,9 @@ None of those are “bad”; they’re normal sim engineering tradeoffs. They *d
 
 If prefab value changes but instance stays the same, the value is very likely **instance-cached** or **recomputed only on events**.
 
-### dnSpy hint (optional)
+### dnSpy tips
 If a struct/component implements `ISerializable`, it’s a strong clue it can be stored in saves.  
-This does not prove “cached”, but it raises the probability.
+This does not prove “cached”, but it raises the probability it may persist in saves.
 
 ---
 
@@ -151,7 +151,7 @@ Even when a value is “safe enough” to set:
 This is a debugging pattern to confirm “instance-cached” behavior.
 
 ```csharp
-// Pseudocode-style example; namespaces depend on the specific component types used.
+// Pseudocode example; type names vary.
 foreach (var (prefabRef, workProvider, entity) in SystemAPI
     .Query<RefRO<Game.Prefabs.PrefabRef>, RefRO<Game.Companies.WorkProvider>>()
     .WithEntityAccess())
@@ -163,8 +163,8 @@ foreach (var (prefabRef, workProvider, entity) in SystemAPI
 
     var prefabWork = SystemAPI.GetComponent<Game.Prefabs.WorkplaceData>(prefabEntity);
 
-    int prefabMax = prefabWork.m_MaxWorkers;
-    int instanceMax = workProvider.ValueRO.m_MaxWorkers;
+    int prefabMax = prefabWork.m_MaxWorkers;                // prefab entity value
+    int instanceMax = workProvider.ValueRO.m_MaxWorkers;    // instance runtime value
 
     // If prefabMax changes but instanceMax stays the same, the value is instance-cached or event-recomputed.
 }
