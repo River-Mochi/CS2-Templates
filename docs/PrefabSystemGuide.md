@@ -147,7 +147,7 @@ This is where the mod actually **changes the prefab entity** (entities with `Pre
 #### Option 1: classic style (query + array loop)
 
 ```csharp
-// Build query → get entities → foreach loop.
+// Build query → get entities → foreach loop (easier to debug).
 // Example: iterate prefab entities that have DeathcareFacilityData.
 
 EntityQuery query = SystemAPI.QueryBuilder()
@@ -185,7 +185,8 @@ foreach (Entity prefabEntity in entities)
 #### Option 2: compact ECS style (`SystemAPI.Query<RefRW<T>>()`)
 
 ```csharp
-// Same logic as above, just using Unity RefRW<T> query style, foreach is denser.
+// Same logic as Option1, just using Unity ECS RefRW<T> query style.
+// Tradeoff: denser, harder to debug when learning (where is real error?)
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
