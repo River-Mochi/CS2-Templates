@@ -143,34 +143,31 @@ int baseHearses = authoring.m_HearseCapacity;
 
 This is where the mod actually **changes the prefab entity** (entities with `PrefabData`) by writing to `*Data` components.
 
-#### Option 1: classic style
+#### Option 1: classic style  (query → get entities → foreach loop)
 
 ```csharp
-// Build query → get entities → foreach loop (easier to debug).
-// Example: iterate prefab entities that have DeathcareFacilityData.
+// Query prefab entities, read vanilla from PrefabBase, write *Data.
 
 EntityQuery query = SystemAPI.QueryBuilder()
-    .WithAll<PrefabData, DeathcareFacilityData>() // prefab entities only + the data component to edit
+    .WithAll<PrefabData, DeathcareFacilityData>()
     .Build();
 
 using NativeArray<Entity> entities = query.ToEntityArray(Allocator.Temp);
 
 foreach (Entity prefabEntity in entities)
 {
-    // 1) Read vanilla baseline from PrefabBase authoring (NOT from prefab-entity *Data)
+    // 1) Read vanilla base from PrefabBase authoring (not from *Data).
     if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
         continue;
 
     if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
         continue;
 
-    float baseRate = authoring.m_ProcessingRate;   // vanilla authored baseline
-    float scaledRate = baseRate * scalar;          // apply settings scalar
+    // 2) Write new scaled value onto the prefab entity's *Data.
+    if (!EntityManager.TryGetComponent(prefabEntity, out DeathcareFacilityData dc))
+        continue;
 
-    // 2) Write scaled values onto the prefab entity's *Data component.
-    // GetComponentData returns a COPY (struct).
-    DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
-    dc.m_ProcessingRate = scaledRate;
+    dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
     EntityManager.SetComponentData(prefabEntity, dc); // Writes modified copy back.
 }
 ```
