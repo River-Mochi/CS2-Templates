@@ -242,9 +242,9 @@ else
 ---
 ## Baseline examples
 
-### DO this (true vanilla baseline)
+### DO this (true vanilla)
 ```csharp
-// RIGHT: baseline from PrefabBase authoring (vanilla)
+// RIGHT: baseline from PrefabBase authoring (vanilla you can trust)
 Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // PrefabRef points to the *prefab entity* (ECS)
 
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
