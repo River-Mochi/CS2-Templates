@@ -145,7 +145,8 @@ ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData
 - Same results as Option 1, uses [Unity.Entities ECS <RefRW<T>>](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi-query.html)
 
 ```csharp
-// Compact Unity.Entities ECS query style `SystemAPI.Query<RefRW<T>>()`
+// Compact Unity.Entities ECS query style SystemAPI.Query<RefRW<T>>()
+
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
     .WithAll<PrefabData>()          // prefab entities only
@@ -159,7 +160,6 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
         continue;
 
     dc.ValueRW.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
-    dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
 }
 ```
 Differences vs Option 1:
