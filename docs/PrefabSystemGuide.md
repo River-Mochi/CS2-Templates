@@ -94,6 +94,9 @@ This is where the mod actually **changes the prefab-entity** (entities with `Pre
 
 ```csharp
 // For each prefab entity: read ProcessingRate from PrefabBase, then write the scaled value into DeathcareFacilityData.
+using Game.Prefabs;        // PrefabSystem, PrefabBase, PrefabData, DeathcareFacilityData
+using Unity.Entities;      // Entity, SystemAPI
+...
 
 EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>()
@@ -114,7 +117,7 @@ foreach (Entity prefabEntity in entities)
     DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
 
-    // Writes updated copy back to the entity. (Consider ECB - see section below).
+    // 3) Writes updated copy back to the entity. (Consider ECB - see section below).
     EntityManager.SetComponentData(prefabEntity, dc);
 }
 ```
@@ -145,6 +148,8 @@ ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData
 
 ```csharp
 // Compact Unity.Entities ECS query style SystemAPI.Query<RefRW<T>>()
+using Game.Prefabs;        // PrefabSystem, PrefabBase, PrefabData, DeathcareFacilityData
+using Unity.Entities;      // Entity, SystemAPI, RefRW
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
@@ -230,19 +235,22 @@ float scaledRate = baseRate * scalar;          // apply settings scalar
 Use this to set a `*Data` value (don't care about baseline check).
 
 ```csharp
-// Direct prefab write (ECB): queue an absolute override onto the prefab-entity *Data.
+// Direct prefab write: set prefab-entity *Data to a fixed value (no vanilla baseline).
+// ECB queues the write now; the game applies it later (batched) at the barrier playback.
 
-Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // the prefab entity to edit
 
 if (!EntityManager.HasComponent<DeathcareFacilityData>(prefabEntity))
-    return;
+    return; // prefab doesn't have this data, nothing to change
 
-DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
-dc.m_ProcessingRate = 12f;
+DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity); // struct copy
+dc.m_ProcessingRate = 12f; // absolute override example
 
-EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer();  // Barrier ECB
-ecb.SetComponent(prefabEntity, dc);
+// Optional 
+EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // Barrier method: create a buffer for queued changes
+ecb.SetComponent(prefabEntity, dc); // queue: write this updated data back later
 ```
+
 
 ---
 
