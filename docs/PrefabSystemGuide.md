@@ -143,10 +143,10 @@ int baseHearses = authoring.m_HearseCapacity;
 
 This is where the mod actually **changes the prefab entity** (entities with `PrefabData`) by writing to `*Data` components.
 
-#### Option 1: classic style  (query → get entities → foreach loop)
+#### Option 1: classic SystemAPI style  (query → get entities → foreach loop)
 
 ```csharp
-// For each prefab entity: read vanilla ProcessingRate from PrefabBase, then write the scaled value into DeathcareFacilityData.
+// For each prefab entity: read ProcessingRate from PrefabBase, then write the scaled value into DeathcareFacilityData.
 
 EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>()
