@@ -156,7 +156,7 @@ using NativeArray<Entity> entities = query.ToEntityArray(Allocator.Temp);
 
 foreach (Entity prefabEntity in entities)
 {
-    // 1) Read vanilla base from PrefabBase authoring (not from *Data).
+    // 1) Read vanilla baseline from PrefabBase authoring (not from *Data).
     if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
         continue;
 
@@ -168,7 +168,7 @@ foreach (Entity prefabEntity in entities)
         continue;
 
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
-    EntityManager.SetComponentData(prefabEntity, dc); // Writes modified copy back.
+    EntityManager.SetComponentData(prefabEntity, dc); // Writes updated copy back to the entity
 }
 ```
 **Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
