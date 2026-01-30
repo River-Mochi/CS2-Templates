@@ -119,7 +119,7 @@ foreach (Entity prefabEntity in entities)
 }
 ```
 
-**Example real mod using Option 1 (with different ways to change Prefabs):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
+>**Example real mod using Option 1 (with different ways to change Prefabs):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
 
 ---
 
@@ -136,7 +136,7 @@ EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., Modification
 // ... inside the foreach after computing dc ...
 ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData(prefabEntity, dc);
 ```
-**Example ECB** from [Anarchy mod](https://github.com/yenyang/Anarchy/blob/master/Anarchy/Systems/ErrorChecks/EnableToolErrorsSystem.cs#L48)
+> **Example ECB** from [Anarchy mod](https://github.com/yenyang/Anarchy/blob/master/Anarchy/Systems/ErrorChecks/EnableToolErrorsSystem.cs#L48)
 
 ---
 
