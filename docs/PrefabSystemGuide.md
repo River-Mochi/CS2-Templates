@@ -133,7 +133,7 @@ foreach (Entity prefabEntity in entities)
         continue;
 
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
-    EntityManager.SetComponentData(prefabEntity, dc); // Writes updated copy back to the entity
+    EntityManager.SetComponentData(prefabEntity, dc); // Writes updated copy back to the entity. Also consider learning about and using an EntityCommandBuffer.
 }
 ```
 **Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
