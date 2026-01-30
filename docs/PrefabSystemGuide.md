@@ -88,39 +88,6 @@ That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vani
 
 ---
 
-## Concrete: real components & fields (examples)
-
-### 1) Authoring components (PrefabBase) — true vanilla values
-These live on `PrefabBase` and contain the authored defaults.
-
-**`Game.Prefabs.DeathcareFacility` (authoring)**
-- `m_ProcessingRate`, `m_StorageCapacity`
-
-**`Game.Prefabs.Workplace` (authoring)**
-- `m_Workplaces` (base main bldg max workers)
-- `m_MinimumWorkersLimit`
-
-### 2) ECS `*Data` components (on prefab entities)
-These are what mods usually write to when scaling for example:
-
-**`Game.Prefabs.DeathcareFacilityData`**
-- `m_ProcessingRate`, `m_StorageCapacity`
-
-**`Game.Prefabs.WorkplaceData`**
-- `m_MaxWorkers`, `m_MinimumWorkersLimit`
-
-### 3) Instance-side components (placed entities)
-Often what simulation uses *right now*:
-
-**`Game.Companies.WorkProvider` (instance-side example)**
-- `m_MaxWorkers`
-
-- WorkProvider.m_MaxWorkers is runtime/cached on the placed instance.
-- Editing prefab `WorkplaceData` applies to new buildings
-- existing buildings update only after a trigger (rebuild/extension) or extra mod code that forces a recompute.
-
----
-
 ## Recommended pattern (safe & compatible)
 
 ### Step 1 — Read vanilla from PrefabBase (authoring)
@@ -239,10 +206,16 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 
 ## Quick summary
 
-### Baseline vs data vs runtime
-| Layer | What it is | Good for | Not good for |
-|:---|:---|:---|:---|
-| `PrefabBase` authoring | Real prefab definition | true vanilla baseline | writing runtime effects |
-| Prefab entity (`PrefabData`) | ECS representation | writing scaled `*Data` | using as baseline |
-| Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
+### Baseline vs data vs runtime (with real examples)
+
+| Layer | What it is | Good for | Not good for | Examples |
+|:---|:---|:---|:---|:---|
+| `PrefabBase` authoring | Real prefab definition (vanilla-authored values) | true vanilla baseline / restore | writing runtime effects | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
+| Prefab entity (`PrefabData`) | ECS representation of the prefab | writing scaled `*Data` values | using as baseline (can be modified) | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
+| Instance entity | placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
+
+> **Note:**
+- Instance-side values like WorkProvider.m_MaxWorkers often don’t hot-update from prefab edits
+- Editing prefab `WorkplaceData` applies to **new** buildings
+- Existing buildings update only with extra mod code that forces a recompute or player trigger (make a new building/extension).
 
