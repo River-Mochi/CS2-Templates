@@ -5,7 +5,7 @@ This is where the mod actually changes the prefab entity (entities with PrefabDa
 
 ```csharp
 // Same as Option 1, just using Unity.Entities ECS RefRW<T> query style.
-// Tradeoff: denser, harder to trace errors. For beginners, Option 1 is better
+// Tradeoff: denser, harder to trace errors.
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
@@ -24,4 +24,6 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
 }
 ```
 
-- Denser ECS query code could be harder to debug, because the compiler error often points at a symptom (missing type/namespace) rather than the real cause.
+- Denser ECS query code could be harder to debug. Option 1 is probably better for begginers for reduced debugging confusion.
+- Using RefRW<T> (write-through) so there’s no ToEntityArray and no explicit SetComponentData.
+
