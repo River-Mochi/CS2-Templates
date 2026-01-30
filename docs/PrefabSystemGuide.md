@@ -206,7 +206,7 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
 ```
 
 ### Step 3 — Restore Strategy / Marker component
-Special case: if scaling something like Workers, consider:
+Special case: if changing something like Workers, consider:
 - store what was applied (add a marker component)
 - restore only if current values still match the marker (prevents stomping another mod)
 - apply on change events (Options UI / load), not per-frame
