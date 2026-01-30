@@ -111,12 +111,11 @@ foreach (Entity prefabEntity in entities)
         continue;
 
     // 2) Write new scaled value onto the prefab entity's *Data.
-    if (!EntityManager.TryGetComponent(prefabEntity, out DeathcareFacilityData dc))
-        continue;
-
+    DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
-     // Writes updated copy back to the entity.
-    EntityManager.SetComponentData(prefabEntity, dc); // consider using EntityCommandBuffer instead.
+
+    // Writes updated copy back to the entity. (Consider ECB - see section below).
+    EntityManager.SetComponentData(prefabEntity, dc);
 }
 ```
 
