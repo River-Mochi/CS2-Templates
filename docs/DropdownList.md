@@ -328,24 +328,7 @@ Locale:
 { "YourMod.Theme.Dark",  "Dark" },
 { "YourMod.Theme.Light", "Light" },
 
-Troubleshooting checklist
 
- Is the property an enum? → No attribute.
-
- Is the property not an enum? → Add [SettingsUIDropdown(typeof(Setting), nameof(GetItems))].
-
- Does DropdownItem<T>.value match the property type T?
-
- Are the locale keys used in LocalizedString.Id(...) present in Locale*.cs?
-
- Is your locale source added (e.g., GameManager.instance.localizationManager.AddSource("en-US", new LocaleEN(setting)))?
-
- No duplicate/overlapping patterns on the same property.
-
- Defaults in SetDefaults() match valid item values.
-
-Copy this file into your repo (e.g., docs/CO-Dropdowns.md).
-Next time, follow the two patterns above and you won’t get greyed-out controls.
 
 
   Two patterns on one property:
@@ -394,10 +377,10 @@ public DropdownItem<string>[] GetThemeItems() => new[]
     new DropdownItem<string> { value = "YourMod.Theme.Dark",  displayName = LocalizedString.Id("YourMod.Theme.Dark")  },
     new DropdownItem<string> { value = "YourMod.Theme.Light", displayName = LocalizedString.Id("YourMod.Theme.Light") },
 };
-
+```
 ---
 
-  Troubleshooting checklist
+Troubleshooting checklist
 
  Is the property an enum? → No attribute.
 
@@ -412,4 +395,5 @@ public DropdownItem<string>[] GetThemeItems() => new[]
  No duplicate/overlapping patterns on the same property.
 
  Defaults in SetDefaults() match valid item values.
-  
+Copy this file into your repo (e.g., docs/CO-Dropdowns.md).
+Follow the two patterns above and you won’t get greyed-out controls.
