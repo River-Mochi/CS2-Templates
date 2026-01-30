@@ -209,7 +209,34 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
 Special case: if scaling something like Workers, consider:
 - store what was applied (add a marker component)
 - restore only if current values still match the marker (prevents stomping another mod)
-- apply on change events (i.e., options menu slider change), not per-frame
+- apply on change events (Options UI / load), not per-frame
+
+```csharp
+// Example marker: store what this mod last applied.
+// Stored on the same prefab entity that has WorkplaceData.
+private struct WorkplaceMarker : IComponentData
+{
+    public int AppliedMax; // last max-workers value written by this mod
+}
+
+// After writing WorkplaceData, write/update the marker too.
+WorkplaceMarker marker = new WorkplaceMarker
+{
+    AppliedMax = scaledMax,
+};
+
+// Marker enables "restore only if it still matches" later,
+// so another mod's changes don't get overwritten by accident.
+if (SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity))
+{
+    EntityManager.SetComponentData(prefabEntity, marker);
+}
+else
+{
+    EntityManager.AddComponentData(prefabEntity, marker);
+}
+
+```
 
 ---
 ## Baseline examples
