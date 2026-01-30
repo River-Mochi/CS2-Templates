@@ -38,7 +38,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 - PrefabBase includes the raw field value that asset creator used on that prefab.
 - This makes restore logic correct and prevents double multiplier scaling.
   
-### 2) Prefab Entity (ECS entity with `PrefabData`)
+### 2) Prefab-Entity (ECS entity with `PrefabData`)
 - ECS representation of a prefab.
 - Often referenced by `PrefabRef.m_Prefab` from an instance.
 - Stores ECS prefab-side `*Data` components that **mods commonly edit** (ex: `DeathcareFacilityData`, `WorkplaceData`).
