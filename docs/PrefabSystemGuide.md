@@ -186,7 +186,7 @@ foreach (Entity prefabEntity in entities)
 
 ### Step 3 — Restore Strategy / Custom component
 Special case: if changing something like Workers, consider:
-- store what was applied (add a marker component)
+- store what was applied (add a custom component)
 - restore only if current values still match the marker (prevents stomping other mods)
 - players often run multiple mods that can change the same values.
 - apply on change events (Options UI / load), not per-frame
