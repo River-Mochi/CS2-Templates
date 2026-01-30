@@ -141,7 +141,7 @@ ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData
 
 ---
 
-### Option 2: compact ECS style
+### Option 2: compact ECS style (advanced)
 - Same results as Option 1, uses [Unity.Entities ECS <RefRW<T>>](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi-query.html)
 
 ```csharp
