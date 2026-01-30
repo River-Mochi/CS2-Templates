@@ -213,7 +213,7 @@ Special case: if changing something like Workers, consider:
 - apply on change events (Options UI / load), not per-frame
 
 ```csharp
-// Example marker: store what this mod last applied.
+// Example marker snippet: store what this mod last applied.
 // Stored on the same prefab entity that has WorkplaceData.
 private struct WorkplaceMarker : IComponentData
 {
@@ -228,11 +228,16 @@ WorkplaceMarker marker = new WorkplaceMarker
 
 // Marker enables "restore only if it still matches" later,
 // so another mod's changes don't get overwritten by accident.
-if (SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity))
-{ EntityManager.SetComponentData(prefabEntity, marker); }
-else
-{ EntityManager.AddComponentData(prefabEntity, marker); }
 
+bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
+if (hasMarker)
+{ 
+EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
+}
+else
+{
+    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time
+}
 ```
 
 ---
