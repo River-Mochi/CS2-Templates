@@ -181,7 +181,8 @@ foreach (Entity prefabEntity in entities)
 **Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
 
 ### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/8a7f601608b2fe6422ecf6876994c217c7790d87/docs/WriteToPrefabData.md)
-- Same results as Option 1, just uses Unity.Entities ECS RefRW<T> query compact style (`SystemAPI.Query<RefRW<T>>()`)
+- Same results as Option 1, just uses compact Unity.Entities ECS `RefRW<T>` query
+- `SystemAPI.Query<RefRW<T>>()`
 
 ### Step 3 — Restore Strategy / Marker component
 Special case: if changing something like Workers, consider:
