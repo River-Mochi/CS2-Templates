@@ -120,7 +120,7 @@ foreach (Entity prefabEntity in entities)
 }
 ```
 
-**Different ways to change Prefabs:** [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
+**Example using Option 1 (with different ways to change Prefabs):** [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
 
 **Advanced (optional): EntityCommandBuffer (ECB)**
 - Instead of calling `EntityManager.SetComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
@@ -163,7 +163,7 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
 Differences vs Option 1:
 - Classic Option 1 is probably easier for beginners; Option 2 is denser and harder to trace errors.
 - No ToEntityArray / NativeArray lifetime to manage.
-- Writes through RefRW<T> (so there’s no explicit “get struct copy → modify → SetComponentData” step).
+- Writes through RefRW<T> (so there’s no “get struct copy → modify → SetComponentData” step).
 
 ---
 
