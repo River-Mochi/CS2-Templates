@@ -167,14 +167,10 @@ foreach (Entity prefabEntity in entities)
     float baseRate = authoring.m_ProcessingRate;   // vanilla authored baseline
     float scaledRate = baseRate * scalar;          // apply settings scalar
 
-    int baseStorage = authoring.m_StorageCapacity;   // vanilla authored baseline
-    int scaledStorage = Math.Max(1, (int)Math.Round(baseStorage * scalar));
-
     // 2) Write scaled values onto the prefab entity's *Data component.
     // GetComponentData returns a COPY (struct).
     DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
     dc.m_ProcessingRate = scaledRate;
-    dc.m_StorageCapacity = scaledStorage;
     EntityManager.SetComponentData(prefabEntity, dc); // Writes modified copy back.
 }
 ```
