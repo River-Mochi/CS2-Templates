@@ -42,7 +42,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 - ECS representation of a prefab.
 - Often referenced by `PrefabRef.m_Prefab` from an instance.
 - Stores ECS prefab-side `*Data` components that **mods commonly edit** (ex: `DeathcareFacilityData`, `WorkplaceData`).
-- **Important:** prefab entities are **mutable**. Game + mods can change them during a session.
+- **Important:** prefab entities are **mutable**. Different mods can change them during a session.
 - Not everything from PrefabBase to PrefabData is one-to-one (not all provide easy tuning knobs).
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
