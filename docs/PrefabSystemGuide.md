@@ -134,9 +134,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
     return;
 
-// true baseline examples
-float baseRate = authoring.m_ProcessingRate;
-int baseHearses = authoring.m_HearseCapacity;
+float baseRate = authoring.m_ProcessingRate;  // true baseline example
 ```
 
 ### Step 2 — Write scaled values onto ECS `*Data` on prefab entities
