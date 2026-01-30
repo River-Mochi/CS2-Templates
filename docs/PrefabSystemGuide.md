@@ -201,23 +201,6 @@ else
 }
 ```
 
-## Tiny but important: how `TryGetPrefab(...)` works
-
-The engine keeps an internal list of authoring prefabs (`PrefabSystem` has a list like `m_Prefabs`).
-Each prefab entity has `PrefabData`, which stores **an index into that list**.
-
-So this call:
-
-```csharp
-prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase)
-```
-
-is basically:
-- read `PrefabData.m_Index` from `prefabEntity`
-- return `m_Prefabs[m_Index]`
-
-That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vanilla values.
-
 ---
 ## Baseline examples
 
@@ -243,6 +226,25 @@ if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
 float baseRate = authoring.m_ProcessingRate;  // Read vanilla baseline from authoring fields
 float scaled = baseRate * scalar;  // Apply scalar from settings.
 ```
+---
+
+## Tiny but important: how `TryGetPrefab(...)` works
+
+The engine keeps an internal list of authoring prefabs (`PrefabSystem` has a list like `m_Prefabs`).
+Each prefab entity has `PrefabData`, which stores **an index into that list**.
+
+So this call:
+
+```csharp
+prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase)
+```
+
+is basically:
+- read `PrefabData.m_Index` from `prefabEntity`
+- return `m_Prefabs[m_Index]`
+
+That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vanilla values.
+
 ---
 
 ## Quick summary
