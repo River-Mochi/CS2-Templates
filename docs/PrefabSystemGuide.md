@@ -116,7 +116,7 @@ Often what simulation uses *right now*:
 - `m_MaxWorkers`
 
 - runtime value; normally not hot-updated from prefab edits in Options UI
-- Means that updating `WokplaceData` in 2) above only applies to new buildings but not existing ones.
+- Means that updating `WokplaceData` in 2 above only applies to new buildings but not existing ones.
 - `WorkProvider` is game computed and needs extra code to make "instant" changes on buildings
 - or a player action to naturally trigger the game job (build new building or add an extension triggers game to run the job and read `WorkplaceData` again).
 
@@ -165,8 +165,8 @@ foreach (Entity prefabEntity in entities)
     if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
         continue;
 
-    float baseRate = authoring.m_ProcessingRate;     // vanilla authored baseline
-    float scaledRate = baseRate * scalar;            // apply settings scalar
+    float baseRate = authoring.m_ProcessingRate;   // vanilla authored baseline
+    float scaledRate = baseRate * scalar;          // apply settings scalar
 
     int baseStorage = authoring.m_StorageCapacity;   // vanilla authored baseline
     int scaledStorage = Math.Max(1, (int)Math.Round(baseStorage * scalar));
@@ -186,7 +186,7 @@ foreach (Entity prefabEntity in entities)
 
 ```csharp
 // Same logic as Option 1, just using Unity ECS RefRW<T> query style.
-// Tradeoff: denser, compile errors turn into "where is the real bug?"
+// Tradeoff: denser, harder to trace errors "will the real bug please step forward?"
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
