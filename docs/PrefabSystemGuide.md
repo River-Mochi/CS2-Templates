@@ -97,7 +97,7 @@ These live on `PrefabBase` and contain the authored defaults.
 - `m_ProcessingRate`, `m_StorageCapacity`
 
 **`Game.Prefabs.Workplace` (authoring)**
-- `m_Workplaces` (baseline max workers)
+- `m_Workplaces` (base main bldg max workers)
 - `m_MinimumWorkersLimit`
 
 ### 2) ECS `*Data` components (on prefab entities)
