@@ -290,7 +290,7 @@ foreach ((RefRW<Game.Prefabs.DeathcareFacilityData> dc, Entity e) in SystemAPI
 
 >Notes:
 >See the [Unity user manual (1.3*)](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi.html) for complete details on use of SystemAPI queries.
->This is only meant to highlight one common SystemAPI error.
+>This is a PrefabSystem article and only meant to highlight one common SystemAPI error with prefabs.
 
 ---
 
