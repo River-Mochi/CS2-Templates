@@ -276,7 +276,7 @@ That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vani
 | Instance entity | placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
 
 > **Note:**
-- Instance-side values like `WorkProvider.m_MaxWorkers` often don’t hot-update from prefab edits.
+- Instance-side values like `WorkProvider.m_MaxWorkers` most often don’t hot-update from prefab edits.
 - Editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings
 
 
