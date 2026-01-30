@@ -146,7 +146,7 @@ This is where the mod actually **changes the prefab entity** (entities with `Pre
 #### Option 1: classic style  (query → get entities → foreach loop)
 
 ```csharp
-// Query prefab entities, read vanilla from PrefabBase, write *Data.
+// For each prefab entity: read vanilla ProcessingRate from PrefabBase, then write the scaled value into DeathcareFacilityData.
 
 EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>()
