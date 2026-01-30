@@ -49,7 +49,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 - The thing that exists in the city right now.
 - `PrefabRef` points to a **prefab entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
 - Has runtime components used by simulation right now (often game computed/ cached / serialized).
-- Most all known runtime values do **not** hot-update just because the prefab entity changed.
+- Most known runtime values do **not** hot-update just because the prefab entity changed.
   - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
   - needs extra code to trigger an instant update or a player action (ex: place a new building).
 
@@ -115,9 +115,8 @@ Often what simulation uses *right now*:
 **`Game.Companies.WorkProvider` (instance-side example)**
 - `m_MaxWorkers`
 
-- runtime value; normally not hot-updated from prefab edits in Options UI
-- Means that updating `WorkplaceData` in 2 above only applies to new buildings but not existing ones.
-- `WorkProvider` is game computed and needs extra code to make "instant" changes on buildings
+- WorkProvider.m_MaxWorkers is runtime/cached
+- updating `WorkplaceData` in 2 above only applies to new buildings but not existing ones without extra code.
 - or a player action to naturally trigger the game job (build new building or add an extension triggers game to run the job and read `WorkplaceData` again).
 
 ---
@@ -154,7 +153,7 @@ EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>() // prefab entities only + the data component to edit
     .Build();
 
-NativeArray<Entity> entities = query.ToEntityArray(Allocator.Temp);
+using NativeArray<Entity> entities = query.ToEntityArray(Allocator.Temp);
 
 foreach (Entity prefabEntity in entities)
 {
