@@ -153,7 +153,7 @@ EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>() // prefab entities only + the data component to edit
     .Build();
 
-using NativeArray<Entity> entities = query.ToEntityArray(Allocator.Temp);
+NativeArray<Entity> entities = query.ToEntityArray(Allocator.Temp);
 
 foreach (Entity prefabEntity in entities)
 {
