@@ -119,22 +119,25 @@ foreach (Entity prefabEntity in entities)
     EntityManager.SetComponentData(prefabEntity, dc); // consider using EntityCommandBuffer.
 }
 ```
+
+**Example mod (query → array loop):**[Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
+
 **Advanced (optional): EntityCommandBuffer (ECB)**
 - Instead of calling `EntityManager.SetComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
 - This batches writes and avoids immediate write sync points; useful when changing lots of entities or running frequently.
 - Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), so playback/dispose is handled automatically.
+- ECB is recommended as the more modern way although `SetComponentData` will work.
   
 ```csharp
 // ... get an ECB from a barrier (recommended) or create one manually.
-
 EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
 
 // ... inside the foreach after computing dc ...
 ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData(prefabEntity, dc);
 ```
+**Example ECB** from [Anarchy mod](https://github.com/yenyang/Anarchy/blob/master/Anarchy/Systems/ErrorChecks/EnableToolErrorsSystem.cs#L48)
 
-
-**Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
+---
 
 ### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/WriteToPrefabData.md#step-2--write-scaled-values-onto-ecs-data-on-prefab-entities)
 - Same results as Option 1, just uses compact Unity.Entities ECS `RefRW<T>` query
