@@ -88,7 +88,7 @@ float baseRate = authoring.m_ProcessingRate;  // true baseline example
 
 ### Step 2 — Write scaled values onto ECS `*Data` on prefab entities
 
-This is where the mod actually **changes the prefab entity** (entities with `PrefabData`) by writing to `*Data` components.
+This is where the mod actually **changes the prefab-entity** (entities with `PrefabData`) by writing to `*Data` components.
 
 #### Option 1: classic SystemAPI style  (query → get entities → foreach loop)
 
