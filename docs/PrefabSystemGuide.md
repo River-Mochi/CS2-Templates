@@ -181,28 +181,8 @@ foreach (Entity prefabEntity in entities)
 
 **Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
 
-#### Option 2: compact ECS style (`SystemAPI.Query<RefRW<T>>()`)
-
-```csharp
-// Same as Option 1, just using Unity.Entities ECS RefRW<T> query style.
-// Tradeoff: denser, harder to trace errors.
-
-foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
-    .Query<RefRW<DeathcareFacilityData>>()
-    .WithAll<PrefabData>()          // prefab entities only
-    .WithEntityAccess())            // exposes prefabEntity in the loop
-{
-    // Vanilla baseline from PrefabBase authoring
-    if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
-        continue;
-
-    if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
-        continue;
-
-    dc.ValueRW.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
-    dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
-}
-```
+### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/8a7f601608b2fe6422ecf6876994c217c7790d87/docs/WriteToPrefabData.md)
+- Same results as Option 1, just uses Unity.Entities ECS RefRW<T> query compact style (`SystemAPI.Query<RefRW<T>>()`)
 
 ### Step 3 — Restore Strategy / Marker component
 Special case: if changing something like Workers, consider:
