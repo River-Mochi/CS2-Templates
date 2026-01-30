@@ -230,11 +230,11 @@ WorkplaceMarker marker = new WorkplaceMarker
 bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
 if (hasMarker)
 { 
-EntityManager.SetComponentData(...); // update existing marker
+EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
 }
 else
 {
-    EntityManager.AddComponentData(...); // add marker first time
+    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time
 }
 ```
 
