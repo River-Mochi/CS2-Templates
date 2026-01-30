@@ -137,6 +137,21 @@ foreach (Entity prefabEntity in entities)
     EntityManager.SetComponentData(prefabEntity, dc); // Also consider learning about and using an EntityCommandBuffer.
 }
 ```
+**Advanced (optional): EntityCommandBuffer (ECB)**
+- Instead of calling `EntityManager.SetComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
+- This batches writes and avoids immediate write sync points; useful when changing lots of entities or running frequently.
+- Typical pattern in CS2: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), so playback/dispose is handled automatically.
+  
+```csharp
+// ... get an ECB from a barrier (recommended) or create one manually.
+
+EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
+
+// ... inside the foreach after computing dc ...
+ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData(prefabEntity, dc);
+```
+
+
 **Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
 
 ### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/WriteToPrefabData.md#step-2--write-scaled-values-onto-ecs-data-on-prefab-entities)
