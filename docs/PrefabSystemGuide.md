@@ -48,7 +48,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
 - `PrefabRef` points to a **prefab entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
-- Has runtime components used by simulation right now (often game computed/ cached / serialized).
+- Has runtime components used by simulation right now.
 - Most known runtime values do **not** hot-update just because the prefab entity changed.
   - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
   - needs extra code to trigger an instant update or a player action (ex: place a new building).
@@ -184,7 +184,7 @@ foreach (Entity prefabEntity in entities)
 #### Option 2: compact ECS style (`SystemAPI.Query<RefRW<T>>()`)
 
 ```csharp
-// Same logic as Option 1, just using Unity.Entities ECS RefRW<T> query style.
+// Same as Option 1, just using Unity.Entities ECS RefRW<T> query style.
 // Tradeoff: denser, harder to trace errors "will the real bug please step forward?"
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
