@@ -203,10 +203,11 @@ else
 ```
 
 ---
-## Baseline examples
+## Baseline versus Direct write
 
-### DO this (true vanilla baseline from PrefabBase authoring)
-Use this when restore accuracy matters or when you want to avoid double-scaling.
+### DO this for true vanilla baseline
+Use this when restore accuracy matters and to avoid double-scaling.
+Baseline scaling (recommended for sliders / % scaling)
 
 ```csharp
 // True vanilla baseline: PrefabBase authoring fields (safe for restore / scaling).
@@ -223,19 +224,19 @@ float baseRate = authoring.m_ProcessingRate;   // vanilla authored baseline
 float scaledRate = baseRate * scalar;          // apply settings scalar
 ```
 
-### DO this (direct prefab write when baseline is not needed)
+### DO this for Direct prefab write
 
-Use this when you just want to set a value (example: force a fixed rate or apply a scalar without caring about “vanilla baseline”).
-```csharp
-// Direct write: no baseline read (simple and fine if restore/double-scaling is not a concern).
+Use this when you just want to set a value (don't care about baseline check).
 
-Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+// Direct write: set an absolute value.
+foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
+    .Query<RefRW<DeathcareFacilityData>>()
+    .WithAll<PrefabData>()
+    .WithEntityAccess())
+{
+    dc.ValueRW.m_ProcessingRate = 12f; // absolute value
+}
 
-if (!EntityManager.TryGetComponent(prefabEntity, out DeathcareFacilityData dc))
-    return;
-
-dc.m_ProcessingRate *= scalar;                 // or: dc.m_ProcessingRate = fixedValue;
-EntityManager.SetComponentData(prefabEntity, dc);
 ```
 
 ---
