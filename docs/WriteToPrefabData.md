@@ -1,7 +1,7 @@
 ## Step 2 — Write scaled values onto ECS *Data on prefab entities
 This is where the mod actually changes the prefab entity (entities with PrefabData) by writing to *Data components.
 
-### Option 2
+### Option 2 Compact ECS style
 
 ```csharp
 // Same as Option 1, just using Unity.Entities ECS RefRW<T> query style.
@@ -23,7 +23,7 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
 }
 ```
-
-- Denser ECS query code could be harder to debug. Option 1 is probably better for begginers for reduced debugging confusion.
-- Using RefRW<T> (write-through) so there’s no ToEntityArray and no explicit SetComponentData.
-
+Differences vs Option 1:
+- Option 1 is probably easier for beginners.
+- No ToEntityArray / NativeArray lifetime to manage.
+- Writes through RefRW<T> (so there’s no explicit “get struct copy → modify → SetComponentData” step).
