@@ -171,7 +171,7 @@ foreach (Entity prefabEntity in entities)
 ```
 **Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
 
-### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/9178b45ab6659ec5f7d872fdff56114ea59f48b1/docs/WriteToPrefabData.md)
+### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/WriteToPrefabData.md#step-2--write-scaled-values-onto-ecs-data-on-prefab-entities)
 - Same results as Option 1, just uses compact Unity.Entities ECS `RefRW<T>` query
 - `SystemAPI.Query<RefRW<T>>()`
 
