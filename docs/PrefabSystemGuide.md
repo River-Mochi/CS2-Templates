@@ -253,22 +253,40 @@ ecb.SetComponent(prefabEntity, dc); // queue: write this updated data back later
 
 ---
 
-## Tiny but important: how `TryGetPrefab(...)` works
+## Avoid Build errors with  `SystemAPI.Query()` (Prefab vs Runtime types)
 
-The engine keeps an internal list of authoring prefabs (`PrefabSystem` has a list like `m_Prefabs`).
-Each prefab entity has `PrefabData`, which stores **an index into that list**.
+Some names exist in two different “layers”, and only the **runtime ECS component** version can be used in `SystemAPI.Query()` / `.WithAll<T>()`.
 
-So this call:
+### The gotcha: same name, different layer
+
+- `Game.Buildings.DeathcareFacility` = **runtime ECS components** ✅  valid in `SystemAPI.Query()` / `.WithAll<T>()`
+- `Game.Prefabs.DeathcareFacility`  = **PrefabBase authoring types** ❌ not ECS components → **cannot** go in `.WithAll<T>()`
+
+❌ Ambiguous: if the file has `using Game.Prefabs;` this can bind to the wrong type:
+
+    EntityQuery q = SystemAPI.QueryBuilder()
+        .WithAll<DeathcareFacility>()        // Makes confusing compile errors.
+        .Build();
+
+✅  Fix: fully-qualify the ECS type in query:
+    EntityQuery q = SystemAPI.QueryBuilder()
+        .WithAll<Game.Buildings.DeathcareFacility>()
+        .Build();
+
+### What *is* valid to query for prefabs?
+Prefab entities are still entities, so querying them is fine.
+
+✅ **Prefab entities**: entities that have `Game.Prefabs.PrefabData`  
+✅ **Prefab `*Data` ECS components**: types like `Game.Prefabs.DeathcareFacilityData`
+
+Example (valid):
 
 ```csharp
-prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase)
+foreach ((RefRW<Game.Prefabs.DeathcareFacilityData> dc, Entity e) in SystemAPI
+    .Query<RefRW<Game.Prefabs.DeathcareFacilityData>>()
+    .WithAll<Game.Prefabs.PrefabData>()
+    .WithEntityAccess())
 ```
-
-is basically:
-- read `PrefabData.m_Index` from `prefabEntity`
-- return `m_Prefabs[m_Index]`
-
-That “index bridge” is why `TryGetPrefab(...)` is the baseline hook for vanilla values.
 
 ---
 
