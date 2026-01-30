@@ -228,7 +228,6 @@ WorkplaceMarker marker = new WorkplaceMarker
 
 // Marker enables "restore only if it still matches" later,
 // so another mod's changes don't get overwritten by accident.
-
 bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
 if (hasMarker)
 { 
