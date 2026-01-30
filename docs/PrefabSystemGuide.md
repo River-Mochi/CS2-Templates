@@ -216,6 +216,6 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 
 > **Note:**
 - Instance-side values like `WorkProvider.m_MaxWorkers` often don’t hot-update from prefab edits.
-- Editing prefab `WorkplaceData` applies to **new** buildings
-- Existing buildings update only with extra mod code that forces a recompute or the player triggers the game job (when making a new building/extension).
+- Editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings
+
 
