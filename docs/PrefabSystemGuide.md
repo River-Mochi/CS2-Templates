@@ -184,7 +184,7 @@ foreach (Entity prefabEntity in entities)
 - Same results as Option 1, just uses compact Unity.Entities ECS `RefRW<T>` query
 - `SystemAPI.Query<RefRW<T>>()`
 
-### Step 3 — Restore Strategy / Marker component
+### Step 3 — Restore Strategy / Custom component
 Special case: if changing something like Workers, consider:
 - store what was applied (add a marker component)
 - restore only if current values still match the marker (prevents stomping other mods)
