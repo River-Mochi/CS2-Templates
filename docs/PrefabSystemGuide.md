@@ -241,6 +241,14 @@ else
 ---
 ## Baseline examples
 
+### DON'T do this for baseline (trap)
+```csharp
+// Common method for assigning values; bad if intent is correct scaled baseline.
+Entity prefab = prefabRefLookup[instance].m_Prefab;
+var baseData = dcLookup[prefab]; // danger, might already be modified!
+float scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
+```
+
 ### DO this (true vanilla)
 ```csharp
 // RIGHT: baseline from PrefabBase authoring (vanilla you can trust)
@@ -254,14 +262,6 @@ if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
 // baseRate = vanilla truth, scaled = computed result
 float baseRate = authoring.m_ProcessingRate;  // Read vanilla baseline from authoring fields
 float scaled = baseRate * scalar;  // Apply scalar from settings.
-```
-
-### DON'T do this for baseline (trap)
-```csharp
-// Common method for assigning values; bad if intent is correct scaled baseline.
-Entity prefab = prefabRefLookup[instance].m_Prefab;
-var baseData = dcLookup[prefab]; // danger, might already be modified!
-float scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 ```
 
 ---
