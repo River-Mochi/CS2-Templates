@@ -175,7 +175,7 @@ foreach (Entity prefabEntity in entities)
     DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
     dc.m_ProcessingRate = scaledRate;
     dc.m_StorageCapacity = scaledStorage;
-    EntityManager.SetComponentData(prefabEntity, dc); // Writes modified copy back to the entity.
+    EntityManager.SetComponentData(prefabEntity, dc); // Writes modified copy back.
 }
 ```
 
