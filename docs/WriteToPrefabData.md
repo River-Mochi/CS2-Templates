@@ -23,3 +23,5 @@ foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
 }
 ```
+
+- Denser ECS query code can be harder for beginners to debug, because the compiler error often points at a symptom (missing type/namespace) rather than the real cause (a type mismatch or missing generic, etc.).
