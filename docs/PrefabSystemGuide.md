@@ -109,15 +109,15 @@ These are what mods usually write to when scaling for example:
 **`Game.Prefabs.WorkplaceData`**
 - `m_MaxWorkers`, `m_MinimumWorkersLimit`
 
-### 3) Runtime / instance-side components (placed entities)
+### 3) Instance-side components (placed entities)
 Often what simulation uses *right now*:
 
 **`Game.Companies.WorkProvider` (instance-side example)**
 - `m_MaxWorkers`
 
-- WorkProvider.m_MaxWorkers is runtime/cached
-- updating `WorkplaceData` in 2 above only applies to new buildings but not existing ones without extra code.
-- or a player action to naturally trigger the game job (build new building or add an extension triggers game to run the job and read `WorkplaceData` again).
+- WorkProvider.m_MaxWorkers is runtime/cached on the placed instance.
+- Editing prefab `WorkplaceData` applies to new buildings
+- existing buildings update only after a trigger (rebuild/extension) or extra mod code that forces a recompute.
 
 ---
 
