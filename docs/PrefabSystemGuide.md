@@ -1,6 +1,6 @@
 # PrefabSystem “Source of Truth” in Cities: Skylines II
 
-This note is for CS2 modders who change things like **capacities / rates and special runtime values** and want the results to be:
+This note is for CS2 modders who change things like **capacities / rates and special values** and want the results to be:
 - **Correct** (true vanilla baselines / game defaults)
 - **Compatible** (other mods can coexist)
 - **Predictable** (players know when changes apply immediately vs needing a new building)
