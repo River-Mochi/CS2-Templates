@@ -120,7 +120,7 @@ foreach (Entity prefabEntity in entities)
 }
 ```
 
-**Example mod (query → array loop):**[Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
+**Example mod (query → array loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
 
 **Advanced (optional): EntityCommandBuffer (ECB)**
 - Instead of calling `EntityManager.SetComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
@@ -139,9 +139,33 @@ ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData
 
 ---
 
-### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/WriteToPrefabData.md#step-2--write-scaled-values-onto-ecs-data-on-prefab-entities)
-- Same results as Option 1, just uses compact Unity.Entities ECS `RefRW<T>` query
-- `SystemAPI.Query<RefRW<T>>()`
+### Option 2 Compact ECS style
+- Same results as Option 1; uses Unity.Entities ECS <RefRW<T>
+```csharp
+// Compact Unity.Entities ECS query style `SystemAPI.Query<RefRW<T>>()`
+
+foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
+    .Query<RefRW<DeathcareFacilityData>>()
+    .WithAll<PrefabData>()          // prefab entities only
+    .WithEntityAccess())            // exposes prefabEntity in the loop
+{
+    // Vanilla baseline from PrefabBase authoring
+    if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
+        continue;
+
+    if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
+        continue;
+
+    dc.ValueRW.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
+    dc.ValueRW.m_StorageCapacity = Math.Max(1, (int)Math.Round(authoring.m_StorageCapacity * scalar));
+}
+```
+Differences vs Option 1:
+- Classic Option 1 is probably easier for beginners; Option 2 is denser and harder to trace errors.
+- No ToEntityArray / NativeArray lifetime to manage.
+- Writes through RefRW<T> (so there’s no explicit “get struct copy → modify → SetComponentData” step).
+
+---
 
 ### Step 3 — Restore Strategy / Custom component
 Special case: if changing something like Workers, consider:
