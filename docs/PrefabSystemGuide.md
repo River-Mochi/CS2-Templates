@@ -229,7 +229,7 @@ float baseRate = authoring.m_ProcessingRate;  // Read vanilla baseline from auth
 float scaled = baseRate * scalar;  // Apply scalar from settings.
 ```
 
-### DON'T do this for baseline (double-scale trap)
+### DON'T do this for baseline (trap)
 ```csharp
 // Common method for assigning values; bad if intent is correct scaled baseline.
 Entity prefab = prefabRefLookup[instance].m_Prefab;
