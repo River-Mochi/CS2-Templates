@@ -205,28 +205,39 @@ else
 ---
 ## Baseline examples
 
-### DON'T do this for baseline (trap)
-```csharp
-// Common method for assigning values; bad if intent is correct scaled baseline.
-Entity prefab = prefabRefLookup[instance].m_Prefab;
-var baseData = dcLookup[prefab]; // danger, might already be modified!
-float scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
-```
+### DO this (true vanilla baseline from PrefabBase authoring)
+Use this when restore accuracy matters or when you want to avoid double-scaling.
 
-### DO this (true vanilla)
 ```csharp
-// RIGHT: baseline from PrefabBase authoring (vanilla you can trust)
-Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // PrefabRef points to the *prefab entity* (ECS)
+// True vanilla baseline: PrefabBase authoring fields (safe for restore / scaling).
+
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // PrefabRef points to the prefab *entity* (ECS)
 
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
 if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
     return;
-// baseRate = vanilla truth, scaled = computed result
-float baseRate = authoring.m_ProcessingRate;  // Read vanilla baseline from authoring fields
-float scaled = baseRate * scalar;  // Apply scalar from settings.
+
+float baseRate = authoring.m_ProcessingRate;   // vanilla authored baseline
+float scaledRate = baseRate * scalar;          // apply settings scalar
 ```
+
+### DO this (direct prefab write when baseline is not needed)
+
+Use this when you just want to set a value (example: force a fixed rate or apply a scalar without caring about “vanilla baseline”).
+```csharp
+// Direct write: no baseline read (simple and fine if restore/double-scaling is not a concern).
+
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+
+if (!EntityManager.TryGetComponent(prefabEntity, out DeathcareFacilityData dc))
+    return;
+
+dc.m_ProcessingRate *= scalar;                 // or: dc.m_ProcessingRate = fixedValue;
+EntityManager.SetComponentData(prefabEntity, dc);
+```
+
 ---
 
 ## Tiny but important: how `TryGetPrefab(...)` works
