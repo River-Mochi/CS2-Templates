@@ -116,7 +116,7 @@ Often what simulation uses *right now*:
 - `m_MaxWorkers`
 
 - runtime value; normally not hot-updated from prefab edits in Options UI
-- Means that updating `WokplaceData` in 2 above only applies to new buildings but not existing ones.
+- Means that updating `WorkplaceData` in 2 above only applies to new buildings but not existing ones.
 - `WorkProvider` is game computed and needs extra code to make "instant" changes on buildings
 - or a player action to naturally trigger the game job (build new building or add an extension triggers game to run the job and read `WorkplaceData` again).
 
