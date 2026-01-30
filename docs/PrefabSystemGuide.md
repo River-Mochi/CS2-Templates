@@ -275,7 +275,7 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 | Prefab entity (`PrefabData`) | ECS representation | writing scaled `*Data` | using as baseline |
 | Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
 
-### “Applies immediately?” (real examples)
+### “Applies immediately?” rule of thumb only (real examples)
 | What to change | Where to usually write | Existing buildings instant update? |
 |:---|:---|:---|
 | storage/rates | prefab `*Data` components<br>(ex: `DeathcareFacilityData`) | yes / easiest |
