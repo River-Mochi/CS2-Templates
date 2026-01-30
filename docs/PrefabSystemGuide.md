@@ -253,7 +253,7 @@ ecb.SetComponent(prefabEntity, dc); // queue: write this updated data back later
 
 ---
 
-## Avoid Build errors with  `SystemAPI.Query()` (Prefab vs Runtime types)
+## Avoid Errors with  `SystemAPI.Query()` (Prefab vs Runtime types)
 
 Some names exist in two different “layers”, and only the **runtime ECS component** version can be used in `SystemAPI.Query()` / `.WithAll<T>()`.
 
@@ -287,6 +287,10 @@ foreach ((RefRW<Game.Prefabs.DeathcareFacilityData> dc, Entity e) in SystemAPI
     .WithAll<Game.Prefabs.PrefabData>()
     .WithEntityAccess())
 ```
+
+>Notes:
+>See the [Unity user manual (1.3*)](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi.html) for complete details on use of SystemAPI queries.
+>This is only meant to highlight one common SystemAPI error.
 
 ---
 
