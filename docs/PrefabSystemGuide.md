@@ -169,7 +169,7 @@ foreach (Entity prefabEntity in entities)
     EntityManager.SetComponentData(prefabEntity, dc); // Writes updated copy back to the entity
 }
 ```
-**Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/56752932a92eb5d0632ecedda499c61157722da2/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L23)
+**Example mod (query → NativeArray<Entity> loop):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
 
 ### Option 2 [Compact ECS style here](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/WriteToPrefabData.md#step-2--write-scaled-values-onto-ecs-data-on-prefab-entities)
 - Same results as Option 1, just uses compact Unity.Entities ECS `RefRW<T>` query
