@@ -229,15 +229,19 @@ float scaledRate = baseRate * scalar;          // apply settings scalar
 
 Use this to set a `*Data` value (don't care about baseline check).
 
-// Direct write: set an absolute value.
-foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
-    .Query<RefRW<DeathcareFacilityData>>()
-    .WithAll<PrefabData>()
-    .WithEntityAccess())
-{
-    dc.ValueRW.m_ProcessingRate = 12f; // absolute value
-}
+```csharp
+// Direct prefab write (ECB): queue an absolute override onto the prefab-entity *Data.
 
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
+
+if (!EntityManager.HasComponent<DeathcareFacilityData>(prefabEntity))
+    return;
+
+DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
+dc.m_ProcessingRate = 12f;
+
+EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer();  // Barrier ECB
+ecb.SetComponent(prefabEntity, dc);
 ```
 
 ---
