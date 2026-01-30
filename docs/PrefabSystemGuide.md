@@ -206,7 +206,7 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 
 ## Quick summary
 
-### Baseline vs data vs runtime (with real examples)
+### Baseline vs data vs runtime (real examples)
 
 | Layer | What it is | Good for | Not good for | Examples |
 |:---|:---|:----|:---|:---|
