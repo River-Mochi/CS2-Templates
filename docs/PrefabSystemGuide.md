@@ -134,13 +134,13 @@ foreach (Entity prefabEntity in entities)
 
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
      // Writes updated copy back to the entity.
-    EntityManager.SetComponentData(prefabEntity, dc); // Also consider learning about and using an EntityCommandBuffer.
+    EntityManager.SetComponentData(prefabEntity, dc); // consider using EntityCommandBuffer.
 }
 ```
 **Advanced (optional): EntityCommandBuffer (ECB)**
 - Instead of calling `EntityManager.SetComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
 - This batches writes and avoids immediate write sync points; useful when changing lots of entities or running frequently.
-- Typical pattern in CS2: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), so playback/dispose is handled automatically.
+- Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), so playback/dispose is handled automatically.
   
 ```csharp
 // ... get an ECB from a barrier (recommended) or create one manually.
