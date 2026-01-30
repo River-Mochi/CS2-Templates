@@ -211,7 +211,7 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 | Layer | What it is | Good for | Not good for | Examples |
 |:---|:---|:---|:---|:---|
 | `PrefabBase` authoring | Real prefab definition (vanilla-authored values) | true vanilla baseline / restore | writing runtime effects | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
-| Prefab entity (`PrefabData`) | ECS representation of the prefab | writing scaled `*Data` values | using as baseline (can be modified) | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
+| Prefab entity `PrefabData` | ECS representation of the prefab | writing scaled `*Data` values | using as baseline (can be modified) | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
 | Instance entity | placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
 
 > **Note:**
