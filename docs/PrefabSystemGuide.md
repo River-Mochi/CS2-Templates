@@ -93,11 +93,11 @@ This is where the mod actually **changes the prefab-entity** (entities with `Pre
 #### Option 1: classic SystemAPI style  (query → get entities → foreach loop)
 
 ```csharp
-// For each prefab entity: read ProcessingRate from PrefabBase, then write the scaled value into DeathcareFacilityData.
+// Classic Style SystemAPI.QueryBuilder 
 using Game.Prefabs;        // PrefabSystem, PrefabBase, PrefabData, DeathcareFacilityData
 using Unity.Entities;      // Entity, SystemAPI
 ...
-
+// For each prefab entity: read ProcessingRate from PrefabBase, then write the scaled value into DeathcareFacilityData.
 EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>()
     .Build();
@@ -148,7 +148,6 @@ ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData
 
 ```csharp
 // Compact Unity.Entities ECS query style SystemAPI.Query<RefRW<T>>()
-using Game.Prefabs;        // PrefabSystem, PrefabBase, PrefabData, DeathcareFacilityData
 using Unity.Entities;      // Entity, SystemAPI, RefRW
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
@@ -208,7 +207,7 @@ else
 ```
 
 ---
-## Baseline versus Direct write
+## Quick Baseline vs Direct write sample
 
 ### DO this for true vanilla baseline
 
