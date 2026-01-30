@@ -211,7 +211,8 @@ else
 ## Baseline versus Direct write
 
 ### DO this for true vanilla baseline
-Use this when restore accuracy matters and to avoid double-scaling.
+
+Use this for restore accuracy and to avoid double-scaling.
 
 ```csharp
 
@@ -246,11 +247,10 @@ if (!EntityManager.HasComponent<DeathcareFacilityData>(prefabEntity))
 DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity); // struct copy
 dc.m_ProcessingRate = 12f; // absolute override example
 
-// Optional 
+// Optional: ECB is the “do a bunch of edits, then apply once” pattern (faster for big loops).
 EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // Barrier method: create a buffer for queued changes
 ecb.SetComponent(prefabEntity, dc); // queue: write this updated data back later
 ```
-
 
 ---
 
