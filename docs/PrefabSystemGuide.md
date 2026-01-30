@@ -120,7 +120,7 @@ foreach (Entity prefabEntity in entities)
 }
 ```
 
-**Example using Option 1 (with different ways to change Prefabs):** [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
+**Example real mod using Option 1 (with different ways to change Prefabs):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
 
 ---
 
