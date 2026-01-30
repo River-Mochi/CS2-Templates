@@ -276,7 +276,7 @@ float scaled = baseRate * scalar;  // Apply scalar from settings.
 | Instance entity | placed building/vehicle | inspecting current behavior | reading vanilla defaults |
 
 ### “Applies immediately?” rule of thumb only (real examples)
-| What to change | Where to usually write | Existing buildings instant update? |
+| Examples to change | Where to usually write | Existing buildings instant update? |
 |:---|:---|:---|
 | storage/rates | prefab `*Data` components<br>(ex: `DeathcareFacilityData`) | yes / easiest |
 | workers max/min | `WorkplaceData` on prefab | often needs a trigger:<br>(new building/extension) |
