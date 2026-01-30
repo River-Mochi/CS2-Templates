@@ -207,10 +207,11 @@ else
 
 ### DO this for true vanilla baseline
 Use this when restore accuracy matters and to avoid double-scaling.
-Baseline scaling (recommended for sliders / % scaling)
 
 ```csharp
-// True vanilla baseline: PrefabBase authoring fields (safe for restore / scaling).
+
+// Baseline version: read authored vanilla (PrefabBase), then scale into *Data.
+// safe for restore / % scaling sliders
 
 Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // PrefabRef points to the prefab *entity* (ECS)
 
@@ -226,7 +227,7 @@ float scaledRate = baseRate * scalar;          // apply settings scalar
 
 ### DO this for Direct prefab write
 
-Use this when you just want to set a value (don't care about baseline check).
+Use this to set a `*Data` value (don't care about baseline check).
 
 // Direct write: set an absolute value.
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
