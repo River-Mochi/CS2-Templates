@@ -116,7 +116,7 @@ foreach (Entity prefabEntity in entities)
 
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
      // Writes updated copy back to the entity.
-    EntityManager.SetComponentData(prefabEntity, dc); // consider using EntityCommandBuffer.
+    EntityManager.SetComponentData(prefabEntity, dc); // consider using EntityCommandBuffer instead.
 }
 ```
 
