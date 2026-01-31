@@ -173,10 +173,11 @@ EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
 }
 else
 {
-    EntityManager.AddComponent(prefabEntity, marker); // add marker first time
+    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time
 }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.
+[Unity EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
 **Advanced (optional): EntityCommandBuffer (ECB)**
 - When adding components to a lot of entities simulatanously, instead of calling `EntityManager.AddComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
@@ -286,13 +287,15 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 
 ### Baseline vs data vs runtime (real examples)
 
-| Layer | What it is | Good for | Not good for | Examples |
-|:---|:---|:----|:---|:---|
-| `PrefabBase` authoring | Real prefab definition | true vanilla baseline / restore | writing runtime effects | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
-| Prefab entity (`PrefabData`) | ECS representation of the prefab | writing scaled `*Data` values | using as baseline (can be modified) | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
-| Instance entity | placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
+| Item | What it is | Good for | Not good for | Examples |
+|:---|:---|:---|:---|:---|
+| `PrefabBase` authoring | Real prefab definition (vanilla-authored values) | true vanilla baseline / restore | changing live behavior directly | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
+| Prefab entity (`PrefabData`) | ECS prefab template entity (holds `*Data`) | writing scaled `*Data` values | using `*Data` as “vanilla baseline” | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
+| `PrefabRef` (instance link) | Instance component that points to the prefab entity (`m_Prefab`) | finding the prefab entity to edit | treating “prefab entity `*Data`” as baseline | `Game.Prefabs.PrefabRef.m_Prefab` |
+| Instance entity | Placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
 
 > **Note:**
+- `PrefabRef.m_Prefab` points to the **prefab entity**, not `PrefabBase`. Use `TryGetPrefab(...)` for vanilla baseline.
 - Instance-side values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
 - Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings.
 
