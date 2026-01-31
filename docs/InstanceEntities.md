@@ -27,14 +27,14 @@ Result: some Options UI menu sliders changing building/vehicle (prefab) details 
 Some systems read prefab `*Data` frequently, or the effect is naturally visible once the next sim tick uses the new value.
 
 - Typical examples: some capacities, rates, dispatch limits, storage, fleet counts  
-- Result: editing prefab `*Data` **often** shows up quickly (sometimes immediately)
+- Result: editing prefab `*Data` shows up quickly (often immediately)
 
 ### Pattern B: “instance caches / computed state”
 Other systems compute a per-instance value and store it on the instance entity (and sometimes serialize it into the save).  
 Prefab edits then affect **new instances**, but **existing** ones can remain unchanged until a refresh trigger happens.
 
-- Typical examples: worker limits (example), upgrade/extension combined stats, derived runtime limits
-- Result: prefab edits do **not reliably** update existing instances without a refresh
+- Examples triggers for worker limits: add/remove building extensions or build new buildings.
+- Result: prefab edits do **not reliably** update all values for *existing* instances without some trigger.
 
 ---
 
