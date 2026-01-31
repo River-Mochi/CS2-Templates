@@ -24,7 +24,6 @@ if (!prefabBase.TryGet(out Game.Prefabs.DeathcareFacility dcAuthoring))
     return;
 
 float baseRate = dcAuthoring.m_ProcessingRate;
-int baseHearses = dcAuthoring.m_HearseCapacity;
 ```
 
 ---
