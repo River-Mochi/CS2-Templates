@@ -14,7 +14,7 @@ Prefab `*Data` values (what mods usually edit) *could* match baseline sometimes 
 ```csharp
 PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
 
-// vanilla baseline values comes from `TryGetPrefab(...)` → `PrefabBase`.  
+// Baseline values are conveniently stored in `PrefabBase`
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
