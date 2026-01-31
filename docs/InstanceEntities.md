@@ -79,9 +79,6 @@ None of those are “bad”; they’re normal sim engineering tradeoffs. They *d
 
 If prefab value changes but instance stays the same, the value is very likely **instance-cached** or **recomputed only on events**.
 
-### dnSpy tips
-If a struct/component implements `ISerializable`, it’s a strong clue it can be stored in saves.
-
 ---
 
 ## Refresh triggers that often cause recompute
