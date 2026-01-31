@@ -218,7 +218,7 @@ Use this for restore accuracy and to avoid double-scaling.
 ```csharp
 
 // Baseline version: read authored vanilla (PrefabBase), then scale into *Data.
-// safe for restore / % scaling sliders
+// safe for restore or % scaling sliders
 
 Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // PrefabRef points to the prefab *entity* (ECS)
 
