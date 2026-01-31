@@ -148,6 +148,7 @@ ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData
 
 ```csharp
 // Compact Unity.Entities ECS query style SystemAPI.Query<RefRW<T>>()
+using Game.Prefabs;        // PrefabSystem, PrefabBase, PrefabData, DeathcareFacilityData
 using Unity.Entities;      // Entity, SystemAPI, RefRW
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
