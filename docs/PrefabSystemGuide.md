@@ -280,7 +280,7 @@ Some names exist in two different “layers”, and only the **runtime ECS compo
 ```
 
 ### What *is* valid to query for prefabs?
-Prefab entities are still entities, so querying them is fine, the *Data at the end of the name is the key.
+Prefab entities are still entities, so querying them is fine, the *Data* at the end of the name is the key.
 
 ✅ **Prefab entities**: entities that have `Game.Prefabs.PrefabData`  
 ✅ **Prefab `*Data` ECS components**: types like `Game.Prefabs.DeathcareFacilityData`
