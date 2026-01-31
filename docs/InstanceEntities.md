@@ -2,7 +2,7 @@
 
 This is a companion to [**PrefabSystemGuide.md**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabSystemGuide.md)
 
-Most mods edit **prefab entities** (entities with Game.Prefabs.PrefabData) by writing to components (with *Data at end of the name).  
+Most mods edit **prefab entities** (entities with Game.Prefabs.PrefabData) by writing to components (with Data at end of the name).  
 The game reads **instance entities** (the placed building/vehicle/citizen/etc.) that may hold **cached / computed / serialized** runtime state.
 
 Result: some Options UI menu sliders changing building/vehicle (prefab) details show instant changes on existing instances, while other values only update on **newly created** instances (e.g. buildings) or after a trigger (adding/removing a building extension or upgrade item). 
