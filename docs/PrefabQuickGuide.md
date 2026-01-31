@@ -37,7 +37,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 > Notice there is **no** *Data at the end of any of these names.
 ---
 
-## Example ECS `*Data` components (changeable) you write on prefab entities
+## Example ECS `*Data` components (changeable) you write on prefab-entities
 
 | ECS component | Key fields (scaled values you write) |
 |---|---|
