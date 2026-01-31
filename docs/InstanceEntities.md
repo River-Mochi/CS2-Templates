@@ -92,7 +92,7 @@ Exact triggers vary by system, but these commonly cause rebuild/reinit paths:
 | Building rebuild (delete + place again) | Forces a clean init using current prefab state |
 | Some service/system-specific “refresh” method | Recomputes runtime data (best-case, but must be located per system) |
 
-This is why “rebuild / change extension / toggle upgrade” is often the most reliable player method.
+This is why Player driven “rebuild / change extension / upgrade” is often the most reliable.
 
 ---
 
@@ -170,7 +170,7 @@ foreach (var (prefabRef, workProvider, entity) in SystemAPI
 ### 2) Safe stance: prefab edit + “refresh needed” message
 ```csharp
 // Edit prefab entity WorkplaceData (new buildings reflect changes)
-// Then communicate: existing buildings update after rebuild/upgrade/extension change.
+// Communicate: existing buildings update after rebuild/upgrade/extension change.
 ```
 
 ### 3) “System-driven refresh” placeholder
@@ -178,7 +178,6 @@ foreach (var (prefabRef, workProvider, entity) in SystemAPI
 // Best-case approach:
 // - Identify the CO system that recomputes the runtime component from prefab state
 // - Call/trigger it once when settings change
-// Details are system-specific and belong next to the mod that uses it.
 ```
 
 ---
