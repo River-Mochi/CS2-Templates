@@ -50,7 +50,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 
 ```csharp
 // Edit prefab-entity *Data using baseline (from PrefabBase).
-// `baseRate` and other items came from the snippet above.
+// `baseRate` and other items from the snippet above.
 
 DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
 dc.m_ProcessingRate = baseRate * scalar;      // scale from true vanilla baseline
