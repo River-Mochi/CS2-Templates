@@ -21,7 +21,7 @@ Result: some Options UI menu sliders changing building/vehicle (prefab) details 
 
 ---
 
-## Why some prefab changes feel instant (and others don’t)
+## Why some prefab changes are instant (and others not)
 
 ### Pattern A: “reads prefab data often”
 Some systems read prefab `*Data` frequently, or the effect is naturally visible once the next sim tick uses the new value.
