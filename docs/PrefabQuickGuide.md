@@ -34,7 +34,9 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 |---|---|
 | `Game.Prefabs.DeathcareFacility` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.Workplace` | `m_Workplaces`, `m_MinimumWorkersLimit` |
-> Notice there is **no** *Data at the end of any of these names.
+
+*Notice: there is **no** `*Data` at the end of any of these names.*
+
 ---
 
 ## Example ECS `*Data` components (changeable) you write on prefab-entities
@@ -43,13 +45,15 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 |---|---|
 | `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.WorkplaceData` | `m_MaxWorkers`, `m_MinimumWorkersLimit` |
-> Notice there **is** *Data at the end of all these ECS names.
+
+*Notice there **is** `*Data` at the end of all these ECS names.*
+
 ---
 
 ## Minimal Write to prefab
 
 ```csharp
-// Edit prefab-entity *Data using baseline (from PrefabBase).
+// Edit *Data named components using baseline values (from PrefabBase).
 // `baseRate` and other items from the snippet above.
 
 DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
