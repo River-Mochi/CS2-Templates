@@ -176,8 +176,8 @@ else
     EntityManager.AddComponentData(prefabEntity, marker); // add marker first time
 }
 ```
-This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.
-[Unity EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
+This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
+[Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
 **Advanced (optional): EntityCommandBuffer (ECB)**
 - When adding components to a lot of entities simulatanously, instead of calling `EntityManager.AddComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
