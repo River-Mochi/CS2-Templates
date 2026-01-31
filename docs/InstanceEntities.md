@@ -127,8 +127,8 @@ Use only when the dependency chain is understood.
 
 ## Compatibility rules of thumb (don’t stomp)
 
-### Marker pattern
-When writing a value that other mods might also change, store a marker so restore only happens when safe.
+### Custom Components
+When writing a value that other mods might also change, store a custom marker component so restore only happens when safe.
 
 - Store “applied-by-mod” + “applied-value”
 - On restore, only revert if the current value still matches the applied marker
