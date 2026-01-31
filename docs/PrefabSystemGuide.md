@@ -311,6 +311,6 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 
 > **Note:**
 - Instance-side values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
-- Editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings.
+- Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings.
 
 
