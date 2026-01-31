@@ -22,7 +22,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 if (!prefabBase.TryGet(out Game.Prefabs.DeathcareFacility dcAuthoring))
     return;
 
-float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base number not altered by any mod.
+float baseRate = dcAuthoring.m_ProcessingRate;  // copy of vanilla baseline
 ```
 
 ---
