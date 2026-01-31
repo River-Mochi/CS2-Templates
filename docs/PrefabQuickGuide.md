@@ -57,7 +57,7 @@ dc.m_ProcessingRate = baseRate * scalar;      // scale from true vanilla baselin
 EntityManager.SetComponentData(prefabEntity, dc);
 ```
 > This writes to the *Data on the prefab-entity. New placed buildings will use it;<br>
-> runtime/instance values need some refresh trigger depending on what you changed.
+> Existing buildings rely on runtime/instance values that need some refresh trigger depending on what you changed.
 
 ---
 ## Why workers example is “special”
