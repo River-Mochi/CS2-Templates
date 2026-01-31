@@ -49,13 +49,14 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 ## Minimal Prefab write
 
 ```csharp
-// Edit prefab-entity *Data using vanilla baseline (from PrefabBase).
+// Edit prefab-entity *Data using baseline (from PrefabBase).
 // (Assumes `prefabEntity` is the prefab template entity and `baseRate` came from the snippet above.)
 
 DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
 dc.m_ProcessingRate = baseRate * scalar;      // scale from true vanilla baseline
 EntityManager.SetComponentData(prefabEntity, dc);
 ```
+> This writes to the *Data on the prefab-entity. New placed buildings will use it; runtime/instance values probably need some refresh trigger depending on what you changed.
 
 ---
 ## Why workers example is “special”
