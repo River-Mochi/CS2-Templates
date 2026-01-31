@@ -262,19 +262,23 @@ Some names exist in two different “layers”, and only the **runtime ECS compo
 - `Game.Buildings.DeathcareFacility` = **runtime ECS components** ✅  valid in `SystemAPI.Query()` / `.WithAll<T>()`
 - `Game.Prefabs.DeathcareFacility`  = **PrefabBase authoring types** ❌ not ECS components → **cannot** go in `.WithAll<T>()`
 
-❌ Ambiguous: if the file has `using Game.Prefabs;` this can bind to the wrong type:
-
+❌ Ambiguous: if the file has `using Game.Prefabs;` (very likely) this can bind to the wrong type:
+```csharp
     EntityQuery q = SystemAPI.QueryBuilder()
         .WithAll<DeathcareFacility>()        // Makes confusing compile errors.
         .Build();
+```
 
 ✅  Fix: fully-qualify the ECS type in query:
+
+```csharp
     EntityQuery q = SystemAPI.QueryBuilder()
         .WithAll<Game.Buildings.DeathcareFacility>()
         .Build();
+```
 
 ### What *is* valid to query for prefabs?
-Prefab entities are still entities, so querying them is fine.
+Prefab entities are still entities, so querying them is fine, the *Data at the end of the name is the key.
 
 ✅ **Prefab entities**: entities that have `Game.Prefabs.PrefabData`  
 ✅ **Prefab `*Data` ECS components**: types like `Game.Prefabs.DeathcareFacilityData`
