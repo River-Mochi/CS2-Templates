@@ -15,7 +15,6 @@ Prefab-entity with `*Data` name endings -> reached via `PrefabRef` are not vanil
 ```csharp
 PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
 
-// Example: prefabEntity is the ECS prefab entity (from PrefabRef.m_Prefab)
 // vanilla baseline values comes from `TryGetPrefab(...)` → `PrefabBase`.  
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
