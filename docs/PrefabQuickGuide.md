@@ -92,6 +92,8 @@ Only if you fully understand:
 - Consider: mutating runtime components that are calculated by the game is riskier with side effects.
   - In the example of max workers, asking the player to rebuild the building to refresh values is easier and safe (all their new buildings are already handled by changing `WorkplaceData` in the easier method).
 
+---
+
 ### Bonus thing
 **ECS = Entity Component System**
 - **Entity**     = an ID (a "thing")
