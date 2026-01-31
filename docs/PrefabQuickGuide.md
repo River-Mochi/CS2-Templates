@@ -34,7 +34,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;  // copy of vanilla baseline
 | `Game.Prefabs.DeathcareFacility` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.Workplace` | `m_Workplaces`, `m_MinimumWorkersLimit` |
 
-*Notice: there is **no** `*Data` at the end of any of these names.*
+*Notice: there is **no** `Data` at the end of any of these names.*
 
 ---
 
@@ -45,7 +45,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;  // copy of vanilla baseline
 | `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.WorkplaceData` | `m_MaxWorkers`, `m_MinimumWorkersLimit` |
 
->*Notice there **is** `*Data` at the end of all these ECS names.*
+>*Notice there **is** `Data` at the end of all these ECS names.*
 
 ---
 
