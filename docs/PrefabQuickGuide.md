@@ -45,7 +45,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;  // copy of vanilla baseline
 | `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.WorkplaceData` | `m_MaxWorkers`, `m_MinimumWorkersLimit` |
 
-*Notice there **is** `*Data` at the end of all these ECS names.*
+>*Notice there **is** `*Data` at the end of all these ECS names.*
 
 ---
 
@@ -91,3 +91,9 @@ Only if you fully understand:
 - Do you really want to add a Harmony patch layer?
 - Consider: mutating runtime components that are calculated by the game is riskier with side effects.
   - In the example of max workers, asking the player to rebuild the building to refresh values is easier and safe (all their new buildings are already handled by changing `WorkplaceData` in the easier method).
+
+### Bonus thing
+**ECS = Entity Component System**
+- **Entity**     = an ID (a "thing")
+- **Component**  = data attached to that ID (e.g. a struct)
+- **System**     = code that reads/writes components
