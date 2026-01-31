@@ -1,4 +1,4 @@
-# PrefabSystem Source-of-Truth — Quick Guide (CS2 Modding)
+# Prefab — Quick Guide (CS2 Mods)
 
 ---
 
