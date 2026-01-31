@@ -56,23 +56,23 @@ var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 
 ---
 ## Why workers example is “special”
-Worker limits are **runtime instance components** (ex: `Game.Companies.WorkProvider.m_MaxWorkers`) that don’t always hot-update when you edit the prefab.
+Worker limits are **runtime instance components** (ex: `Game.Companies.WorkProvider.m_MaxWorkers`) and instance-entities don't just hot-update when you edit the prefab.
 
 ### So:
-- editing `WorkplaceData` is correct and safe for all **new** buildings (or other things inside of names ending in *Data)
-- but for Existing buildings to change values, something needs to trigger the game job to update the runtime instance like `WorkProvider.m_MaxWorkers`.
-  - restarting the game usually doesn’t force that refresh
+- Editing `WorkplaceData` is correct and safe for all **new** buildings (or other things inside of names ending in *Data)
+- For Existing buildings to change values, something needs to trigger the game job to update the runtime instance like `WorkProvider.m_MaxWorkers`.
+    - restarting the game usually doesn’t force that refresh.
     
 #### Option 1 Player action (easiest)
   - rebuild building
-  - add/remove extension
-  - add/remove upgrade (ex: cold storage)
+  - add/remove extension building or upgrade items (ex: cold storage)
+  - These actions trigger the game's own job to run -> reads the `WorkplaceData` you altered -> refreshes the employee m_MaxWorkers -> building panel shows increase number.
 
 #### Option 2 Custom code
-- If you can find the specific game job using iLSpy, copy the code method, and then run it when you like (ex: Options UI slider to trigger it)
+- If you can find the specific game job using iLSpy, copy the same method used to complete Option 1, then run it when you like (ex: Options UI slider to trigger it)
 
 #### Option 3 Harmony patch code.
-- Sometimes easier than option 2 as there are 1000's of code lines to research.
+- Sometimes easier than option 2 as there are 1000's of code lines to research and you might not find a lucky hook.
 - Could be brittle on game patch days.
 
 ---
