@@ -113,33 +113,16 @@ foreach (Entity prefabEntity in entities)
     if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
         continue;
 
-    // 2) Write new scaled value onto the prefab entity's *Data.
+    // 2) Write new scaled value onto a copy of prefab entity's *Data component.
     DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
 
-    // 3) Writes updated copy back to the entity. (Consider ECB - see section below).
+    // 3) Writes updated copy back to the entity.
     EntityManager.SetComponentData(prefabEntity, dc);
 }
 ```
 
 >**Example real mod using Option 1 (with different ways to change Prefabs):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
-
----
-
-**Advanced (optional): EntityCommandBuffer (ECB)**
-- Instead of calling `EntityManager.SetComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
-- This batches writes and avoids immediate write sync points; useful when changing lots of entities or running frequently.
-- Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), so playback/dispose is handled automatically.
-- ECB is recommended as the more modern way although `SetComponentData` will work.
-  
-```csharp
-// ... get an ECB from a barrier (recommended) or create one manually.
-EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
-
-// ... inside the foreach after computing dc ...
-ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData(prefabEntity, dc);
-```
-> **Example ECB** from [Anarchy mod](https://github.com/yenyang/Anarchy/blob/master/Anarchy/Systems/ErrorChecks/EnableToolErrorsSystem.cs#L48)
 
 ---
 
@@ -203,11 +186,26 @@ EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
 }
 else
 {
-    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time
+    EntityManager.AddComponent(prefabEntity, marker); // add marker first time
 }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.
 
+**Advanced (optional): EntityCommandBuffer (ECB)**
+- When adding components to a lot of entities simulatanously, instead of calling `EntityManager.AddComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
+- This batches writes and avoids immediate write sync points; useful when causing structural changes on lots of entities.
+- Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), to not stall the main thread and queue a lot commands to run in bulk.
+  
+```csharp
+// ... get an ECB from a barrier (recommended) or create one manually.
+EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
+
+// ... inside the foreach after computing dc ...
+ecb.AddComponent(prefabEntity, dc); // instead of EntityManager.AddComponent(prefabEntity, dc);
+```
+> **Example ECB** from [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L157)
+> 
+> See Unity Docs on [Optimizing for Structural Changes](https://docs.unity3d.com/Packages/com.unity.entities@1.4/manual/optimize-structural-changes.html)
 ---
 ## Quick Baseline vs Direct write sample
 
@@ -248,9 +246,7 @@ if (!EntityManager.HasComponent<DeathcareFacilityData>(prefabEntity))
 DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity); // struct copy
 dc.m_ProcessingRate = 12f; // absolute override example
 
-// Optional: ECB is the “do a bunch of edits, then apply once” pattern (faster for big loops).
-EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // Barrier method: create a buffer for queued changes
-ecb.SetComponent(prefabEntity, dc); // queue: write this updated data back later
+EntityManager.SetComponentData(prefabEntity, dc); // queue: write this updated data back.
 ```
 
 ---
