@@ -286,10 +286,9 @@ Prefab entities are still entities, so querying them is fine, the *Data at the e
 Example (valid):
 
 ```csharp
-foreach ((RefRW<Game.Prefabs.DeathcareFacilityData> dc, Entity e) in SystemAPI
-    .Query<RefRW<Game.Prefabs.DeathcareFacilityData>>()
-    .WithAll<Game.Prefabs.PrefabData>()
-    .WithEntityAccess())
+EntityQuery prefabQ = SystemAPI.QueryBuilder()
+    .WithAll<Game.Prefabs.PrefabData, Game.Prefabs.DeathcareFacilityData>() // prefab entities with this *Data name
+    .Build();
 ```
 
 >Notes:
