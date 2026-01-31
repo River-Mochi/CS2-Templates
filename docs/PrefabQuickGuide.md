@@ -45,7 +45,7 @@ int baseHearses = dcAuthoring.m_HearseCapacity;
 
 ---
 
-## Danger snippet (don’t do this for true baseline)
+## Danger snippet
 
 ```csharp
 Entity prefab = prefabRefLookup[instance].m_Prefab;
