@@ -199,10 +199,12 @@ else
     // Add marker + initial data later (batched at playback)
     ecb.AddComponent(prefabEntity, marker);
 }
-
 ```
-> **Example ECB** from [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L157)
-> 
+
+- Use `ecb.AddComponent(entity, componentData)` instead of `EntityManager.AddComponentData(entity, componentData)` when batching **structural** changes.
+- Use `ecb.SetComponent(entity, componentData)` instead of `EntityManager.SetComponentData(entity, componentData)` when batching **component** updates.
+
+> **Example ECB** from [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L157)<br>
 > See Unity Docs on [Optimizing for Structural Changes](https://docs.unity3d.com/Packages/com.unity.entities@1.4/manual/optimize-structural-changes.html)
 
 ---
