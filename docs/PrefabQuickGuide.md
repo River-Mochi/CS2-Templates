@@ -43,7 +43,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 |---|---|
 | `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.WorkplaceData` | `m_MaxWorkers`, `m_MinimumWorkersLimit` |
-> Notice there **is** *Data at the end of all these names.
+> Notice there **is** *Data at the end of all these ECS names.
 ---
 
 ## Danger snippet
