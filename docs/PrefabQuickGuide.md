@@ -3,17 +3,17 @@
 ---
 
 ## The rule
-**True vanilla baseline comes from `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` authoring components.**  
-Do **not** treat prefab-entity `*Data` components reached via `PrefabRef` as baseline.
+Do **not** treat prefab-entity with `*Data` name endings -> reached via `PrefabRef` as baseline.
 
 ---
 
-## Minimal “RIGHT baseline” snippet
+## Minimal baseline snippet
 
 ```csharp
 PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
 
 // Example: prefabEntity is the ECS prefab entity (from PrefabRef.m_Prefab)
+// vanilla baseline values comes from `TryGetPrefab(...)` → `PrefabBase`.  
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
