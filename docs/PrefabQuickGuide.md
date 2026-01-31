@@ -10,7 +10,7 @@ Prefab-entity with `*Data` name endings -> reached via `PrefabRef` are not vanil
 
 ---
 
-## Minimal baseline snippet
+## Minimal baseline
 
 ```csharp
 PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
@@ -46,12 +46,15 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 > Notice there **is** *Data at the end of all these ECS names.
 ---
 
-## Danger snippet
+## Minimal Prefab write
 
 ```csharp
-Entity prefab = prefabRefLookup[instance].m_Prefab;
-var baseData = dcLookup[prefab]; // already modified by game/mods
-var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
+// Edit prefab-entity *Data using vanilla baseline (from PrefabBase).
+// (Assumes `prefabEntity` is the prefab template entity and `baseRate` came from the snippet above.)
+
+DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
+dc.m_ProcessingRate = baseRate * scalar;      // scale from true vanilla baseline
+EntityManager.SetComponentData(prefabEntity, dc);
 ```
 
 ---
