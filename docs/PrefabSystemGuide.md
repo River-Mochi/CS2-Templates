@@ -264,7 +264,7 @@ Some names exist in two different “layers”, and only the **runtime ECS compo
 - `Game.Buildings.DeathcareFacility` = **runtime ECS components** ✅  valid in `SystemAPI.Query()` / `.WithAll<T>()`
 - `Game.Prefabs.DeathcareFacility`  = **PrefabBase authoring types** ❌ not ECS components → **cannot** go in `.WithAll<T>()`
 
-❌ Ambiguous: if the file has `using Game.Prefabs;` this can bind to the wrong type:
+❌ Ambiguous: if the file has `using Game.Prefabs;` this code can bind to the wrong type:
 ```csharp
     EntityQuery q = SystemAPI.QueryBuilder()
         .WithAll<DeathcareFacility>()    // Makes confusing compile errors.
