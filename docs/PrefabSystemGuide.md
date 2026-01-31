@@ -57,19 +57,6 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 
 ---
 
-## Why `PrefabRef` is NOT the “true vanilla baseline”
-
-`PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
-That prefab entity is commonly modified by mods.
-
-So using prefab-entity `*Data` as “baseline” could produce **double-scaling** or **wrong restore values**.
-
-**Rule of thumb**
-- ✅ Baseline = `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` → authoring component fields
-- ❌ Baseline = reading `*Data` from the prefab entity referenced by `PrefabRef`
-
----
-
 ## Recommended pattern (safe & compatible)
 
 ### Step 1 — Read vanilla from PrefabBase (authoring)
@@ -113,33 +100,16 @@ foreach (Entity prefabEntity in entities)
     if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility authoring))
         continue;
 
-    // 2) Write new scaled value onto the prefab entity's *Data.
+    // 2) Write new scaled value onto a copy of prefab entity's *Data component.
     DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
     dc.m_ProcessingRate = authoring.m_ProcessingRate * scalar;
 
-    // 3) Writes updated copy back to the entity. (Consider ECB - see section below).
+    // 3) Writes updated copy back to the entity.
     EntityManager.SetComponentData(prefabEntity, dc);
 }
 ```
 
 >**Example real mod using Option 1 (with different ways to change Prefabs):** [Tree Controller](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L21)
-
----
-
-**Advanced (optional): EntityCommandBuffer (ECB)**
-- Instead of calling `EntityManager.SetComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
-- This batches writes and avoids immediate write sync points; useful when changing lots of entities or running frequently.
-- Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), so playback/dispose is handled automatically.
-- ECB is recommended as the more modern way although `SetComponentData` will work.
-  
-```csharp
-// ... get an ECB from a barrier (recommended) or create one manually.
-EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
-
-// ... inside the foreach after computing dc ...
-ecb.SetComponent(prefabEntity, dc); // instead of EntityManager.SetComponentData(prefabEntity, dc);
-```
-> **Example ECB** from [Anarchy mod](https://github.com/yenyang/Anarchy/blob/master/Anarchy/Systems/ErrorChecks/EnableToolErrorsSystem.cs#L48)
 
 ---
 
@@ -207,7 +177,23 @@ else
 }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.
+[Unity EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
+**Advanced (optional): EntityCommandBuffer (ECB)**
+- When adding components to a lot of entities simulatanously, instead of calling `EntityManager.AddComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
+- This batches writes and avoids immediate write sync points; useful when causing structural changes on lots of entities.
+- Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), to not stall the main thread and queue a lot commands to run in bulk.
+  
+```csharp
+// ... get an ECB from a barrier (recommended) or create one manually.
+EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
+
+// ... inside the foreach after computing dc ...
+ecb.AddComponent(prefabEntity, dc); // instead of EntityManager.AddComponent(prefabEntity, dc);
+```
+> **Example ECB** from [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L157)
+> 
+> See Unity Docs on [Optimizing for Structural Changes](https://docs.unity3d.com/Packages/com.unity.entities@1.4/manual/optimize-structural-changes.html)
 ---
 ## Quick Baseline vs Direct write sample
 
@@ -248,9 +234,7 @@ if (!EntityManager.HasComponent<DeathcareFacilityData>(prefabEntity))
 DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity); // struct copy
 dc.m_ProcessingRate = 12f; // absolute override example
 
-// Optional: ECB is the “do a bunch of edits, then apply once” pattern (faster for big loops).
-EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // Barrier method: create a buffer for queued changes
-ecb.SetComponent(prefabEntity, dc); // queue: write this updated data back later
+EntityManager.SetComponentData(prefabEntity, dc); // queue: write this updated data back.
 ```
 
 ---
@@ -303,13 +287,15 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 
 ### Baseline vs data vs runtime (real examples)
 
-| Layer | What it is | Good for | Not good for | Examples |
-|:---|:---|:----|:---|:---|
-| `PrefabBase` authoring | Real prefab definition | true vanilla baseline / restore | writing runtime effects | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
-| Prefab entity (`PrefabData`) | ECS representation of the prefab | writing scaled `*Data` values | using as baseline (can be modified) | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
-| Instance entity | placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
+| Item | What it is | Good for | Not good for | Examples |
+|:---|:---|:---|:---|:---|
+| `PrefabBase` authoring | Real prefab definition (vanilla-authored values) | true vanilla baseline / restore | changing live behavior directly | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
+| Prefab entity (`PrefabData`) | ECS prefab template entity (holds `*Data`) | writing scaled `*Data` values | using `*Data` as “vanilla baseline” | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
+| `PrefabRef` (instance link) | Instance component that points to the prefab entity (`m_Prefab`) | finding the prefab entity to edit | treating “prefab entity `*Data`” as baseline | `Game.Prefabs.PrefabRef.m_Prefab` |
+| Instance entity | Placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
 
 > **Note:**
+- `PrefabRef.m_Prefab` points to the **prefab entity**, not `PrefabBase`. Use `TryGetPrefab(...)` for vanilla baseline.
 - Instance-side values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
 - Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings.
 
