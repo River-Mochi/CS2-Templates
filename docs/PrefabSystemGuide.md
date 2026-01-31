@@ -180,7 +180,13 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
 #### Advanced (optional): EntityCommandBuffer (ECB)
-- When adding components to a lot of entities simulatanously, instead of calling `EntityManager.AddComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
+
+- When doing lots of structural changes, queue them with an ECB:
+  
+  ```csharp
+  EntityManager.AddComponentData(entity, componentData) → ecb.AddComponent(entity, componentData)
+  EntityManager.SetComponentData(entity, componentData) → ecb.SetComponent(entity, componentData)
+  ```
 - This batches writes and avoids immediate write sync points; useful when causing structural changes on lots of entities.
 - Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), to not stall the main thread and queue a lot commands to run in bulk.
   
@@ -200,9 +206,6 @@ else
     ecb.AddComponent(prefabEntity, marker);
 }
 ```
-
-- Use `ecb.AddComponent(entity, componentData)` instead of `EntityManager.AddComponentData(entity, componentData)` when batching **structural** changes.
-- Use `ecb.SetComponent(entity, componentData)` instead of `EntityManager.SetComponentData(entity, componentData)` when batching **component** updates.
 
 > **Example ECB** from [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L157)<br>
 > See Unity Docs on [Optimizing for Structural Changes](https://docs.unity3d.com/Packages/com.unity.entities@1.4/manual/optimize-structural-changes.html)
@@ -311,6 +314,6 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 > **Note:**
 - `PrefabRef.m_Prefab` points to the **prefab entity**, not `PrefabBase`. Use `TryGetPrefab(...)` for vanilla baseline.
 - Instance-side values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
-- Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings.
+- Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings, and alternate methods needed to see changes in **existing** buildings.
 
 
