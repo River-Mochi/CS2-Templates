@@ -15,7 +15,7 @@ Result: some Options UI menu sliders changing building/vehicle (prefab) details 
 |---|---|---|
 | **PrefabBase** (authoring) | Vanilla authored object (source-of-truth baseline) | Read baseline via `PrefabSystem.TryGetPrefab(...)` |
 | **Prefab entity** (`PrefabData`) | ECS entity that represents the prefab and holds `*Data` components | Write scaled `*Data` |
-| **Instance entity** | Placed things have `PrefabRef.m_Prefab that points to a prefab entity | Inspect current runtime behavior; avoid blind edits |
+| **Instance entity** | Placed things have `PrefabRef.m_Prefab` that points to a prefab entity | Inspect current runtime behavior; avoid blind edits |
 
 **Key link:** instance → prefab entity via `PrefabRef.m_Prefab`.
 
@@ -69,18 +69,18 @@ None of those are “bad”; they’re normal sim engineering tradeoffs. They *d
 
 ## How to tell if a value is instance-cached
 
-### Fast in-game test (Scene Explorer)
-1. Pick a placed building/vehicle.
-2. Inspect **instance entity** runtime component value.
-3. Inspect **prefab entity** `*Data` value.
-4. Change the setting (edit prefab `*Data`).
-5. Re-check the instance value.
+### Fast in-game test
+1. Install Scene Explorer mod  (use hot-keys)
+2. Ctrl+E > Pick a placed building.
+3. Inspect **instance-entity** runtime component value.
+4. Inspect **prefab-entity** `*Data` value.
+5. Change a setting with a mod (edit prefab `*Data`) or just add an Extension building.
+6. Re-check the instance values.
 
 If prefab value changes but instance stays the same, the value is very likely **instance-cached** or **recomputed only on events**.
 
 ### dnSpy tips
-If a struct/component implements `ISerializable`, it’s a strong clue it can be stored in saves.  
-This does not prove “cached”, but it raises the probability the value can persist across loads.
+If a struct/component implements `ISerializable`, it’s a strong clue it can be stored in saves.
 
 ---
 
