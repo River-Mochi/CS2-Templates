@@ -2,7 +2,7 @@
 
 ---
 
-## The rule
+## Maxim
 
 Vanilla baseline = what the game sets the buildings/vehicles/citizens to be.<br>
 Prefab-entity with `*Data` name endings -> reached via `PrefabRef` are not vanilla baseline values and can be and are altered by mods.
