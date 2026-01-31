@@ -168,17 +168,16 @@ foreach (var (prefabRef, workProvider, entity) in SystemAPI
 ```
 
 ### 2) Safe stance: prefab edit + “refresh needed” message
-```csharp
-// Edit prefab entity WorkplaceData (new buildings reflect changes)
-// Communicate: existing buildings update after rebuild/upgrade/extension change.
-```
+
+- Just edit the prefab entity `WorkplaceData` (all new buildings reflect changes). This might be enough for most players and safe/easy.
+- Communicate: *existing* buildings update after adding/deleting extension buildings (triggers the game to update on old buildings).
 
 ### 3) “System-driven refresh” placeholder
-```csharp
-// Best-case approach:
-// - Identify the CO system that recomputes the runtime component from prefab state
-// - Call/trigger it once when settings change
-```
+
+ Best-case approach:
+- Identify the CO system that recomputes the runtime component from prefab state (iLSpy digging)
+- Call/trigger it once with a settings change
+
 
 ---
 
