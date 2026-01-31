@@ -3,7 +3,8 @@
 ---
 
 ## The rule
-Do **not** treat prefab-entity with `*Data` name endings -> reached via `PrefabRef` as baseline.
+Prefab-entity with `*Data` name endings -> reached via `PrefabRef` are not vanilla baseline values.
+Vanilla baseline = what the game sets the buildings/vehicles/citizens to be.
 
 ---
 
