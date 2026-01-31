@@ -58,17 +58,20 @@ var scaled = baseData.m_ProcessingRate * scalar; // double-scaling risk
 ## Why workers example is “special”
 Worker limits are **runtime instance components** (ex: `Game.Companies.WorkProvider.m_MaxWorkers`) that don’t always hot-update when you edit the prefab.
 
-**So:**
+### So:
 - editing `WorkplaceData` is correct and safe for all **new** buildings (or other things inside of names ending in *Data)
 - but for Existing buildings to change values, something needs to trigger the game job to update the runtime instance like `WorkProvider.m_MaxWorkers`.
   - restarting the game usually doesn’t force that refresh
-Option 1 Player action (easiest)
+    
+#### Option 1 Player action (easiest)
   - rebuild building
   - add/remove extension
   - add/remove upgrade (ex: cold storage)
-Option 2 Custom code
+
+#### Option 2 Custom code
 - If you can find the specific game job using iLSpy, copy the code method, and then run it when you like (ex: Options UI slider to trigger it)
-Option 3 Harmony patch code.
+
+#### Option 3 Harmony patch code.
 - Sometimes easier than option 2 as there are 1000's of code lines to research.
 - Could be brittle on game patch days.
 
