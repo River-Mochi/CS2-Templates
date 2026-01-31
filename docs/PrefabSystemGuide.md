@@ -206,7 +206,7 @@ else
     EntityManager.AddComponentData(prefabEntity, marker); // add marker first time
 }
 ```
-This is just an introduction to using custom component markers with prefabs. Hopefully, someone will write a more detailed article on this.
+This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.
 
 ---
 ## Quick Baseline vs Direct write sample
