@@ -14,7 +14,7 @@ Result: some Options UI menu sliders changing building/vehicle (prefab) details 
 | Term | Meaning | Typical mod action |
 |---|---|---|
 | **PrefabBase** (authoring) | Vanilla authored object (source-of-truth baseline) | Read baseline via `PrefabSystem.TryGetPrefab(...)` |
-| **Prefab entity** (`PrefabData`) | ECS entity that represents the prefab and holds `*Data` components | Write scaled `*Data` |
+| **Prefab entity** (`PrefabData`) | ECS entity that represents the prefab and holds `*Data` components | Write changes to `*Data` |
 | **Instance entity** | Placed building/vehicle/citizen in the city | Inspect runtime behavior; avoid blind edits |
 
 **Key link:** instance → prefab entity via `PrefabRef.m_Prefab`.
