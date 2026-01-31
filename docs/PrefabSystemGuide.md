@@ -179,7 +179,7 @@ else
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
 [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
-**Advanced (optional): EntityCommandBuffer (ECB)**
+#### Advanced (optional): EntityCommandBuffer (ECB)
 - When adding components to a lot of entities simulatanously, instead of calling `EntityManager.AddComponentData(...)` inside the loop, queue the write with an ECB (`ecb.SetComponent(...)`).
 - This batches writes and avoids immediate write sync points; useful when causing structural changes on lots of entities.
 - Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), to not stall the main thread and queue a lot commands to run in bulk.
