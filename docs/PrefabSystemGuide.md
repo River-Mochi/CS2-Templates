@@ -47,7 +47,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
-- `PrefabRef` points to a **prefab entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
+- `PrefabRef` points to a **prefab-entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
 - Has runtime components used by simulation right now.
 - Most known runtime values do **not** hot-update just because the prefab entity changed.
   - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
