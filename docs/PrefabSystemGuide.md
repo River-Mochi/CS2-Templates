@@ -185,16 +185,28 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 - Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), to not stall the main thread and queue a lot commands to run in bulk.
   
 ```csharp
-// ... get an ECB from a barrier (recommended) or create one manually.
+// Use ECB when doing lots of structural changes (add/remove components) to avoid doing them immediately one-by-one.
+
 EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
 
-// ... inside the foreach after computing dc ...
-ecb.AddComponent(prefabEntity, dc); // instead of EntityManager.AddComponent(prefabEntity, dc);
+if (hasMarker)
+{
+    // Update existing marker later (batched at playback)
+    ecb.SetComponent(prefabEntity, marker);    
+}
+else
+{
+    // Add marker + initial data later (batched at playback)
+    ecb.AddComponent(prefabEntity, marker);
+}
+
 ```
 > **Example ECB** from [Tree Controller mod](https://github.com/yenyang/Tree_Controller/blob/master/Tree_Controller/Systems/ModifyVegetationPrefabsSystem.cs#L157)
 > 
 > See Unity Docs on [Optimizing for Structural Changes](https://docs.unity3d.com/Packages/com.unity.entities@1.4/manual/optimize-structural-changes.html)
+
 ---
+
 ## Quick Baseline vs Direct write sample
 
 ### DO this for true vanilla baseline
@@ -224,17 +236,17 @@ Use this to set a `*Data` value (don't care about baseline check).
 
 ```csharp
 // Direct prefab write: set prefab-entity *Data to a fixed value (no vanilla baseline).
-// ECB queues the write now; the game applies it later (batched) at the barrier playback.
 
-Entity prefabEntity = prefabRefLookup[instance].m_Prefab; // the prefab entity to edit
+Entity prefabEntity = prefabRefLookup[instance].m_Prefab;
 
 if (!EntityManager.HasComponent<DeathcareFacilityData>(prefabEntity))
-    return; // prefab doesn't have this data, nothing to change
+    return;
 
-DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity); // struct copy
-dc.m_ProcessingRate = 12f; // absolute override example
+DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>(prefabEntity);
+dc.m_ProcessingRate = 12f;
 
-EntityManager.SetComponentData(prefabEntity, dc); // queue: write this updated data back.
+EntityManager.SetComponentData(prefabEntity, dc); // writes immediately
+
 ```
 
 ---
