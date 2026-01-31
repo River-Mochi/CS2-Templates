@@ -310,7 +310,7 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 | Instance entity | placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
 
 > **Note:**
-- Instance-side values like `WorkProvider.m_MaxWorkers` most often don’t hot-update from prefab edits.
+- Instance-side values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
 - Editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings.
 
 
