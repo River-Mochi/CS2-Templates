@@ -173,7 +173,7 @@ Differences vs Option 1:
 
 ---
 
-### Step 3 — Restore Strategy / Custom component
+### Step 3 — Restore Strategy / Custom "Marker" component
 Special case: if changing something like Workers, consider:
 - store what was applied (add a custom component)
 - restore only if current values still match the marker (prevents stomping other mods)
