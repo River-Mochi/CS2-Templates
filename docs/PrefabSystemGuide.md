@@ -57,19 +57,6 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 
 ---
 
-## Why `PrefabRef` is NOT the “true vanilla baseline”
-
-`PrefabRef.m_Prefab` only tells you *which prefab entity* the instance came from.
-That prefab entity is commonly modified by mods.
-
-So using prefab-entity `*Data` as “baseline” could produce **double-scaling** or **wrong restore values**.
-
-**Rule of thumb**
-- ✅ Baseline = `PrefabSystem.TryGetPrefab(...)` → `PrefabBase` → authoring component fields
-- ❌ Baseline = reading `*Data` from the prefab entity referenced by `PrefabRef`
-
----
-
 ## Recommended pattern (safe & compatible)
 
 ### Step 1 — Read vanilla from PrefabBase (authoring)
