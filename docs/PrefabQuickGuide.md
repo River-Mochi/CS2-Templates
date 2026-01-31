@@ -46,7 +46,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;    // copy of the real base numbe
 > Notice there **is** *Data at the end of all these ECS names.
 ---
 
-## Minimal Write to Prefab
+## Minimal Write to prefab
 
 ```csharp
 // Edit prefab-entity *Data using baseline (from PrefabBase).
