@@ -5,7 +5,7 @@
 ## Maxim
 
 Vanilla baseline = the original default values included with the game.<br>
-Prefab `*Data` values (what mods usually edit) *may* match vanilla by coincidence, but **shouldn't be trusted as baseline.**
+Prefab `*Data` values (what mods usually edit) *may* match vanilla by chance, but **shouldn't be trusted as baseline.**
 
 ---
 
