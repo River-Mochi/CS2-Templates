@@ -180,7 +180,7 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
 
-`AddComponentData` / `RemoveComponent` are **structural changes**. Repeating them many times in a loop can cause **sync points**.
+`AddComponentData` / `RemoveComponent` are **structural changes**. Repeating them many times in a loop can cause **sync points**.<br>
 When doing lots of structural changes, queue them with an **ECB** and play them back later in one batched step.
   
   ```csharp
