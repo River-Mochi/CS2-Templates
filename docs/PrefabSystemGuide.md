@@ -56,7 +56,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // bas
 
 ## Recommended pattern (safe & compatible)
 
-### Step 1 — Read vanilla from PrefabBase (authoring)
+### Step 1 — Read vanilla from PrefabBase
 ```csharp
 PrefabSystem prefabSystem =
     World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PrefabSystem>();
