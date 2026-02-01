@@ -2,8 +2,8 @@
 
 This note is for CS2 modders who change prefab values (capacities, rates, workers) and want the results to be:
 - **Correct** (true vanilla baselines / game defaults)
-- **Compatible** (other mods can coexist)
-- **Predictable** (players know when changes apply immediately vs needing a new building)
+- **Compatible** (improve mod co-existance)
+- **Predictable** (clear when changes apply: existing vs new buildings)
 
 **No time to read?** [Quick Guide](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabQuickGuide.md#prefabsystem-source-of-truth--quick-guide-cs2-modding)
 
