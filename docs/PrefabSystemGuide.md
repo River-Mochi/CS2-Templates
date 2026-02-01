@@ -278,7 +278,7 @@ Example (valid):
 
 ```csharp
 EntityQuery prefabQ = SystemAPI.QueryBuilder()
-    .WithAll<Game.Prefabs.PrefabData, Game.Prefabs.DeathcareFacilityData>() // prefab entities with this *Data name
+    .WithAll<Game.Prefabs.PrefabData, Game.Prefabs.DeathcareFacilityData>() // prefab entities with *Data in the name.
     .Build();
 ```
 
