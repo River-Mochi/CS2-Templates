@@ -176,27 +176,27 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
 
-`AddComponentData` / `RemoveComponent` are **structural changes**. Repeating them many times in a loop can cause **sync points**.<br>
-When doing lots of structural changes, queue them with an **ECB** and play them back later in one batched step.
-  
+**Structural changes** (add/remove components, create/destroy entities) **can trigger sync points** when repeated many times.
+If doing lots of structural changes in a loop, queue them with **ECB** so playback happens later in one batched step.
+
   ```csharp
-  EntityManager.AddComponentData(entity, componentData) → ecb.AddComponent(entity, componentData)
-  EntityManager.SetComponentData(entity, componentData) → ecb.SetComponent(entity, componentData)
-  ```
+EntityManager.AddComponentData(entity, data) -> ecb.AddComponent(entity, data)    (add + set initial value)
+EntityManager.SetComponentData(entity, data) -> ecb.SetComponent(entity, data)   (not structural, but can be batched)
+```
 Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.<br>
-Typical pattern: create the ECB from an appropriate barrier for the update phase (ex: `ModificationEndBarrier`) so playback is later at a predictable point.
+Create the ECB from an appropriate barrier for the system phase so playback happens at a predictable point.
 
 ```csharp
-// ECB variant: same logic, but structural work is queued and played back later.
+// ECB variant: same logic as EntityManager, but structural work is queued and played back later.
 EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
 
 if (hasMarker)
 {
-    ecb.SetComponent(prefabEntity, marker);  // update later (batched)
+    ecb.SetComponent(prefabEntity, marker);  // marker exists: queue update.
 }
 else
 {
-    ecb.AddComponent(prefabEntity, marker);  // add later (batched)
+    ecb.AddComponent(prefabEntity, marker);  // marker missing: queue add.
 }
 ```
 
