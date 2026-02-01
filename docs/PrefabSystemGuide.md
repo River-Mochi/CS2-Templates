@@ -50,7 +50,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // bas
   - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
   - needs extra code to trigger an instant update or a player action (ex: place a new building).
 
-> See **InstanceEntities.md** for detailed instance-side / runtime examples.
+> See [**InstanceEntities**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/InstanceEntities.md) for instance-side / runtime examples.
 
 ---
 
