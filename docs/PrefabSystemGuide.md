@@ -38,9 +38,9 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // rea
 - PrefabBase includes the raw field value that asset creator used on that prefab.
   
 ### 2) Prefab-Entity (ECS entity with `PrefabData`)
-- An entity tagged with `Game.Prefabs.PrefabData` that holds the prefab's `*`**Data** components.
-- **Important:** different mods commonly edit these (ex: School**Data**, Workplace**Data**).
-- Not everything from PrefabBase to PrefabData is one-to-one (not all provide easy tuning knobs).
+- An entity tagged with `Game.Prefabs.PrefabData` that holds prefab-side components ending in `*`**Data** names.
+- **Important:** mods commonly edit these (ex: School**Data**, Workplace**Data**).
+- Not every PrefabBase field has a 1:1 PrefabData equivalent (not all provide easy tuning knobs).
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
@@ -108,7 +108,7 @@ foreach (Entity prefabEntity in entities)
 ---
 
 ### Option 2: compact ECS style (advanced)
-- Same results as Option 1, uses [Unity.Entities ECS <RefRW<T>>](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi-query.html)
+- Same results as Option 1, uses [Unity.Entities ECS `RefRW<T>`](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi-query.html)
 
 ```csharp
 // Compact Unity.Entities ECS query style SystemAPI.Query<RefRW<T>>()
@@ -159,14 +159,14 @@ WorkplaceMarker marker = new WorkplaceMarker
 
 // Marker enables "restore only if it still matches" later, so another mod's changes don't get overwritten.
 bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
-if (hasMarker)
-{ 
-EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
-}
-else
-{
-    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
-}
+    if (hasMarker)
+    { 
+        EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
+    }
+    else
+    {
+        EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
+    }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
 [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
@@ -174,14 +174,13 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 ### Advanced (optional): EntityCommandBuffer (ECB)
 
 **Structural changes** (like AddComponentData) can trigger **sync points** when repeated many times in a loop.
-If doing lots of structural changes, queue them with **ECB** so plays back later in one batched step.
+Create the ECB from an appropriate barrier for the update phase (ex: ModificationEndBarrier) so playback is later at a predictable point.
 
-  ```csharp
+```csharp
 EntityManager.AddComponentData(entity, data) -> ecb.AddComponent(entity, data)    (add + set initial value)
 EntityManager.SetComponentData(entity, data) -> ecb.SetComponent(entity, data)   (not structural, but can be batched)
 ```
-Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.<br>
-Create the ECB from an appropriate barrier for the update phase so playback happens at a predictable point.
+Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.
 
 ```csharp
 // ECB variant: same logic as EntityManager, but structural work is queued and played back later.
@@ -297,7 +296,7 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 | Item | What it is | Good for | Not good for | Examples |
 |:---|:---|:---|:---|:---|
 | `PrefabBase` authoring | Real prefab definition (vanilla-authored values) | true vanilla baseline / restore | changing live behavior directly | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
-| Prefab entity (`PrefabData`) | ECS prefab template entity (holds `*Data`) | writing scaled `*Data` values | using `*Data` as “vanilla baseline” | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
+| Prefab entity (`PrefabData`) | ECS that holds `*Data` components | writing scaled `*Data` values | using `*Data` as “vanilla baseline” | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
 | `PrefabRef` (instance link) | Instance component that points to the prefab entity (`m_Prefab`) | finding the prefab entity to edit | treating “prefab entity `*Data`” as baseline | `Game.Prefabs.PrefabRef.m_Prefab` |
 | Instance entity | Placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
 
