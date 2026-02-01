@@ -147,7 +147,7 @@ Differences vs Option 1:
 Special case: if changing something like Workers, consider:
 - store what was applied (add a custom component)
 - restore only if current values still match the marker (prevents stomping other mods)
-- players often run multiple mods that can change the same values.
+- defense: players sometimes run multiple mods which change the same values.
 - apply on change events (Options UI / load), not per-frame
 
 ```csharp
@@ -179,19 +179,21 @@ else
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
 [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
-#### Advanced (optional): EntityCommandBuffer (ECB)
+### Advanced (optional): EntityCommandBuffer (ECB)
 
-- When doing lots of structural changes, queue them with an ECB:
+`EntityManager.AddComponentData(...)` is a **structural change** (add/remove components) triggers **sync points** when repeated many times.<br>
+When doing lots of structural changes in a loop, queue them with an **ECB** so they play back in one batched step.
   
   ```csharp
   EntityManager.AddComponentData(entity, componentData) → ecb.AddComponent(entity, componentData)
   EntityManager.SetComponentData(entity, componentData) → ecb.SetComponent(entity, componentData)
   ```
+  
 - This batches writes and avoids immediate write sync points; useful when causing structural changes on lots of entities.
 - Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), to not stall the main thread and queue a lot commands to run in bulk.
-  
+
 ```csharp
-// Use ECB when doing lots of structural changes (add/remove components) to avoid doing them immediately one-by-one.
+// Use ECB when doing lots of add/remove components in a loop.
 
 EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
 
