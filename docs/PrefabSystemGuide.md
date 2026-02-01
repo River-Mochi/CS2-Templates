@@ -169,6 +169,7 @@ else
 }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
+[Unity unmanaged components]: (https://docs.unity3d.com/Packages/com.unity.entities%401.4/manual/components-unmanaged.html)
 [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
