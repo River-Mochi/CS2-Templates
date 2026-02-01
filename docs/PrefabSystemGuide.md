@@ -302,7 +302,7 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 
 > **Note:**
 - `PrefabRef.m_Prefab` points to the **prefab entity**, not `PrefabBase`. Use `TryGetPrefab(...)` for vanilla baseline.
-- Instance-side values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
-- Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings, and alternate methods needed to see changes in **existing** buildings.
+- **Instance-side** values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
+- Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings, and you need alternate methods to see changes in **existing** buildings.
 
 
