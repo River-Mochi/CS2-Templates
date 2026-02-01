@@ -40,7 +40,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // bas
 ### 2) Prefab-Entity (ECS entity with `PrefabData`)
 - An entity tagged with `Game.Prefabs.PrefabData` that holds prefab-side components whose type names end in **Data**.
 - **Important:** mods commonly edit these (ex: School**Data**, Workplace**Data**).
-- Not every PrefabBase field has a 1:1 PrefabData equivalent (not all expose easy tuning knobs).
+- Not every PrefabBase field has a 1:1 prefab-side `*Data` equivalent (not all expose easy tuning knobs).
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 
