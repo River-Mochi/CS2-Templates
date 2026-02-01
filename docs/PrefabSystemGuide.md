@@ -197,11 +197,11 @@ EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., Modification
 
 if (hasMarker)
 {
-    ecb.SetComponent(prefabEntity, marker);    
+    ecb.SetComponent(prefabEntity, marker);  // update later (batched)
 }
 else
 {
-    ecb.AddComponent(prefabEntity, marker);
+    ecb.AddComponent(prefabEntity, marker);  // add later (batched)
 }
 ```
 
