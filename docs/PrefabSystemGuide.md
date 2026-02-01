@@ -176,8 +176,8 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 **Structural changes** (like AddComponentData) can trigger **sync points** when repeated many times in a loop.<br>
 Create the ECB from an appropriate barrier for the update phase (ex: ModificationEndBarrier) so playback is later at a predictable point.
 
-- EntityManager.AddComponentData(entity, data) -> ecb.AddComponent(entity, data)    (add + set initial value)
-- EntityManager.SetComponentData(entity, data) -> ecb.SetComponent(entity, data)   (not structural, but can be batched)
+- `EntityManager.AddComponentData(entity, data)` -> `ecb.AddComponent(entity, data)`   // add + set initial value
+- `EntityManager.SetComponentData(entity, data)` -> `ecb.SetComponent(entity, data)`   // not structural, but can be batched
 
 Note: `SetComponentData` is *not* a structural change; ECB is mainly the performance win for **add/remove**.
 
