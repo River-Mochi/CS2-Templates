@@ -23,7 +23,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
 if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility dcAuthoring))
     return;
 
-float baseRate = dcAuthoring.m_ProcessingRate;  // copy of vanilla baseline
+float baseRate = dcAuthoring.m_ProcessingRate;  // vanilla baseline
 ```
 
 ---
