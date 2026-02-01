@@ -187,7 +187,7 @@ When doing lots of structural changes, queue them with an **ECB** and play them 
   EntityManager.AddComponentData(entity, componentData) → ecb.AddComponent(entity, componentData)
   EntityManager.SetComponentData(entity, componentData) → ecb.SetComponent(entity, componentData)
   ```
-Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.
+Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.<br>
 Typical pattern: create the ECB from an appropriate barrier for the update phase (ex: `ModificationEndBarrier`) so playback is later at a predictable point.
 
 ```csharp
