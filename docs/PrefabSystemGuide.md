@@ -144,18 +144,19 @@ Differences vs Option 1:
 ---
 
 ### Step 3 — Restore Strategy / Custom "Marker" component
-Special case: if changing something like Workers, consider:
-- store what was applied (add a custom component)
-- restore only if current values still match the marker (prevents stomping other mods)
-- defense: players sometimes run multiple mods which change the same values.
-- apply on change events (Options UI / load), not per-frame
+
+Special Case: when changing values that other mods might also touch (ex: Workers), store what this mod applied on the same prefab entity. 
+On restore, only revert when the current value still matches the marker (avoids stomping another mod).
+
+- **Marker = last value applied by this mod**
+- **Restore only if marker still matches**
+- Apply on setting change/load, not per-frame.
 
 ```csharp
-// Example marker snippet: store what this mod last applied.
-// Stored on the same prefab entity that has WorkplaceData.
+// Custom component: store what this mod last applied.
 private struct WorkplaceMarker : IComponentData
 {
-    public int AppliedMax; // last max-workers value written by this mod
+    public int AppliedMax; // last max-workers value this mod wrote.
 }
 
 // After writing WorkplaceData, write/update the marker too.
@@ -164,8 +165,7 @@ WorkplaceMarker marker = new WorkplaceMarker
     AppliedMax = scaledMax,
 };
 
-// Marker enables "restore only if it still matches" later,
-// so another mod's changes don't get overwritten by accident.
+// Marker enables "restore only if it still matches" later, so another mod's changes don't get overwritten.
 bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
 if (hasMarker)
 { 
@@ -188,7 +188,7 @@ When doing lots of structural changes, queue them with an **ECB** and play them 
   EntityManager.AddComponentData(entity, componentData) → ecb.AddComponent(entity, componentData)
   EntityManager.SetComponentData(entity, componentData) → ecb.SetComponent(entity, componentData)
   ```
-Note: SetComponentData is *not* a structural change; ECB is mainly the win for **add/remove**.
+Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.
 Typical pattern: create the ECB from an appropriate barrier for the update phase (ex: `ModificationEndBarrier`) so playback is later at a predictable point.
 
 ```csharp
