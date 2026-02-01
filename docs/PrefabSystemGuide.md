@@ -1,6 +1,6 @@
 # PrefabSystem in Cities: Skylines II
 
-This note is for CS2 modders who change prefab values (capacities, rates, workers) and want the results to be:
+This note is for CS2 modders who change prefab values (capacities, rates, workers, etc.) and want the results to be:
 - **Correct** (true vanilla baselines / game defaults)
 - **Compatible** (coexist with most other mods)
 - **Predictable** (clear when changes apply: existing vs new buildings)
