@@ -173,7 +173,7 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
 
-**Structural changes** (like AddComponentData) can trigger **sync points** when repeated many times in a loop.
+**Structural changes** (like AddComponentData) can trigger **sync points** when repeated many times in a loop.<br>
 Create the ECB from an appropriate barrier for the update phase (ex: ModificationEndBarrier) so playback is later at a predictable point.
 
 ```csharp
