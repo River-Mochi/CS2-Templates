@@ -173,7 +173,7 @@ EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
 }
 else
 {
-    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time
+    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
 }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
@@ -181,30 +181,26 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
 
-`EntityManager.AddComponentData(...)` is a **structural change** (add/remove components) triggers **sync points** when repeated many times.<br>
-When doing lots of structural changes in a loop, queue them with an **ECB** so they play back in one batched step.
+`AddComponentData` / `RemoveComponent` are **structural changes**. Repeating them many times in a loop can cause **sync points**.
+When doing lots of structural changes, queue them with an **ECB** and play them back later in one batched step.
   
   ```csharp
   EntityManager.AddComponentData(entity, componentData) → ecb.AddComponent(entity, componentData)
   EntityManager.SetComponentData(entity, componentData) → ecb.SetComponent(entity, componentData)
   ```
-  
-- This batches writes and avoids immediate write sync points; useful when causing structural changes on lots of entities.
-- Typical pattern: create the ECB from a phase barrier (ex: `ModificationEndBarrier`), to not stall the main thread and queue a lot commands to run in bulk.
+Note: SetComponentData is *not* a structural change; ECB is mainly the win for **add/remove**.
+Typical pattern: create the ECB from an appropriate barrier for the update phase (ex: `ModificationEndBarrier`) so playback is later at a predictable point.
 
 ```csharp
-// Use ECB when doing lots of add/remove components in a loop.
-
+// ECB variant: same logic, but structural work is queued and played back later.
 EntityCommandBuffer ecb = m_Barrier.CreateCommandBuffer(); // e.g., ModificationEndBarrier
 
 if (hasMarker)
 {
-    // Update existing marker later (batched at playback)
     ecb.SetComponent(prefabEntity, marker);    
 }
 else
 {
-    // Add marker + initial data later (batched at playback)
     ecb.AddComponent(prefabEntity, marker);
 }
 ```
@@ -216,7 +212,7 @@ else
 
 ## Quick Baseline vs Direct write sample
 
-### DO this for true vanilla baseline
+### DO this to get vanilla baseline
 
 Use this for restore accuracy and to avoid double-scaling.
 
