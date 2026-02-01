@@ -25,12 +25,11 @@ In CS2 you run into **three layers** that *sound* similar but behave differently
 ### 1) PrefabBase (authoring) — the real baseline
 
 - The prefab’s **vanilla default values** shipped with the game.
-- Read it via `PrefabSystem.TryGetPrefab(...)`:
 
 ```csharp
 PrefabSystem prefabSystem =
     World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PrefabSystem>();
-
+// read the value.
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 ```
