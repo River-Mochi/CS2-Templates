@@ -68,7 +68,7 @@ EntityManager.SetComponentData(prefabEntity, dc);
 Worker limits are **runtime instance components** (ex: `Game.Companies.WorkProvider.m_MaxWorkers`) and instance-entities don't just hot-update when you edit the prefab `*Data` items.
 
 ### So:
-- Editing `WorkplaceData` is correct and safe for all **new** buildings (or other things inside of names ending in *Data)
+- Editing `WorkplaceData` is safe for all **new** buildings (and other type names ending in `Data`)
 - For Existing buildings to change values, something needs to trigger the game job to update the runtime instance like `WorkProvider.m_MaxWorkers`.
     - restarting the game usually doesn’t force that refresh.
     
