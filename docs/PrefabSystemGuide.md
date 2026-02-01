@@ -29,8 +29,8 @@ In CS2 you run into **three layers** that *sound* similar but behave differently
 ```csharp
 PrefabSystem prefabSystem =
     World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PrefabSystem>();
-// read the value.
-if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
+
+if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // read the base value.
     return;
 ```
 
