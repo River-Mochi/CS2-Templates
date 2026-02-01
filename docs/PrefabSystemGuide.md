@@ -239,40 +239,39 @@ DeathcareFacilityData dc = EntityManager.GetComponentData<DeathcareFacilityData>
 dc.m_ProcessingRate = 12f;
 
 EntityManager.SetComponentData(prefabEntity, dc); // writes immediately
-
 ```
 
 ---
 
 ## Avoid Errors with  `SystemAPI.Query()` (Prefab vs Runtime types)
 
-Some names exist in two different “layers”, and only the **runtime ECS component** version can be used in `SystemAPI.Query()` / `.WithAll<T>()`.
+Some names exist in two different “layers”, and only the **runtime ECS component** can be used in `SystemAPI.Query()` / `.WithAll<T>()`.
 
 ### The gotcha: same name, different layer
 
-- `Game.Buildings.DeathcareFacility` = **runtime ECS components** ✅  valid in `SystemAPI.Query()` / `.WithAll<T>()`
-- `Game.Prefabs.DeathcareFacility`  = **PrefabBase authoring types** ❌ not ECS components → **cannot** go in `.WithAll<T>()`
+- `Game.Buildings.DeathcareFacility` = **runtime ECS components** ✅ valid in WithAll<T>()
+- `Game.Prefabs.DeathcareFacility` = **PrefabBase authoring types** ❌ NOT ECS → **cannot** go in WithAll<T>()
 
-❌ Ambiguous: if the file has `using Game.Prefabs;` this code can bind to the wrong type:
+❌ Ambiguous: if file has `using Game.Prefabs;` this can bind to the wrong type:
+
 ```csharp
     EntityQuery q = SystemAPI.QueryBuilder()
-        .WithAll<DeathcareFacility>()    // Makes confusing compile errors.
+        .WithAll<DeathcareFacility>()    // Makes misleading compile errors.
         .Build();
 ```
 
-✅  Fix: fully-qualify the ECS type in query:
+✅ Fix: fully-qualify the ECS type:
 
 ```csharp
     EntityQuery q = SystemAPI.QueryBuilder()
-        .WithAll<Game.Buildings.DeathcareFacility>()
+        .WithAll<Game.Buildings.DeathcareFacility>()   // this is a good defense habit.
         .Build();
 ```
 
 ### What *is* valid to query for prefabs?
 Prefab entities are still entities, so querying them is fine, the *Data* at the end of the name is the key.
 
-✅ **Prefab entities**: entities that have `Game.Prefabs.PrefabData`  
-✅ **Prefab `*Data` ECS components**: types like `Game.Prefabs.DeathcareFacilityData`
+✅ `Game.Prefabs.PrefabData`, `Game.Prefabs.PrefabRef` = **ECS components** ✅ valid in `WithAll<T>()`
 
 Example (valid):
 
@@ -284,7 +283,7 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 
 >Notes:<br>
 >See the [Unity user manual (1.3*)](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi.html) for complete details on SystemAPI queries.<br>
->This section is only for highlighting one common SystemAPI error with prefabs, and not a full SystemAPI guide.
+>This section is only for highlighting one common SystemAPI error with prefabs, a more detailed SystemAPI guide is still needed.
 
 ---
 
