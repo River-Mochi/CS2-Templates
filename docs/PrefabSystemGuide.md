@@ -161,11 +161,11 @@ WorkplaceMarker marker = new WorkplaceMarker
 bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
 if (hasMarker)
 {
-  EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
+    EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
 }
 else
 {
-  EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
+    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
 }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
