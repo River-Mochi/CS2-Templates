@@ -38,7 +38,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // bas
 - PrefabBase includes the raw field value that asset creator used on that prefab.
   
 ### 2) Prefab-Entity (ECS entity with `PrefabData`)
-- An entity tagged with `Game.Prefabs.PrefabData` that holds prefab-side components whose type names end in ***Data**.
+- An entity tagged with `Game.Prefabs.PrefabData` that holds prefab-side components whose type names end in **Data**.
 - **Important:** mods commonly edit these (ex: School**Data**, Workplace**Data**).
 - Not every PrefabBase field has a 1:1 PrefabData equivalent (not all expose easy tuning knobs).
 
