@@ -202,7 +202,7 @@ else
 
 ## Quick Baseline vs Direct write sample
 
-### DO this to get vanilla baseline
+### DO this to get baseline
 
 Use this for restore accuracy and to avoid double-scaling.
 
