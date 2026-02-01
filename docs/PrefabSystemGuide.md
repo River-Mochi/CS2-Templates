@@ -168,7 +168,7 @@ else
     EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
 }
 ```
-This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
+This is a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
 [Unity unmanaged components](https://docs.unity3d.com/Packages/com.unity.entities%401.4/manual/components-unmanaged.html) and [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
