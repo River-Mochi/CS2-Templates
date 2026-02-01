@@ -13,14 +13,14 @@ Prefab `*Data` values (what mods usually edit) *may* match vanilla by chance, bu
 ## Minimal baseline
 
 ```csharp
-PrefabSystem prefabSystem = World.GetOrCreateSystemManaged<PrefabSystem>();
+PrefabSystem prefabSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PrefabSystem>();
 
 // Baseline values are conveniently stored in `PrefabBase`
 if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 
 // authoring components = vanilla truth
-if (!prefabBase.TryGet(out Game.Prefabs.DeathcareFacility dcAuthoring))
+if (!prefabBase.TryGetExactly(out Game.Prefabs.DeathcareFacility dcAuthoring))
     return;
 
 float baseRate = dcAuthoring.m_ProcessingRate;  // copy of vanilla baseline
