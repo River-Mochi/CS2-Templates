@@ -80,11 +80,8 @@ This is where the mod actually **changes the prefab-entity** (entities with `Pre
 #### Option 1: classic SystemAPI style  (query → get entities → foreach loop)
 
 ```csharp
-// Classic Style SystemAPI.QueryBuilder 
-using Game.Prefabs;        // PrefabSystem, PrefabBase, PrefabData, DeathcareFacilityData
-using Unity.Entities;      // Entity, SystemAPI
-...
 // For each prefab entity: read ProcessingRate from PrefabBase, then write the scaled value into DeathcareFacilityData.
+
 EntityQuery query = SystemAPI.QueryBuilder()
     .WithAll<PrefabData, DeathcareFacilityData>()
     .Build();
@@ -118,8 +115,6 @@ foreach (Entity prefabEntity in entities)
 
 ```csharp
 // Compact Unity.Entities ECS query style SystemAPI.Query<RefRW<T>>()
-using Game.Prefabs;        // PrefabSystem, PrefabBase, PrefabData, DeathcareFacilityData
-using Unity.Entities;      // Entity, SystemAPI, RefRW
 
 foreach ((RefRW<DeathcareFacilityData> dc, Entity prefabEntity) in SystemAPI
     .Query<RefRW<DeathcareFacilityData>>()
@@ -153,6 +148,7 @@ On restore, only revert when the current value still matches the marker (avoids 
 
 ```csharp
 // Custom component: store what this mod last applied.
+// Stored on the same prefab entity that has WorkplaceData.
 private struct WorkplaceMarker : IComponentData
 {
     public int AppliedMax; // last max-workers value this mod wrote.
