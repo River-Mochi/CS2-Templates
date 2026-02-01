@@ -297,7 +297,7 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 |:---|:---|:---|:---|:---|
 | `PrefabBase` authoring | Real prefab definition (vanilla-authored values) | true vanilla baseline / restore | changing live behavior directly | `Game.Prefabs.DeathcareFacility.m_ProcessingRate`<br>`Game.Prefabs.Workplace.m_Workplaces` |
 | Prefab entity (`PrefabData`) | ECS that holds `*Data` components | writing scaled `*Data` values | using `*Data` as “vanilla baseline” | `Game.Prefabs.DeathcareFacilityData.m_ProcessingRate`<br>`Game.Prefabs.WorkplaceData.m_MaxWorkers` |
-| `PrefabRef` (instance link) | Instance component that points to the prefab entity (field `m_Prefab`) | finding the prefab entity to edit | treating “prefab entity `*Data`” as baseline | `Game.Prefabs.PrefabRef.m_Prefab`<br>*(PrefabRef stores an entity handle in m_Prefab)* |
+| `PrefabRef` (instance link) | Instance component that points to the prefab entity<br>(field `m_Prefab`) | finding the prefab entity to edit | treating “prefab entity `*Data`” as baseline | `Game.Prefabs.PrefabRef.m_Prefab`<br>*(PrefabRef stores an entity handle in m_Prefab)* |
 | Instance entity | Placed building / vehicle / citizen | inspecting current behavior | reading vanilla defaults | `Game.Companies.WorkProvider.m_MaxWorkers` *(runtime/cached)* |
 
 > **Note:**
