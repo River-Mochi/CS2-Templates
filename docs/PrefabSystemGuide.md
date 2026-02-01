@@ -30,7 +30,7 @@ In CS2 you run into **three layers** that *sound* similar but behave differently
 PrefabSystem prefabSystem =
     World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<PrefabSystem>();
 
-if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // read the base value.
+if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // baseline
     return;
 ```
 
@@ -38,9 +38,9 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // rea
 - PrefabBase includes the raw field value that asset creator used on that prefab.
   
 ### 2) Prefab-Entity (ECS entity with `PrefabData`)
-- An entity tagged with `Game.Prefabs.PrefabData` that holds prefab-side components ending in `*`**Data** names.
+- An entity tagged with `Game.Prefabs.PrefabData` that holds prefab-side components ending in ***Data** names.
 - **Important:** mods commonly edit these (ex: School**Data**, Workplace**Data**).
-- Not every PrefabBase field has a 1:1 PrefabData equivalent (not all provide easy tuning knobs).
+- Not every PrefabBase field has a 1:1 PrefabData equivalent (not all expose easy tuning knobs).
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
 - The thing that exists in the city right now.
@@ -160,12 +160,12 @@ WorkplaceMarker marker = new WorkplaceMarker
 // Marker enables "restore only if it still matches" later, so another mod's changes don't get overwritten.
 bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
     if (hasMarker)
-    { 
-        EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
+    {
+    EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
     }
     else
     {
-        EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
+    EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
     }
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
