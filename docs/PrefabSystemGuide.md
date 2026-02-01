@@ -23,8 +23,9 @@ This note is for CS2 modders who change things like **capacities / rates and spe
 
 In CS2 you run into **three layers** that *sound* similar but behave differently:
 ### 1) PrefabBase (authoring) — the real baseline
-- Authoring object that represents what the prefab “is” in vanilla.
-- Accessed via `PrefabSystem.TryGetPrefab(...)`:
+
+- The prefab’s **vanilla default values** shipped with the game.
+- Read it via `PrefabSystem.TryGetPrefab(...)`:
 
 ```csharp
 PrefabSystem prefabSystem =
@@ -34,15 +35,12 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))
     return;
 ```
 
-- **Treat PrefabBase authoring fields as the “true vanilla baseline.”**
+- Use PrefabBase fields as the baseline for scaling/restore (prevents double-scaling).
 - PrefabBase includes the raw field value that asset creator used on that prefab.
-- This makes restore logic correct and prevents double multiplier scaling.
   
 ### 2) Prefab-Entity (ECS entity with `PrefabData`)
-- ECS representation of a prefab.
-- Often referenced by `PrefabRef.m_Prefab` from an instance.
-- Stores ECS prefab-side `*Data` components that **mods commonly edit** (ex: `DeathcareFacilityData`, `WorkplaceData`).
-- **Important:** prefab entities are **mutable**. Different mods can change them during a session.
+- An entity tagged with `Game.Prefabs.PrefabData` that holds the prefab's `*`**Data** components.
+- **Important:** different mods commonly edit these (ex: School**Data**, Workplace**Data**).
 - Not everything from PrefabBase to PrefabData is one-to-one (not all provide easy tuning knobs).
 
 ### 3) Instance Entity (placed building / vehicle / citizen)
@@ -176,15 +174,15 @@ This is just a brief example of custom component markers with prefabs. Hopefully
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
 
-**Structural changes** (add/remove components, create/destroy entities) **can trigger sync points** when repeated many times.
-If doing lots of structural changes in a loop, queue them with **ECB** so playback happens later in one batched step.
+**Structural changes** (like AddComponentData) can trigger **sync points** when repeated many times in a loop.
+If doing lots of structural changes, queue them with **ECB** so plays back later in one batched step.
 
   ```csharp
 EntityManager.AddComponentData(entity, data) -> ecb.AddComponent(entity, data)    (add + set initial value)
 EntityManager.SetComponentData(entity, data) -> ecb.SetComponent(entity, data)   (not structural, but can be batched)
 ```
 Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.<br>
-Create the ECB from an appropriate barrier for the system phase so playback happens at a predictable point.
+Create the ECB from an appropriate barrier for the update phase so playback happens at a predictable point.
 
 ```csharp
 // ECB variant: same logic as EntityManager, but structural work is queued and played back later.
