@@ -48,7 +48,7 @@ if (!prefabSystem.TryGetPrefab(prefabEntity, out PrefabBase prefabBase))  // bas
 - `PrefabRef` points to a **prefab-entity** (`PrefabRef.m_Prefab`), not `PrefabBase`.
 - Most known runtime values do **not** hot-update just because the prefab entity changed.
   - (ex: workers: instance-side `Game.Companies.WorkProvider.m_MaxWorkers`)
-  - needs extra code to trigger an instant update or a player action (ex: place a new building).
+  - needs extra code to trigger an update of existing buildings or a player action (ex: place an extension).
 
 > See [**InstanceEntities**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/InstanceEntities.md) for instance-side / runtime examples.
 
