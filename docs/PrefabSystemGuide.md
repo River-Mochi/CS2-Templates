@@ -107,7 +107,7 @@ foreach (Entity prefabEntity in entities)
 
 ---
 
-### Option 2: compact ECS style (advanced)
+#### Option 2: compact ECS style (advanced)
 - Same results as Option 1, uses [Unity.Entities ECS `RefRW<T>`](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi-query.html)
 
 ```csharp
