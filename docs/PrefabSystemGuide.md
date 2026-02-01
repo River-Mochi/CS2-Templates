@@ -159,14 +159,14 @@ WorkplaceMarker marker = new WorkplaceMarker
 
 // Marker enables "restore only if it still matches" later, so another mod's changes don't get overwritten.
 bool hasMarker = SystemAPI.HasComponent<WorkplaceMarker>(prefabEntity); // already tracked?
-  if (hasMarker)
-    {
-      EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
-    }
-  else
-    {
-      EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
-    }
+if (hasMarker)
+{
+  EntityManager.SetComponentData(prefabEntity, marker); // update existing marker
+}
+else
+{
+  EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
+}
 ```
 This is just a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
 [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
