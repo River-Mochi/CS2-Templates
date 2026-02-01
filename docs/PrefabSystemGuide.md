@@ -180,7 +180,7 @@ Create the ECB from an appropriate barrier for the update phase (ex: Modificatio
 EntityManager.AddComponentData(entity, data) -> ecb.AddComponent(entity, data)    (add + set initial value)
 EntityManager.SetComponentData(entity, data) -> ecb.SetComponent(entity, data)   (not structural, but can be batched)
 ```
-Note: `SetComponentData` is *not* a structural change; ECB is mainly the win for **add/remove**.
+Note: `SetComponentData` is *not* a structural change; ECB is mainly the performance win for **add/remove**.
 
 ```csharp
 // ECB variant: same logic as EntityManager, but structural work is queued and played back later.
