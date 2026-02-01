@@ -135,7 +135,7 @@ Differences vs Option 1:
 
 ---
 
-### Step 3 — Restore Strategy / Custom "Marker" component
+### Step 3 — Restore Strategy / Custom "Marker" component (advanced)
 
 Special Case: when changing values that other mods might also touch (ex: Workers), store what this mod applied on the same prefab entity. 
 On restore, only revert when the current value still matches the marker (avoids stomping another mod).
