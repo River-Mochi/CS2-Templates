@@ -14,7 +14,7 @@ This note is for CS2 modders who change prefab values (capacities, rates, worker
 
 ### TL;DR
 - **Baseline (true vanilla)** = `PrefabBase` authoring fields (via `PrefabSystem.TryGetPrefab(...)`)
-- **What mods usually edit** = prefab-entity `*Data` components (`WithAll<PrefabData>()`)
+- **What mods usually edit** = prefab-entity `*Data` components.
 - **What gameplay uses right now** = instance-side runtime components (often game computed / cached / serialized)
 
 ---
