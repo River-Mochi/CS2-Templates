@@ -146,6 +146,7 @@ On restore, only revert when the current value still matches the marker (avoids 
 ```csharp
 // Custom component: store what this mod last applied.
 // Stored on the same prefab entity that has WorkplaceData.
+
 private struct WorkplaceMarker : IComponentData
 {
     public int AppliedMax; // last max-workers value this mod wrote.
