@@ -169,7 +169,8 @@ else
     EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
 }
 ```
-This is a brief example of custom component markers with prefabs. Hopefully, someone writes a more extensive article.<br>
+Scene Explorer mod shows your custom component name under your mod name (click on things your mod alters).<br>
+This is a brief example of custom component markers. Hopefully, someone writes a more extensive article.<br>
 Refer to: [Unity unmanaged components](https://docs.unity3d.com/Packages/com.unity.entities%401.4/manual/components-unmanaged.html) and [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
