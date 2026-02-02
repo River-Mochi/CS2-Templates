@@ -249,8 +249,8 @@ Some names exist in two different “layers”, and only the **runtime ECS compo
 
 ### The gotcha: same name, different layer
 
-- `Game.Buildings.DeathcareFacility` = **runtime ECS components** ✅ valid in WithAll<T>()
-- `Game.Prefabs.DeathcareFacility` = **PrefabBase authoring types** ❌ NOT ECS → **cannot** go in WithAll<T>()
+- `Game.Buildings.DeathcareFacility` = **runtime ECS component** ✅ valid in WithAll<T>()
+- `Game.Prefabs.DeathcareFacility` = **PrefabBase authoring type** ❌ not an ECS component → **cannot** go in WithAll<T>()
 
 ❌ Ambiguous: if file has `using Game.Prefabs;` this can bind to the wrong type:
 
@@ -268,16 +268,18 @@ Some names exist in two different “layers”, and only the **runtime ECS compo
         .Build();
 ```
 
-### What *is* valid to query for prefabs?
-Prefab entities are still entities, so querying them is fine, the *Data* at the end of the name is the key.
+### What *is* valid to query?
 
-✅ `Game.Prefabs.PrefabData`, `Game.Prefabs.PrefabRef` = **ECS components** ✅ valid in `WithAll<T>()`
+Prefab entities are still entities, so querying them is fine (rule: **ECS components only**; `*Data` name ending is a common hint).
+
+✅ `Game.Prefabs.PrefabData` and `Game.Prefabs.PrefabRef` are **ECS components** ✅ valid in `WithAll<T>()`  
+(`PrefabRef` is on **instances** and points to the prefab entity.)
 
 Example (valid):
 
 ```csharp
 EntityQuery prefabQ = SystemAPI.QueryBuilder()
-    .WithAll<Game.Prefabs.PrefabData, Game.Prefabs.DeathcareFacilityData>() // prefab entities with *Data in the name.
+    .WithAll<Game.Prefabs.PrefabData, Game.Prefabs.DeathcareFacilityData>()
     .Build();
 ```
 
