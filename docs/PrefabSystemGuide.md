@@ -306,6 +306,6 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 - Fun: use Scene Explorer mod, click on any crematorium, confirm examples from the Quick table above.
 - `PrefabRef.m_Prefab` points to the **prefab entity**, not `PrefabBase`. Use `TryGetPrefab(...)` for vanilla baseline.
 - **Instance-side** values like `WorkProvider.m_MaxWorkers` are not known to hot-update from prefab edits.
-- Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings, and you need alternate methods to see changes in **existing** buildings.
+- Hence, editing prefab `WorkplaceData.m_MaxWorkers` applies to **new** buildings, and you need alternate methods to force changes in **existing** buildings.
 
 
