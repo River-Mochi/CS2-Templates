@@ -133,8 +133,8 @@ Differences vs Option 1:
 - No ToEntityArray / NativeArray lifetime to manage.
 - Writes through RefRW<T> (so there’s no “get struct copy → modify → SetComponentData” step).
   
-> Example using both Classic and Compact SystemAPI query in a real mod: [Magic Hearse](https://github.com/River-Mochi/MagicHearse/blob/main/Systems/FuneralDirectorSystem.cs#L26)<br>
-> Normally, the mod only used one style; it was modified to be a working example for this guide.
+> **Example using both Classic and Compact** SystemAPI query in a mod: [Magic Hearse](https://github.com/River-Mochi/MagicHearse/blob/main/Systems/FuneralDirectorSystem.cs#L26)<br>
+> Normally, this mod only had one style; it was modified to give a working RefRW example for the guide.
 
 ---
 
@@ -172,9 +172,9 @@ else
     EntityManager.AddComponentData(prefabEntity, marker); // add marker first time (structural change)
 }
 ```
-Scene Explorer mod shows your custom component name under your mod name (click on things your mod alters).<br>
-This is a brief example of custom component markers. Hopefully, someone writes a more extensive article.<br>
-Refer to: [Unity unmanaged components](https://docs.unity3d.com/Packages/com.unity.entities%401.4/manual/components-unmanaged.html) and [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
+- Scene Explorer mod shows your custom component name under your mod name (click on things your mod alters).<br>
+- This is a brief example of custom component markers. Hopefully, someone writes a more extensive article.<br>
+- Refer to: [Unity unmanaged components](https://docs.unity3d.com/Packages/com.unity.entities%401.4/manual/components-unmanaged.html) and [Unity user manual: EntityManager](https://docs.unity3d.com/Packages/com.unity.entities@1.3/api/Unity.Entities.EntityManager.html)
 
 ### Advanced (optional): EntityCommandBuffer (ECB)
 
