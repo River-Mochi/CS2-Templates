@@ -132,6 +132,9 @@ Differences vs Option 1:
 - Classic Option 1 is probably easier for beginners; Option 2 is denser and harder to trace errors.
 - No ToEntityArray / NativeArray lifetime to manage.
 - Writes through RefRW<T> (so there’s no “get struct copy → modify → SetComponentData” step).
+  
+> Example using both Classic and Compact SystemAPI query in a real mod: [Magic Hearse](https://github.com/River-Mochi/MagicHearse/blob/main/Systems/FuneralDirectorSystem.cs#L26)<br>
+> Normally, the mod only used one style; it was modified to be a working example for this guide.
 
 ---
 
