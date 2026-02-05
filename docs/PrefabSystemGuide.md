@@ -291,7 +291,7 @@ EntityQuery prefabQ = SystemAPI.QueryBuilder()
 
 >Notes:<br>
 >See the [Unity user manual (1.3*)](https://docs.unity3d.com/Packages/com.unity.entities@1.3/manual/systems-systemapi.html) for complete details on SystemAPI queries.<br>
->This section is only for highlighting one common SystemAPI error with prefabs, a more detailed SystemAPI guide is still needed.
+>This section only highlights one SystemAPI error, a more detailed SystemAPI guide is still needed.
 
 ---
 
