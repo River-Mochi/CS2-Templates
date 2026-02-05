@@ -1,5 +1,5 @@
 # Prefab — Quick Guide (CS2 Mods)
-This is a companion to [**PrefabSystemGuide**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabSystemGuide.md) (better code examples).
+This is a companion to [**PrefabSystemGuide**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabSystemGuide.md) (more code examples there).
 
 ---
 
