@@ -7,8 +7,8 @@ How to change prefab values (capacities, rates, workers, and more) if you want t
 
 **No time to read?** [Quick Guide](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabQuickGuide.md#prefabsystem-source-of-truth--quick-guide-cs2-modding)
 
-> [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to inspect entities in-game.  
-> Examples use Magic Hearse mod but the pattern applies to *any* prefab type.
+> [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) is recommended to inspect entities in-game.<br>
+> Examples use Magic Hearse mod but the pattern applies to *any* prefab type.<br>
 > Refer to Unity 1.3* user manuals as other versions may not be supported.
 
 ---
