@@ -275,7 +275,7 @@ Some names exist in two different “layers”, and only the **runtime ECS compo
 
 ### What *is* valid to query?
 
-Prefab entities are still entities, so querying them is fine (rule: **ECS components only**; `*Data` name ending is a common hint).
+Prefab entities are still entities, so querying them is fine (rule: **ECS components only**).
 
 ✅ `Game.Prefabs.PrefabData` and `Game.Prefabs.PrefabRef` are ✅ valid in `WithAll<T>()`  
 (`PrefabRef` is on **instances** and points to the prefab entity.)
