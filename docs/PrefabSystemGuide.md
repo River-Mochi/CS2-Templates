@@ -270,7 +270,7 @@ Some names exist in two different “layers”, and only the **runtime ECS compo
 
 ```csharp
     EntityQuery q = SystemAPI.QueryBuilder()
-        .WithAll<Game.Buildings.DeathcareFacility>()   // this is a good defense habit.
+        .WithAll<Game.Buildings.DeathcareFacility>()   // Good defense habit.
         .Build();
 ```
 
