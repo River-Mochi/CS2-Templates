@@ -17,7 +17,7 @@ Result: some Options UI menu sliders changing building/vehicle (prefab) show ins
 | **Prefab entity** (`PrefabData`) | ECS entity that represents the prefab and holds `*Data` components | Write changes to `*Data` |
 | **Instance entity** | Placed building/vehicle/citizen in the city | Inspect runtime behavior; avoid blind edits |
 
-**Key link:** instance → prefab entity via `PrefabRef.m_Prefab`.
+**Key bridge:** instance → prefab entity via `PrefabRef.m_Prefab`.
 
 ---
 
