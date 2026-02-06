@@ -72,7 +72,7 @@ None of those are “bad”; they’re normal sim engineering tradeoffs. They *d
 ### Fast in-game test
 1. Install [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) (use hot-keys).
 2. Ctrl+E > Pick a placed building.
-3. Inspect **instance-entity** runtime component value.
+3. Inspect **instance-entity** runtime component value (first panel you see).
 4. Inspect **prefab-entity** `*Data` value.
 5. Change a setting with a mod (edit prefab `*Data`) or just add an Extension building.
 6. Re-check the instance values.
