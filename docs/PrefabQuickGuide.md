@@ -41,7 +41,7 @@ float baseRate = dcAuthoring.m_ProcessingRate;  // vanilla baseline
 
 ## Example ECS `*Data` components (changeable) you write on prefab-entities
 
-| ECS component | Key fields (scaled values you write) |
+| ECS component | Key fields (values you write) |
 |---|---|
 | `Game.Prefabs.DeathcareFacilityData` | `m_ProcessingRate`, `m_StorageCapacity` |
 | `Game.Prefabs.WorkplaceData` | `m_MaxWorkers`, `m_MinimumWorkersLimit` |
