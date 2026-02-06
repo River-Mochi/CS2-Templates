@@ -1,6 +1,6 @@
 # Instance Entities (runtime state, caches, refresh triggers)
 
-This is a companion to [**PrefabSystemGuide**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabSystemGuide.md)
+This is a companion to [**PrefabSystem Guide**](https://github.com/River-Mochi/CS2-Templates/blob/main/docs/PrefabSystemGuide.md)
 
 Most mods edit **prefab entities** (entities with Game.Prefabs.PrefabData) by writing to ECS components (with Data at end of the name).  
 The game reads **instance entities** (the placed building/vehicle/citizen/etc.) that may hold **cached / computed / serialized** runtime state.
