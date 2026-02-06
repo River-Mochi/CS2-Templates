@@ -70,7 +70,7 @@ None of those are “bad”; they’re normal sim engineering tradeoffs. They *d
 ## How to tell if a value is instance-cached
 
 ### Fast in-game test
-1. Install Scene Explorer mod  (use hot-keys)
+1. Install [Scene Explorer mod](https://mods.paradoxplaza.com/mods/74285/Windows) (use hot-keys).
 2. Ctrl+E > Pick a placed building.
 3. Inspect **instance-entity** runtime component value.
 4. Inspect **prefab-entity** `*Data` value.
