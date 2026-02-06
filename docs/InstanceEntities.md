@@ -92,7 +92,7 @@ Exact triggers vary by system, but these commonly cause rebuild/reinit paths:
 | Building rebuild (delete + place again) | Forces a clean init using current prefab state |
 | Some service/system-specific “refresh” method | Recomputes runtime data (best-case, but must be located per system) |
 
-This is why Player driven “rebuild / change extension / upgrade” is often the most reliable.
+This is why Player driven “rebuild / add extension / add upgrade” is often the most reliable.
 
 ---
 
