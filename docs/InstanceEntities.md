@@ -5,7 +5,7 @@ This is a companion to [**PrefabSystem Guide**](https://github.com/River-Mochi/C
 Most mods edit **prefab entities** (entities with Game.Prefabs.PrefabData) by writing to ECS components.
 The game reads **instance entities** (the placed building/vehicle/citizen/etc.) that may hold **cached / computed / serialized** runtime state.
 
-Result: some Options UI menu sliders changing building/vehicle (prefab) show instant changes on existing instances, while other values only update on **newly created** instances (e.g. buildings) or after a trigger (adding/removing a building extension or upgrade item). 
+Result: some Options UI menu sliders changing building/vehicle (prefab) show instant changes on existing instances, while other values only update on **newly created** instances (e.g. new placed building) or after a trigger (adding/removing a building extension or upgrade item). 
 
 ---
 
