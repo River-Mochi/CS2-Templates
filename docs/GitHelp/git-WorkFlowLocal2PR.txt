@@ -172,7 +172,7 @@ git switch -c work/newThing
 # ==============================================
 #     VS2026 (GUI steps)
 # ==============================================
-# 1) First, make sure Alpha is updated
+# 1) First, make sure local Alpha is updated
 #    - switch to Alpha-v0.6.1 (local)
 #    - menu Git > Pull (fast forward)
 #
@@ -182,4 +182,4 @@ git switch -c work/newThing
 #    - Based on: Alpha-v0.6.1 (Local Alpha, one you just pulled fresh)
 #    - click Create
 # 3) Do work + commits
-# 4) When ready: Push branch, then PR to Alpha-v0.6.1 on GitHub
+# 4) When ready: commit + Push branch to Github => then on Github, PR to Alpha-v0.6.1
