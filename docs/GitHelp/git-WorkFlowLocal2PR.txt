@@ -5,8 +5,8 @@
 #
 # A) OLD work branch -> CLEAN temp PR branch from latest Alpha (EOL-safe)
 # B) START a NEW working branch from latest Alpha
-#
 # VS2026 GUI method at the end for Start New branch from Alpha.
+# Version: 0.5.2
 
 # ---------------------------------------------------------------------
 # A) OLD work branch -> CLEAN temp PR branch from latest Alpha (EOL-safe)
