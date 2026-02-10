@@ -102,10 +102,13 @@ git branch -d fix/something
 # 4) DELETE REMOTE BRANCHES (GitHub)
 # ----------------------------------
 
-# Delete remote branch on origin (CHANGES: affects GitHub)
+# Delete remote branch on origin (CHANGES: deletes GitHub "origin" branch)
+
 git push origin --delete pr/workBranch02
 
-# Note: You usually cannot (should not) delete upstream branches (unless you are OWNER).
+# Side note:
+# - If you work on a FORK, you usually CANNOT delete "upstream" branches (read-only).
+# - If you OWN the repo, your "origin" IS the main repo, so deleting on origin is deleting in the real repo.
 
 # --------------------------------------
 # 5) CLEAN UP STALE REMOTE-TRACKING REFS
