@@ -1,0 +1,165 @@
+# ============================================================
+# Branch cleanup + hygiene (Beginners, Git Bash)
+# Goal:
+#   - Safely delete Local branches
+#   - Optionally delete Remote (GitHub) branches
+#   - Clean up stale remote-tracking refs
+# Version: 0.5.1
+# Notes:
+#   - “origin”   = your GitHub repo (your fork, or your main repo if you OWN it)
+#   - “upstream” = main/owner repo (forkers often only have read-only rights)
+#   - “Alpha-v0.6.1” = main working branch in this repo
+#   - Change branch names in examples to your REAL branche names.
+#
+# Output tip:
+#   [q]      - Gracefully escape long scrollable output.
+#   [CTRL+c] - Command is spewing many lines and you want to stop/interrupt.
+# =========================================================================
+
+# -----------------------------------------------------------
+# 0) SAFE PREP: get to repo + get off the branch you might delete
+# -----------------------------------------------------------
+
+# Go to repo root
+cd "$(git rev-parse --show-toplevel)"
+
+# Show the repo root path
+git rev-parse --show-toplevel
+
+# Switch to Alpha so you’re not deleting the branch you’re currently on.
+git switch Alpha-v0.6.1
+
+# Quick sanity checks
+git status
+git branch --show-current
+git remote -v
+
+
+# ---------------------------------------------
+# 1) FIND BRANCHES (LOCAL + REMOTE)
+# All SAFE - info only.
+# ---------------------------------------------
+
+# Local branches (use -v for last commit, and -a for all local+remote)
+git branch
+
+# Remote-tracked branches - always fetch before trusting branch -r.
+git fetch origin --prune
+git branch -r
+
+# Optional: Only remote-tracking branches for origin
+git branch -r --list "origin/*"
+
+# Optional: Only remote-tracking branches for upstream
+git branch -r --list "upstream/*"
+
+# Useful: which remote branches are already merged into origin/Alpha-v0.6.1?
+# THINK: these are "likely" safe to delete.
+# (piping through sed disables scary colors. try without | sed -n 'p')
+git branch -r --merged origin/Alpha-v0.6.1 | sed -n 'p'
+
+# Show common cleanup prefixes
+git branch --format="%(refname:short)" | grep -E "^(pr/|fix/|backup/|work/|wip/)"
+
+# See EXACTLY what branches exist on GitHub origin right NOW
+# (Rarely needed: can be long, use q or Ctrl+C if needed)
+git ls-remote --heads origin
+
+# ---------------------------------------
+# 2) DOUBLE CHECK IF SAFE TO DELETE
+# ---------------------------------------
+
+# Show commits that are on <branch> but NOT in Alpha (may page, press q)
+# If this prints Nothing, the branch adds no commits beyond Alpha (often safe to delete).
+# Change name "pr/branchName" to REAL name.
+# (Two dots are important).
+
+git log --oneline Alpha-v0.6.1..pr/branchName
+
+# Extra-safe check: is the branch Fully contained in Alpha?
+# If it prints the message, the branch is fully merged into Alpha (likely safe to delete).
+
+git merge-base --is-ancestor pr/branchName Alpha-v0.6.1 && echo "Fully merged into Alpha"
+
+
+# -----------------------------
+# 3) DELETE LOCAL BRANCHES
+# -----------------------------
+
+# Safe delete (CHANGES): refuses if Git thinks branch has unmerged commits
+git branch -d pr/workBranch02
+git branch -d fix/something
+
+# Force delete (CHANGES, DANGEROUS): deletes even if unmerged
+# Use only for throwaway branches, or AFTER verifying it’s merged / backed up.
+# git branch -D wip/experiment01
+
+
+# ----------------------------------
+# 4) DELETE REMOTE BRANCHES (GitHub)
+# ----------------------------------
+
+# Delete remote branch on origin (CHANGES: affects GitHub)
+git push origin --delete pr/workBranch02
+
+# Note: You usually cannot (should not) delete upstream branches (unless you are OWNER).
+
+# --------------------------------------
+# 5) CLEAN UP STALE REMOTE-TRACKING REFS
+# --------------------------------------
+
+# TIDY: update remote-tracking refs, drop deleted remote branches from your local track list
+# (just updates refs, use as often as you like)
+git fetch origin --prune
+
+# If upstream exists, prune it (SAFE: no file changes, updates upstream/* refs locally)
+git fetch upstream --prune 2>/dev/null || true
+
+# Confirm remote-tracking branches again
+git branch -r
+
+# -----------------------------
+# 6) FINAL CHECKS
+# -----------------------------
+
+git status
+git branch
+git branch -r
+
+
+# ============================================================
+# Good housekeeping habits (recommended)
+# ============================================================
+# 1) Use prefixes so branches sort nicely and easy to clean (future you wants this):
+#    - pr/<topic>    : temp branches used to do pull request
+#    - fix/<topic>   : bug fix branches (may become PRs)
+#    - wip/<topic>   : work in progress (not ready)
+#    - backup/<what> : temporary safety copies
+#
+# 2) Delete branches after merge:
+#    - After PR merges into Alpha, delete the PR branch (local + remote).
+#    - If more work is needed later, create a NEW pr/<topic> branch from Alpha, don't reuse.
+#
+# 3) Keep Alpha clean:
+#    - Don’t commit experimental work directly on Alpha.
+#    - Always branch from Alpha for changes > merge back in > then delete pr/tempBranch (and backup/tempBranch)
+#
+# 4) Before creating a new branch from Alpha:
+#    - git fetch origin --prune    
+#    - git switch Alpha-v0.6.1		# be on Alpha
+#    - git pull --ff-only origin Alpha-v0.6.1
+#    - git switch -c wip/newThing	# new branch = exact copy of fresh Alpha (Github)
+#
+#  FastForward is similar to VS2026 Pull, but stricter:
+# - ONLY updates if your local Alpha has zero local-only commits.
+# - If Alpha diverged (you committed/merged on local Alpha by accident), it refuses.
+#     That’s GOOD: prevents Git from auto-merging and making a mess (fail = CHECK, be sure)
+#     Fix is usually: move your work to a feature branch, then reset Alpha to the remote (keep local work off Alpha).
+#
+# 5) When in doubt, verify a branch adds nothing beyond Alpha 
+#   (two dots are important):
+#    git log --oneline Alpha-v0.6.1..branchName
+# ============================================================
+#
+# Bonus: use TAB to autocomplete almost everything. Use Up arrow for history of commands (no retyping).
+# If you made it to end of this, you are now a POWER-Gitter.
