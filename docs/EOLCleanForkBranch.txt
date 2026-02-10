@@ -1,0 +1,117 @@
+# ============================================================
+# For Forks: Sync fork Alpha with Yen’s latest Alpha
+# AND sanitize local branches so .gitattributes stops causing fake huge diffs
+# (Git Bash / Windows)
+# ============================================================
+
+# 0) Go to repo root (SAFE: info)
+
+cd ~/source/repos/CS2-MoveIt
+git rev-parse --show-toplevel
+
+# 1) Check remotes + current branch + working tree (SAFE: info)
+git remote -v
+git branch --show-current
+git status
+
+# 2) Update local knowledge of BOTH remotes (CHANGES: none to files; SAFE)
+git fetch upstream --prune
+git fetch origin   --prune
+
+# 3) OPTIONAL but recommended: make sure this repo doesn’t do extra line-ending “help” on Windows
+#    (CHANGES: writes repo-local .git/config only; does not edit tracked files)
+git config core.autocrlf false
+git config core.safecrlf true
+
+# 4) Sync local Alpha-v0.6.1 to upstream Alpha (Yen is source-of-truth)
+#    First: make a local backup branch (CHANGES: creates a backup ref)
+git switch Alpha-v0.6.1
+git branch backup/Alpha-v0.6.1-before-upstream-sync
+
+#    Show how far off it is (SAFE: info)
+git rev-list --left-right --count Alpha-v0.6.1...upstream/Alpha-v0.6.1
+
+#    Hard-align local Alpha to upstream Alpha (CHANGES: updates local files; discards uncommitted changes on Alpha)
+git reset --hard upstream/Alpha-v0.6.1
+
+# 5) Make GitHub fork’s Alpha match upstream Alpha
+#    (CHANGES: updates fork branch on GitHub; use force-with-lease to avoid accidental clobber)
+git push --force-with-lease origin Alpha-v0.6.1
+
+# 6) Quick verification: Alpha is clean + matches upstream (SAFE: info)
+git status
+git rev-list --left-right --count origin/Alpha-v0.6.1...upstream/Alpha-v0.6.1
+git show --no-patch --oneline HEAD
+git show --no-patch --oneline upstream/Alpha-v0.6.1
+
+
+# ============================================================
+# 7) Fix OTHER local branches so .gitattributes rules apply cleanly
+#    Goal: no more “whole file changed but 0 real changes” noise.
+#
+#    IMPORTANT: This is intentionally NOT a loop.
+#    Do it branch-by-branch so it works cleanly one command at a time.
+#
+#    What it does per branch:
+#      - switch to the branch
+#      - ensure working tree is clean (or STOP)
+#      - copy the exact .gitattributes from upstream/Alpha-v0.6.1
+#      - commit that file IF it changed
+#      - renormalize line endings according to .gitattributes
+#      - commit renormalization IF it staged changes
+#      - push branch to your fork (as backup)
+# ============================================================
+
+# 7.0 List branches to decide which ones to fix (SAFE: info)
+git branch --format="%(refname:short)"
+
+# 7.1 OPTIONAL: list only non-Alpha, non-backup branches (SAFE: info)
+git branch --format="%(refname:short)" | grep -v '^backup/' | grep -v '^Alpha-v0.6.1$'
+
+# 7.2 Pick ONE branch name from the list above and set it here (SAFE: just sets a shell variable)
+# Example branch:
+b="pr/csproj-alpha-fix"
+
+# 7.3 Switch to that branch (CHANGES: working tree changes to that branch)
+git switch "$b"
+
+# 7.4 Safety check: STOP if branch has uncommitted changes (SAFE: info)
+git status
+git status --porcelain
+
+# If the line below prints anything, STOP and either commit or stash first.
+# (SAFE: info)
+test -z "$(git status --porcelain)" && echo "OK: clean" || echo "STOP: not clean (commit or stash first)"
+
+# 7.5 Copy ONLY the exact .gitattributes from upstream Alpha into this branch (CHANGES: overwrites that file in this branch)
+git checkout upstream/Alpha-v0.6.1 -- .gitattributes
+
+# 7.6 See if .gitattributes actually changed (SAFE: info)
+git diff -- .gitattributes
+
+# 7.7 Commit .gitattributes IF it changed (CHANGES: commit)
+# If diff shows nothing, skip these two lines.
+git add .gitattributes
+git commit -m "chore: sync .gitattributes from Alpha-v0.6.1"
+
+# 7.8 Renormalize line endings per .gitattributes (CHANGES: stages edits if needed)
+git add --renormalize .
+
+# 7.9 Check what got staged by renormalize (SAFE: info)
+git status
+git diff --cached --stat
+
+# 7.10 Commit renormalization ONLY if something was staged (CHANGES: commit if needed)
+# If "git diff --cached --stat" shows nothing, skip this line.
+git commit -m "chore: renormalize line endings via .gitattributes"
+
+# 7.11 Push this branch to your fork (CHANGES: remote update)
+# Use -u the first time you ever push THIS branch name.
+git push -u origin "$b"
+
+# 7.12 Repeat 7.2 → 7.11 for each branch you care about.
+# Change b="..." to the next branch name and run again.
+
+# 7.99 Return to Alpha when done (CHANGES: working tree)
+git switch Alpha-v0.6.1
+git status
