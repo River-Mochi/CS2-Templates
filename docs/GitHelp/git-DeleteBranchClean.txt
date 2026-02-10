@@ -9,7 +9,7 @@
 #   - “origin”   = your GitHub repo (your fork, or your main repo if you OWN it)
 #   - “upstream” = main/owner repo (forkers often only have read-only rights)
 #   - “Alpha-v0.6.1” = main working branch in this repo
-#   - Change branch names in examples to your REAL branche names.
+#   - Change branch names in examples to your REAL branch names.
 #
 # Output tip:
 #   [q]      - Gracefully escape long scrollable output.
