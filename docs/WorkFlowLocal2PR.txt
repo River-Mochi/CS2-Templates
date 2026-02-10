@@ -1,0 +1,185 @@
+# =====================================================================
+# REPO OWNER Git Playbook: EOL-safe PRs + starting new branches
+# =====================================================================
+# TWO workflows included:
+#
+# A) OLD work branch -> CLEAN temp PR branch from latest Alpha (EOL-safe)
+# B) START a NEW working branch from latest Alpha
+#
+# VS2026 GUI method at the end for Start New branch from Alpha.
+
+# ---------------------------------------------------------------------
+# A) OLD work branch -> CLEAN temp PR branch from latest Alpha (EOL-safe)
+# ---------------------------------------------------------------------
+# Purpose:
+# - PR diffs show real changes (not CRLF/LF churn)
+# - Prevent older branches from reintroducing EOL noise
+#
+# Replace:
+#   workBranch01    = old branch that contains your edits
+#   pr/workBranch02 = clean temp PR branch (pick a fresh name each PR)
+
+# A0) Start cleanly from newest Alpha (base branch)
+git branch --show-current
+git status
+cd "$(git rev-parse --show-toplevel)"
+
+git switch Alpha-v0.6.1
+git fetch origin --prune
+git pull --ff-only
+
+# Belt + suspenders (repo-local): let .gitattributes control line endings
+git config --local core.autocrlf false
+git config --local core.safecrlf true
+git config --local --unset core.eol 2>/dev/null || true
+
+# A1) Make OLD work branch use .gitattributes (prevents future EOL churn)
+# make optional local-only backup (delete later)
+git switch workBranch01
+git branch backup/workBranch01-before-attributes
+
+git checkout Alpha-v0.6.1 -- .gitattributes
+git add .gitattributes
+
+# If Git says "nothing to commit", that's fine (already correct) - just continue.
+git commit -m "chore: sync .gitattributes from Alpha-v0.6.1"
+
+# OPTIONAL backup: push workBranch01 to GitHub (backup only)
+# git push -u origin workBranch01
+
+# A2) Create a clean TEMP PR branch from latest Alpha
+git switch Alpha-v0.6.1
+git pull --ff-only
+
+# Pick a fresh branch name each PR to avoid "already exists" errors
+git switch -c pr/workBranch02
+# If it says the branch already exists, use:
+# git switch pr/workBranch02
+# git reset --hard Alpha-v0.6.1
+
+# A3) Find the changed files unless you already know exactly what you need.
+# the three dots are important.
+git diff --name-only Alpha-v0.6.1...workBranch01
+
+# Option 1 (manual): copy only specific files (replace with real paths)
+# git checkout workBranch01 -- path/to/file1 path/to/file2 path/to/file3
+
+# Option 2 (FAST): copy ALL changed files listed by the diff (Git Bash)
+git checkout workBranch01 -- $(git diff --name-only Alpha-v0.6.1...workBranch01)
+
+# A4) Quick check (unstaged)
+git status
+
+# Show only "real" changes (ignoring CR-at-EOL noise) BEFORE staging
+git diff --ignore-cr-at-eol --name-only
+
+# If git status shows a giant wall BUT the ignore-cr list is tiny/empty:
+# => it's mostly line-ending noise. Do NOT commit that.
+# Fix by discarding the noise (ONLY if no work needs saving on this PR branch):
+# NOTE: this discards ALL local changes in the current branch.
+# git reset --hard HEAD
+
+# A5) Commit + push the PR branch
+git add -A
+git status
+
+# Show staged files that still look "real" after ignoring CR-at-EOL noise
+git diff --cached --ignore-cr-at-eol --name-only
+
+git commit -m "Fix: <short description>"
+git push -u origin pr/workBranch02
+
+# A6) On GitHub: open PR
+# base:    Alpha-v0.6.1
+# compare: pr/workBranch02
+
+# A7) AFTER PR MERGE (cleanup)
+git switch Alpha-v0.6.1
+git fetch origin --prune
+git pull --ff-only
+
+git branch -d pr/workBranch02
+git push origin --delete pr/workBranch02   # optional if already deleted on PR page
+
+# OPTIONAL: delete old scratch branch if truly no longer needed
+# git branch -d workBranch01
+# git branch -D workBranch01
+
+git fetch origin --prune
+
+
+# ===================================================================
+# B) START a NEW working branch from latest Alpha (not PR yet)
+# ===================================================================
+# IMPORTANT:
+# - Any new branch created FROM latest Alpha already includes .gitattributes.
+# - Normal PR is simple: push the working branch and open PR.
+# - Only use the "clean PR branch" trick if GitHub shows a messy diff (rare).
+
+# B0) Pre-flight: confirm repo + go to repo root
+git branch --show-current
+git status
+cd "$(git rev-parse --show-toplevel)"
+
+# B1) Update local Alpha to match GitHub Alpha
+git switch Alpha-v0.6.1
+git fetch origin --prune
+git pull --ff-only
+
+# B2) Create a new working branch from fresh Alpha
+git switch -c work/newThing
+
+# ---- Work/commit normally on work/newThing ----
+
+#===============================================
+# Ready for PR; Pick ONE PR method C1 or D1
+#===============================================
+
+# ---------------------------------------------------------------
+# C1) NORMAL PR (common): push working branch + PR it
+# ---------------------------------------------------------------
+# Push the working branch (first push needs -u)
+# git push -u origin work/newThing
+#
+# On GitHub: open PR
+# base:    Alpha-v0.6.1
+# compare: work/newThing
+
+# ---------------------------------------------------------------------
+# D1) CLEAN PR (good if GitHub PR diff looks messy)
+# ---------------------------------------------------------------------
+# This makes a temp PR branch based on fresh Alpha, then copies only the changed files.
+#
+# 1) Start from fresh Alpha and create temp PR branch
+# git switch Alpha-v0.6.1
+# git pull --ff-only
+# git switch -c pr/newThing-clean
+#
+# 2) Copy only changed files from work/newThing into the temp PR branch
+# git checkout work/newThing -- $(git diff --name-only Alpha-v0.6.1...work/newThing)
+#
+# 3) Stage + verify + commit + push
+# git add -A
+# git status
+# git diff --cached --ignore-cr-at-eol --name-only
+# git commit -m "Fix: <short description>"
+# git push -u origin pr/newThing-clean
+#
+# On GitHub: open PR
+# base:    Alpha-v0.6.1
+# compare: pr/newThing-clean
+
+# ==============================================
+#     VS2026 (GUI steps)
+# ==============================================
+# 1) First, make sure Alpha is updated
+#    - switch to Alpha-v0.6.1 (local)
+#    - menu Git > Pull (fast forward)
+#
+# 2) Git Menu > New Branch... and fill in:
+#    - Branch name: newThing (example)
+#    - Repository: CS2-MoveIt  (Leave "Checkout branch" checked)
+#    - Based on: Alpha-v0.6.1 (Local Alpha, one you just pulled fresh)
+#    - click Create
+# 3) Do work + commits
+# 4) When ready: Push branch, then PR to Alpha-v0.6.1 on GitHub
