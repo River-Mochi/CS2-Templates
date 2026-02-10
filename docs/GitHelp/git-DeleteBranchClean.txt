@@ -23,7 +23,7 @@
 # Go to repo root
 cd "$(git rev-parse --show-toplevel)"
 
-# Show the repo root path
+# Show the repo root path (optional)
 git rev-parse --show-toplevel
 
 # Switch to Alpha so you’re not deleting the branch you’re currently on.
