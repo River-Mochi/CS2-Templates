@@ -88,6 +88,8 @@ git merge-base --is-ancestor pr/branchName Alpha-v0.6.1 && echo "Fully merged in
 # -----------------------------
 
 # Safe delete (CHANGES): refuses if Git thinks branch has unmerged commits
+# Swap out the branch names pr/workBranch02 or fix/something
+
 git branch -d pr/workBranch02
 git branch -d fix/something
 
