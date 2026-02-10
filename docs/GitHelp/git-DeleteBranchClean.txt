@@ -62,7 +62,7 @@ git branch -r --merged origin/Alpha-v0.6.1 | sed -n 'p'
 git branch --format="%(refname:short)" | grep -E "^(pr/|fix/|backup/|work/|wip/)"
 
 # See EXACTLY what branches exist on GitHub origin right NOW
-# (Rarely needed: can be long, use q or Ctrl+C if needed)
+# (Rarely needed: can be long, use q or Ctrl+c if needed)
 git ls-remote --heads origin
 
 # ---------------------------------------
