@@ -1,6 +1,7 @@
 # ===== SAFE: normalize line endings after adding .gitattributes (OWNER / upstream) =====
 # Goal: create a single commit that renormalizes tracked files according to .gitattributes
-# This avoids everyone getting endless "modified" noise.
+# This avoids everyone getting endless "modified" noise. Only needs to be done ONE time.
+# Version: 0.5.0
 
 # 0) STOP & CHECK: confirm current branch + clean working tree BEFORE pulling Alpha
 git branch --show-current
