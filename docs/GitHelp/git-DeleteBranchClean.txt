@@ -114,7 +114,7 @@ git push origin --delete pr/workBranch02
 # 5) CLEAN UP STALE REMOTE-TRACKING REFS
 # --------------------------------------
 
-# TIDY: update remote-tracking refs, drop deleted remote branches from your local track list
+# TIDY: update remote-tracking refs, drop deleted remote from your local track list
 # (just updates refs, use as often as you like)
 git fetch origin --prune
 
@@ -132,9 +132,8 @@ git status
 git branch
 git branch -r
 
-
 # ============================================================
-# Good housekeeping habits (recommended)
+# Good housekeeping (recommended)
 # ============================================================
 # 1) Use prefixes so branches sort nicely and easy to clean (future you wants this):
 #    - pr/<topic>    : temp branches used to do pull request
@@ -147,23 +146,23 @@ git branch -r
 #    - If more work is needed later, create a NEW pr/<topic> branch from Alpha, don't reuse.
 #
 # 3) Keep Alpha clean:
-#    - Don’t commit experimental work directly on Alpha.
-#    - Always branch from Alpha for changes > merge back in > then delete pr/tempBranch (and backup/tempBranch)
+#    - Don’t commit experimental work directly on "local" Alpha.
+#    - Always use an Alpha "copy" branch for changes > then PR merge back > then delete pr/tempBranch (and any backup/tempBranch)
 #
 # 4) Before creating a new branch from Alpha:
 #    - git fetch origin --prune    
-#    - git switch Alpha-v0.6.1		# be on Alpha
+#    - git switch Alpha-v0.6.1		# Be on Alpha
 #    - git pull --ff-only origin Alpha-v0.6.1
-#    - git switch -c wip/newThing	# new branch = exact copy of fresh Alpha (Github)
+#    - git switch -c wip/newThing	   # new branch = exact copy of fresh Alpha (Github)
 #
-#  FastForward is similar to VS2026 Pull, but stricter:
+#  FastForward (ff) is similar to VS2026 Pull, but stricter:
 # - ONLY updates if your local Alpha has zero local-only commits.
 # - If Alpha diverged (you committed/merged on local Alpha by accident), it refuses.
 #     That’s GOOD: prevents Git from auto-merging and making a mess (fail = CHECK, be sure)
-#     Fix is usually: move your work to a feature branch, then reset Alpha to the remote (keep local work off Alpha).
+#     Fix is usually: move your work to a feature branch, then reset Alpha to match remote (keep local work off Alpha).
 #
-# 5) When in doubt, verify a branch adds nothing beyond Alpha 
-#   (two dots are important):
+# 5) When in doubt, verify if it has any commits NOT in Alpha:
+#   (two dots are important, change "branchName"):
 #    git log --oneline Alpha-v0.6.1..branchName
 # ============================================================
 #
