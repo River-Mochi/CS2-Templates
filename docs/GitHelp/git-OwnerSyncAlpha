@@ -1,4 +1,5 @@
 # Sync LOCAL Alpha-v0.6.1 to match GitHub (origin/Alpha-v0.6.1) as the repo owner.
+# Version: 0.2.0
 # "origin" = yenyang/CS2-MoveIt (for forkers, it's canonical "upstream" repo).
 # note: if someone has a fork and not owner, commands are different.
 # remote = things on Github and not local vs2026 repo (local .git folder is important, don't delete)
