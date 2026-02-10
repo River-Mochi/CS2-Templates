@@ -1,0 +1,56 @@
+# ===== SAFE: normalize line endings after adding .gitattributes (OWNER / upstream) =====
+# Goal: create a single commit that renormalizes tracked files according to .gitattributes
+# This avoids everyone getting endless "modified" noise.
+
+# 0) STOP & CHECK: confirm current branch + clean working tree BEFORE pulling Alpha
+git branch --show-current
+git status
+# If not clean RIGHT NOW (before pulling), STOP and commit or stash unrelated work:
+# git stash push -u -m "WIP before renormalize"
+
+# Recommended (repo-local): let .gitattributes decide line endings; avoid Git auto-conversions
+git config --local core.autocrlf false
+git config --local core.safecrlf true
+# If core.eol isn't set, this does nothing (the "|| true" just prevents a scary error)
+git config --local --unset core.eol 2>/dev/null || true
+
+# 1) Update remote refs (get latest from GitHub)
+git fetch --all --prune
+
+# 2) Switch to the upstream Alpha branch and fast-forward safely (no merge commits)
+git switch Alpha-v0.6.1
+git pull --ff-only
+
+# 3) Optional safety (make local backup branch)
+git branch backup/Alpha-v0.6.1-before-renormalize
+
+# 4) Create a PR branch (SAFE: avoid pushing directly to Alpha)
+# First run: this creates and switches to the branch.
+# If it prints "fatal: a branch named 'fix/renormalize-eol' already exists", that's fine (already exist, just switch to it).
+git switch -c fix/renormalize-eol
+
+# Rerun-safe: always ends up on the PR branch starting from current Alpha tip.
+git switch fix/renormalize-eol
+git reset --hard Alpha-v0.6.1
+
+# 5) STOP & CHECK: confirm .gitattributes is present in this branch
+ls -la .gitattributes
+git show --stat --oneline -1
+
+# 6) Renormalize tracked files according to .gitattributes 
+# (don't make me cd to root first :(top))
+git add --renormalize :(top)
+
+# 7) STOP & CHECK: inspect what will be committed (compact check)
+git status
+git diff --cached --ignore-cr-at-eol --stat
+# If the --ignore-cr-at-eol --stat output becomes tiny/empty, it's basically newline normalization noise.
+
+# 8) Commit the normalization (single commit)
+git commit -m "Normalize line endings per .gitattributes"
+
+# 9) Push PR branch to GitHub
+git push -u origin fix/renormalize-eol
+
+# 10) On GitHub: open PR from fix/renormalize-eol -> Alpha-v0.6.1 and merge it.
+# After merge, everyone should update/reset to the new Alpha tip.
