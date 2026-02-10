@@ -1,7 +1,8 @@
 # ============================================================
-# For Forks: Sync fork Alpha with Yen’s latest Alpha
+# For Forks: Sync Fork Alpha with Yen’s latest Alpha
 # AND sanitize local branches so .gitattributes stops causing fake huge diffs
 # (Git Bash / Windows)
+# Only needs to be done one time on FORK branch.
 # ============================================================
 
 # 0) Go to repo root (SAFE: info)
