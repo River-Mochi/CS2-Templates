@@ -93,10 +93,10 @@ git merge-base --is-ancestor pr/branchName Alpha-v0.6.1 && echo "Fully merged in
 git branch -d pr/workBranch02
 git branch -d fix/something
 
-# Force delete (CHANGES, DANGEROUS): deletes even if unmerged
+# Force delete (CHANGES, DANGEROUS): deletes even if unmerged. Swap in real branch name after -D.
 # Use only for throwaway branches, or AFTER verifying it’s merged / backed up.
-# git branch -D wip/experiment01
 
+# git branch -D wip/experiment01
 
 # ----------------------------------
 # 4) DELETE REMOTE BRANCHES (GitHub)
