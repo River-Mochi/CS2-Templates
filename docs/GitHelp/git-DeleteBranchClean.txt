@@ -78,6 +78,7 @@ git log --oneline Alpha-v0.6.1..pr/branchName
 
 # Extra-safe check: is the branch Fully contained in Alpha?
 # If it prints the message, the branch is fully merged into Alpha (likely safe to delete).
+# Change name "pr/branchName" to REAL name.
 
 git merge-base --is-ancestor pr/branchName Alpha-v0.6.1 && echo "Fully merged into Alpha"
 
