@@ -60,7 +60,7 @@ git branch -d wip/my-topic			    # Delete local branch
 git push origin --delete wip/my-topic   # Delete remote branch ON Github or git-bash (ok to get error if it's already deleted)
 git fetch origin --prune		        # tell local .git about changes
 
-Note: I don't use stash and just use vs2026 saves and use commit when ready.
+Note: I don't use stash and just use vs2026 saves and use commit a lot.
 Push frequency is personal per how much work one is willing to lose if PC explodes.
 
 # Quick glossary
@@ -68,7 +68,7 @@ Push frequency is personal per how much work one is willing to lose if PC explod
 # - Commit: 
 #     - local real saved checkpoint inside local .git (survives VS crash)
 # - Push: sends commits to GitHub (survives PC total loss)
-#     - now your commit history/blame is visible to all team members.
+#     - now your commit history/blame is visible to all.
 # - Stash: 
       - temporary "hide my uncommitted changes" (stored in .git).
 	  - personal, team doesn't see them (local).
