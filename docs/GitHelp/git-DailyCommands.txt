@@ -69,5 +69,5 @@ Push frequency is personal per how much work one is willing to lose if PC explod
 # - Stash: 
       - temporary "hide my uncommitted changes" (stored in .git).
 	  - personal, team doesn't see them (local).
-	  - problem: easy to forget you stashed stuff (often used sparingly).
+	  - problem: easy to forget you stashed stuff (used sparingly).
 	  - helps when you must switch branches NOW, but not ready for commit.
