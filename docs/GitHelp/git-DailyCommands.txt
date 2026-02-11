@@ -28,6 +28,7 @@ git add -A								  # some time later
 git commit -m "fix: more changes"	
 	  
 #... time passes, more edits
+# side note:  VS GUI does both the add+commit together (like this)
 git add -A								  # stage
 git commit -m "docs: update Publish doc"  # commit
 
@@ -38,17 +39,17 @@ git commit -m "fix: register LocalePL in Mod.cs"
 
 # Optional: OOPS if you staged the wrong thing in Optional 1 (safe-ish, it's just staging)
 # If you always "commit everything" (like VS "Commit All") and don’t mind extra files in commits,
-# you can skip this. VS GUI does both the add+commit together.
-# git restore --staged Code/MoveIt/Mod.cs
+# you can skip this.
+# git restore --staged Code/MoveIt/Mod.cs   # Fix Oops or don't bother if you are ok keeping all commits. (I don't use restore)
 
 # 3) Push to GitHub (backup); only first push needs (-u)
-git push -u origin wip/my-topic         # Updates GitHub
+git push -u origin wip/my-topic   # Updates GitHub
 
 # Later pushes (only works if you are ON the branch you mean to push):
-git branch --show-current             # Safety: confirm you are on the branch you mean to push
-git push                              # Pushes "current" branch to its tracked remote
+git branch --show-current        # Safety: confirm you are on the branch you mean to push
+git push                         # Pushes "current" branch to its tracked remote
 
-# Can always do "git push origin wip/my-topic" to be 100% sure, use TAB to autocomplete long names.
+# Can always do "git push origin wip/my-topic" full to be 100% sure. use TAB to autocomplete long names.
 
 #3.2  Submit PR to Github, details here if needed: https://github.com/River-Mochi/CS2-Templates/blob/main/docs/GitHelp/git-WorkFlowLocal2PR.txt#L134
 
