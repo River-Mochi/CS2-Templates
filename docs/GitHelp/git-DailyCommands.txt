@@ -11,8 +11,8 @@
 cd "$(git rev-parse --show-toplevel)"       # SAFE: go to repo root
 git fetch origin --prune                    # SAFE: update what .git knows about GitHub
 git switch Alpha-v0.6.1                     # SAFE: switch branch
-git pull --ff-only origin Alpha-v0.6.1      # CHANGES: update local Alpha (no auto-merge allowed)
-git switch -c wip/my-topic                  # CHANGES: create + switch to new work branch
+git pull --ff-only origin Alpha-v0.6.1      # CHANGE: update local Alpha (no auto-merge allowed)
+git switch -c wip/my-topic                  # CHANGE: create + switch to new work branch
 
 # 1) Edit files in VS2026 like normal
 #    - File > Save often (saves to disk, NOT to git history)
