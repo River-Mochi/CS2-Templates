@@ -31,7 +31,7 @@ git commit -m "fix: more changes"
 git add -A								  # stage
 git commit -m "docs: update Publish doc"  # commit
 
-# Optional 1: stage ONE file
+# Optional 1: only want ONE file (not all commited)
 git status
 git add Code/MoveIt/Mod.cs                # Stages ONLY this file
 git commit -m "fix: register LocalePL in Mod.cs"  
