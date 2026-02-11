@@ -51,7 +51,7 @@ git push                         # Pushes "current" branch to its tracked remote
 
 # Can always do "git push origin wip/my-topic" full to be 100% sure. use TAB to autocomplete long names.
 
-#3.2  Submit PR to Github, details here if needed: https://github.com/River-Mochi/CS2-Templates/blob/main/docs/GitHelp/git-WorkFlowLocal2PR.txt#L134
+#3.2  Submit PR to Github, details: https://github.com/River-Mochi/CS2-Templates/blob/main/docs/GitHelp/git-WorkFlowLocal2PR.txt#L134
 
 # 4) Cleanup: after PR merges on Github
 git switch Alpha-v0.6.1
