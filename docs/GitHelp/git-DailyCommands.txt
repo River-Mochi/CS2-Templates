@@ -53,9 +53,9 @@ git push                              # Pushes "current" branch to its tracked r
 # 4) Cleanup: after PR merges on Github
 git switch Alpha-v0.6.1
 git pull --ff-only origin Alpha-v0.6.1	# Make local Alpha exactly like Github
-git branch -d wip/my-topic			   # Delete local branch
-git push origin --delete wip/my-topic  # Delete ON Github or git-bash (ok to get error b/c it's already deleted)
-git fetch origin --prune		# tell local .git about changes
+git branch -d wip/my-topic			    # Delete local branch
+git push origin --delete wip/my-topic   # Delete ON Github or git-bash (ok to get error b/c it's already deleted)
+git fetch origin --prune		        # tell local .git about changes
 
 Note: I don't use stash and just use vs2026 saves and use commit when ready.
 Push frequency is personal per how much work one is willing to lose if PC explodes.
