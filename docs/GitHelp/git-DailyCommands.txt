@@ -53,7 +53,7 @@ git push                         # Pushes "current" branch to its tracked remote
 
 #3.2  Submit PR to Github, details: https://github.com/River-Mochi/CS2-Templates/blob/main/docs/GitHelp/git-WorkFlowLocal2PR.txt#L134
 
-# 4) Cleanup: after PR merges on Github
+# 4) Cleanup after PR merged.
 git switch Alpha-v0.6.1
 git pull --ff-only origin Alpha-v0.6.1	# Make local Alpha exactly like Github
 git branch -d wip/my-topic			    # Delete local branch
