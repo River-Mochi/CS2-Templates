@@ -36,7 +36,9 @@ git status
 git add Code/MoveIt/Mod.cs                # Stages ONLY this file
 git commit -m "fix: register LocalePL in Mod.cs"  
 
-# OOPS if you staged the wrong thing in Optional 1 (safe-ish, it's just staging)
+# Optional: OOPS if you staged the wrong thing in Optional 1 (safe-ish, it's just staging)
+# If you always "commit everything" (like VS "Commit All") and don’t mind extra files in commits,
+# you can skip this. VS GUI does both the add+commit together.
 # git restore --staged Code/MoveIt/Mod.cs
 
 # 3) Push to GitHub (backup); only first push needs (-u)
