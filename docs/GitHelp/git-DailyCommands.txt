@@ -4,7 +4,7 @@
 #   - Save work (VS2026 Save)
 #   - Commit checkpoints (safe vs pc crashes)
 #   - Push to GitHub (backup vs PC loss)
-#   - Swap real branch names for "wip/my-topic" below
+#   - Swap in your real branch names for "wip/my-topic" below
 #=================================================================
 
 # 0) Start work (safe - fresh branch from remote Alpha)
