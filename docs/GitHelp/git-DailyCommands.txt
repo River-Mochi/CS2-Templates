@@ -1,6 +1,6 @@
 #=================================================================
 # Mini Commands throughout the day (Git Bash)
-# version 0.1.1
+# version 0.1.2
 #   - Save work (VS2026 Save)
 #   - Commit checkpoints (safe vs pc crashes)
 #   - Push to GitHub (backup vs PC loss)
@@ -20,38 +20,38 @@ git switch -c wip/my-topic                  # CHANGE: create + switch to new wor
 # 2) Stage everything changed, commit (at good stopping points)
 git status                                # List changed files
 git add -A                                # Stage all branch changes
-git status                                # Optional: recheck “Changes to be committed”
-git commit -m "fix: changes"              # CHANGE: writes commit into local .git
+git status                                # Optional: recheck “changes to commit”
+git commit -m "fix: this and that"        # CHANGE: writes commit into local .git
 
 # Repeat as needed all day:
 git add -A								  # some time later
 git commit -m "fix: more changes"	
 	  
-#... time passes, more edits
-# side note:  VS GUI does both the add+commit together (like this)
+# Optional... time passes, more edits
+# side note:  VS2026 GUI does both the add+commit together (just like this)
 git add -A								  # stage
 git commit -m "docs: update Publish doc"  # commit
 
-# Optional 1: only want ONE file (not all commited)
+# Optional 1: only want ONE file (not [-A] all commited)
 git status
 git add Code/MoveIt/Mod.cs                # Stages ONLY this file
-git commit -m "fix: register LocalePL in Mod.cs"  
+git commit -m "fix: register LocaleEN in Mod.cs"
 
-# Optional: OOPS if you staged the wrong thing in Optional 1 (safe-ish, it's just staging)
+# Optional OOPS: if you staged the wrong thing in Optional 1 (safe-ish, just staging)
 # If you always "commit everything" (like VS "Commit All") and don’t mind extra files in commits,
-# you can skip this.
-# git restore --staged Code/MoveIt/Mod.cs   # Fix Oops or don't bother if you are ok keeping all commits. (I don't use restore)
+# you can skip this optional command to remove the single file stage.
+# git restore --staged Code/MoveIt/Mod.cs   # don't bother if you are ok keeping all commits. (I don't use restore because I normally do -A anyway)
 
 # 3) Push to GitHub (backup); only first push needs (-u)
-git push -u origin wip/my-topic   # Updates GitHub
+git push -u origin wip/my-topic   # Updates GitHub with local copy.
 
 # Later pushes (only works if you are ON the branch you mean to push):
-git branch --show-current        # Safety: confirm you are on the branch you mean to push
+git branch --show-current        # Optional safe: confirm you are on the branch you mean to push
 git push                         # Pushes "current" branch to its tracked remote
 
-# Can always do "git push origin wip/my-topic" full to be 100% sure. use TAB to autocomplete long names.
+# Can always do "git push origin wip/my-topic" full name to be 100% sure. use TAB to autocomplete long names.
 
-#3.2  Submit PR to Github, details: https://github.com/River-Mochi/CS2-Templates/blob/main/docs/GitHelp/git-WorkFlowLocal2PR.txt#L134
+#3.2  Submit PR to Github, more details if needed: https://github.com/River-Mochi/CS2-Templates/blob/main/docs/GitHelp/git-WorkFlowLocal2PR.txt#L134
 
 # 4) Cleanup after PR merged.
 git switch Alpha-v0.6.1
@@ -60,7 +60,7 @@ git branch -d wip/my-topic			    # Delete local branch
 git push origin --delete wip/my-topic   # Delete remote branch ON Github or git-bash (ok to get error if it's already deleted)
 git fetch origin --prune		        # tell local .git about changes
 
-Note: I don't use stash and just use vs2026 saves and use "commit -m" a lot.
+Note: I don't use stash and just use vs2026 saves + "commit -m" a lot.
 Push frequency is personal per how much work one is willing to lose if PC explodes.
 
 # Quick glossary
