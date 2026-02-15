@@ -68,7 +68,7 @@ Push frequency is personal per how much work one is willing to lose if PC explod
 # - Commit: 
 #     - local real saved checkpoint inside local .git (survives VS crash)
 # - Push: sends commits to GitHub (survives PC total loss)
-#     - now your commit history/blame is visible to all.
+#     - your commit history/blame is visible to all.
 # - Stash: 
       - temporary "hide my uncommitted changes" (stored in .git).
 	  - personal, team doesn't see (local).
