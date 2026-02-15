@@ -40,7 +40,9 @@ git commit -m "fix: register LocaleEN in Mod.cs"
 # Optional OOPS: if you staged the wrong thing in Optional 1 (safe-ish, just staging)
 # If you always "commit everything" (like VS "Commit All") and don’t mind extra files in commits,
 # you can skip this optional command to remove the single file stage.
-# git restore --staged Code/MoveIt/Mod.cs   # don't bother if you are ok keeping all commits. (I don't use restore because I normally do -A anyway)
+
+# git restore --staged Code/MoveIt/Mod.cs
+# don't bother if you are ok keeping all commits. (I don't use restore because I normally do -A anyway)
 
 # 3) Push to GitHub (backup); only first push needs (-u)
 git push -u origin wip/my-topic   # Updates GitHub with local copy.
