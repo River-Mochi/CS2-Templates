@@ -20,7 +20,8 @@ git ls-files -z | perl -0ne '
   END { print "ALL GOOD - No BOM\n" unless $found; }
 '
 
-# Hit return in Git-bash to continue the script
+# Quote mark at end is important.
+# Hit return to continue the script.
 # Empty output is GOOD, No BOM files.
 
 B) Strip BOM from those tracked files
