@@ -3,13 +3,21 @@ Fix files that are BOM so they are just UTF-8
 A) List tracked files that still have UTF-8 BOM
 cd "$(git rev-parse --show-toplevel)"
 
-git ls-files -z | xargs -0 -n 200 perl -e '
-  for my $f (@ARGV) {
-    open my $fh, "<:raw", $f or next;
-    read($fh, my $b, 3);
-    close $fh;
-    print "$f\n" if $b eq "\xEF\xBB\xBF";
+git ls-files -z | perl -0ne '
+  BEGIN { our $found = 0; }
+  chomp;
+  my $f = $_;
+
+  open my $fh, "<:raw", $f or next;
+  read($fh, my $b, 3);
+  close $fh;
+
+  if ($b eq "\xEF\xBB\xBF") {
+    print "$f\n";
+    $found = 1;
   }
+
+  END { print "ALL GOOD - No BOM\n" unless $found; }
 '
 
 # Hit return in Git-bash to continue the script
