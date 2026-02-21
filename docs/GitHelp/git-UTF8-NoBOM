@@ -1,6 +1,6 @@
 Fix files that are BOM so they are correct UTF-8
 
-A) SAFE: List tracked files that still have UTF-8 BOM
+A) List tracked files that still have UTF-8 BOM (safe, it's just a list)
 cd "$(git rev-parse --show-toplevel)"
 
 git ls-files -z | xargs -0 -n 200 perl -e '
@@ -11,7 +11,7 @@ git ls-files -z | xargs -0 -n 200 perl -e '
     print "$f\n" if $b eq "\xEF\xBB\xBF";
   }
 '
-B) CHANGES: Strip BOM from those tracked files
+B) Strip BOM from those tracked files (changes)
 cd "$(git rev-parse --show-toplevel)"
 
 git ls-files -z | xargs -0 -n 200 perl -e '
