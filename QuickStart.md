@@ -85,10 +85,10 @@ English is included in either the Setting.cs file for mods that don't need many 
 ---
 
 ## 8) Shipping / Publishing
-- Keep **LICENSE** (MIT is already set, update copyright year/name)
+- Keep **LICENSE** (MIT is already set, update copyright year/name, can be your avatar name and not real)
 - Write your own **README** if you like (see repo)
 - Don't publish this sample test mod :) - it will just bloat the PDX website with a do-nothing mod :)
-- For real mod, Publish to Paradox Mods using Visual Studio 2022, just right click on YourModName (csproj near the top right under Solution)
+- For real mod, Publish to Paradox Mods using Visual Studio 2026, just right click on YourModName (csproj near the top right under Solution)
 
 ---
 
