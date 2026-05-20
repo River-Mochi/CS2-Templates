@@ -82,26 +82,6 @@ namespace MyModName
 
             settings.RegisterInOptionsUI();
 
-            // --- Input hookup (optional) ---
-            // Actions are declared by attributes in Setting.cs; call RegisterKeyBindings() to ensure
-            // the actions exist, then retrieve them by name and (optionally) log interactions.
-            try
-            {
-                settings.RegisterKeyBindings(); // REQUIRED with the attribute-based template
-
-                s_ButtonAction = settings.GetAction(kButtonActionName);
-                s_AxisAction = settings.GetAction(kAxisActionName);
-                s_VectorAction = settings.GetAction(kVectorActionName);
-
-                EnableAndSubscribe(s_ButtonAction, MakeFloatLogger(() => s_ButtonAction));
-                EnableAndSubscribe(s_AxisAction, MakeFloatLogger(() => s_AxisAction));
-                EnableAndSubscribe(s_VectorAction, MakeVector2Logger(() => s_VectorAction));
-            }
-            catch (System.Exception ex)
-            {
-                s_Log.Warn($"Input action hookup skipped: {ex.GetType().Name}: {ex.Message}");
-            }
-
             // --- Example system registrations (uncomment and replace with actual systems) ---
             // updateSystem.UpdateAt<ExampleUiSystem>(SystemUpdatePhase.UIUpdate);
             // updateSystem.UpdateAt<ExampleSimSystem>(SystemUpdatePhase.MainLoop);
