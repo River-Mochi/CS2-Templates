@@ -90,11 +90,11 @@ namespace MyModName
                 settings.RegisterKeyBindings(); // REQUIRED with the attribute-based template
 
                 s_ButtonAction = settings.GetAction(kButtonActionName);
-                s_AxisAction   = settings.GetAction(kAxisActionName);
+                s_AxisAction = settings.GetAction(kAxisActionName);
                 s_VectorAction = settings.GetAction(kVectorActionName);
 
                 EnableAndSubscribe(s_ButtonAction, MakeFloatLogger(() => s_ButtonAction));
-                EnableAndSubscribe(s_AxisAction,   MakeFloatLogger(() => s_AxisAction));
+                EnableAndSubscribe(s_AxisAction, MakeFloatLogger(() => s_AxisAction));
                 EnableAndSubscribe(s_VectorAction, MakeVector2Logger(() => s_VectorAction));
             }
             catch (System.Exception ex)
@@ -109,16 +109,10 @@ namespace MyModName
             s_Log.Info($"{Name} initialized.");
         }
 
+        // Do NOT remove localization sources; CS2 manages them.
         public void OnDispose()
         {
             s_Log.Info($"{Name} - OnDispose");
-
-            // Clean input subscriptions.
-            SafeUnsubscribeAndDisable(ref s_ButtonAction, ref s_OnButtonInteraction);
-            SafeUnsubscribeAndDisable(ref s_AxisAction,   ref s_OnAxisInteraction);
-            SafeUnsubscribeAndDisable(ref s_VectorAction, ref s_OnVectorInteraction);
-
-            // Do NOT remove localization sources; CS2 manages them.
 
             if (s_Settings != null)
             {
