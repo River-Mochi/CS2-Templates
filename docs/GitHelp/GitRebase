@@ -1,0 +1,20 @@
+# if a local changes and remote is updated, this is how to align both safely 
+
+
+git status -sb
+git add -A
+git commit -m "short detail of the local change"
+
+git fetch origin --prune
+git rebase origin/add/boundary-lines
+git push origin add/boundary-lines
+
+git status -sb
+
+# No additional pull is needed. Fetch updates GitHub changes.
+# rebase incorporates them into local branch; push uploads the combined history.
+# This routine is good when your local commits haven't been pushed to github yet.
+# If a rebase reports conflicts, resolve them or run git rebase --abort; don't push until it completes.
+
+# When you haven't made any local commits and only want GitHub's latest version, use this to download from Github:
+git pull --ff-only origin add/boundary-lines
