@@ -6,8 +6,8 @@ git add -A
 git commit -m "short detail of the local change"
 
 git fetch origin --prune
-git rebase origin/add/boundary-lines
-git push origin add/boundary-lines
+git rebase origin/nameOfBranch
+git push origin nameOfBranch
 
 git status -sb
 
